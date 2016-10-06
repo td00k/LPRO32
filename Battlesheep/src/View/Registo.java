@@ -48,7 +48,7 @@ public class Registo extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dados Pessoais\n", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 12))); // NOI18N
 
-        jLabel1.setText("Nome");
+        jLabel1.setText("Name");
 
         jLabel2.setText("Login ");
 
