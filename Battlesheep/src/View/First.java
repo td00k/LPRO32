@@ -76,7 +76,7 @@ public class First extends javax.swing.JFrame {
 
         jButton4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/folder/Add User Group Man Man Filled-50.png"))); // NOI18N
-        jButton4.setText("Registar");
+        jButton4.setText("Register");
         jButton4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/folder/RiG6qpxxT.png"))); // NOI18N
