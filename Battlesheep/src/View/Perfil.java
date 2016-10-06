@@ -50,7 +50,7 @@ public class Perfil extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Jogos");
 
-        jLabel2.setText("Vitorias");
+        jLabel2.setText("Victories");
 
         jLabel3.setText("Derrotas");
 
