@@ -9,12 +9,12 @@ package View;
  *
  * @author tiagodias
  */
-public class Regras extends javax.swing.JInternalFrame {
+public class HowToPlay extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form Regras
      */
-    public Regras() {
+    public HowToPlay() {
         initComponents();
     }
 
@@ -49,8 +49,7 @@ public class Regras extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
