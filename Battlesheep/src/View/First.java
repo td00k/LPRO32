@@ -87,7 +87,7 @@ public class First extends javax.swing.JFrame {
         jLabel1.setText("BattleSheeep");
         jLabel1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
-        jButton7.setText("Advertisement");
+        jButton7.setText("Advertisement 1");
         jButton7.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
