@@ -14,56 +14,29 @@
     <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
     <AuxValue name="FormSettings_variablesModifier" type="java.lang.Integer" value="2"/>
+    <AuxValue name="designerSize" type="java.awt.Dimension" value="-84,-19,0,5,115,114,0,18,106,97,118,97,46,97,119,116,46,68,105,109,101,110,115,105,111,110,65,-114,-39,-41,-84,95,68,20,2,0,2,73,0,6,104,101,105,103,104,116,73,0,5,119,105,100,116,104,120,112,0,0,1,-113,0,0,2,61"/>
   </AuxValues>
 
-  <Layout>
-    <DimensionLayout dim="0">
-      <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-      </Group>
-    </DimensionLayout>
-    <DimensionLayout dim="1">
-      <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jPanel1" max="32767" attributes="0"/>
-      </Group>
-    </DimensionLayout>
+  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
+    <Property name="useNullLayout" type="boolean" value="false"/>
   </Layout>
   <SubComponents>
-    <Container class="javax.swing.JPanel" name="jPanel1">
+    <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="0" y="10" width="534" height="342"/>
+        </Constraint>
+      </Constraints>
 
-      <Layout>
-        <DimensionLayout dim="0">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" min="-2" pref="534" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
-              </Group>
-          </Group>
-        </DimensionLayout>
-        <DimensionLayout dim="1">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" pref="289" max="32767" attributes="0"/>
-              </Group>
-          </Group>
-        </DimensionLayout>
-      </Layout>
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Container class="javax.swing.JScrollPane" name="jScrollPane1">
-
-          <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-          <SubComponents>
-            <Component class="javax.swing.JTextArea" name="jTextArea1">
-              <Properties>
-                <Property name="columns" type="int" value="20"/>
-                <Property name="rows" type="int" value="5"/>
-                <Property name="text" type="java.lang.String" value="Batalha naval &#xe9; um jogo de tabuleiro de dois jogadores, no qual os jogadores &#xa;t&#xea;m de adivinhar em que quadrados est&#xe3;o os navios do oponente. &#xa;Embora o primeiro jogo em tabuleiro comercializado e publicado pela &#xa;Milton Bradley Company em 1931, o jogo foi originalmente jogado com &#xa;l&#xe1;pis e papel. Seu objectivo &#xe9; derrubar os barcos do oponente advers&#xe1;rio,&#xa;ganha quem derrubar todos os navios advers&#xe1;rios primeiro.&#xa;O jogo original &#xe9; jogado em duas grelhas para cada jogador &#x2014; uma que &#xa;representa a disposi&#xe7;&#xe3;o dos barcos do jogador, e outra que representa &#xa;a do oponente. As grelhas s&#xe3;o tipicamente quadradas, estando identificadas &#xa;na horizontal por n&#xfa;meros e na vertical por letras. Em cada grelha o jogador &#xa;coloca os seus navios e regista os tiros do oponente.&#xa;Antes do in&#xed;cio do jogo, cada jogador coloca os seus navios nos quadros,&#xa;alinhados horizontalmente ou verticalmente. O n&#xfa;mero de navios permitidos &#xa;&#xe9; igual para ambos jogadores e os navios n&#xe3;o podem se sobrepor.&#xa;Ap&#xf3;s os navios terem sido posicionados o jogo continua numa s&#xe9;rie de turnos, &#xa;em cada turno um jogador diz um quadrado na grelha do oponente, se houver &#xa;um navio nesse quadrado, &#xe9; colocada uma marca vermelha, sen&#xe3;o houver &#xe9; &#xa;colocada uma marca branca.&#xa;Os tipos de navios s&#xe3;o: porta-avi&#xf5;es (5 quadrados adjacentes em filinha pirilau), &#xa;barcos de dois, tr&#xea;s e quatro canos. Numa das varia&#xe7;&#xf5;es deste jogo, &#xa;as grelhas s&#xe3;o de dimens&#xe3;o 10x10, e o &#xa;n&#xfa;mero de navios s&#xe3;o: 1, 4, 3, 2, 1, respectivamente.&#xa;"/>
-              </Properties>
-            </Component>
-          </SubComponents>
-        </Container>
+        <Component class="javax.swing.JTextArea" name="jTextArea1">
+          <Properties>
+            <Property name="columns" type="int" value="20"/>
+            <Property name="rows" type="int" value="5"/>
+            <Property name="text" type="java.lang.String" value="Batalha naval &#xe9; um jogo de tabuleiro de dois jogadores, no qual os jogadores &#xa;t&#xea;m de adivinhar em que quadrados est&#xe3;o os navios do oponente. &#xa;Embora o primeiro jogo em tabuleiro comercializado e publicado pela &#xa;Milton Bradley Company em 1931, o jogo foi originalmente jogado com &#xa;l&#xe1;pis e papel. Seu objectivo &#xe9; derrubar os barcos do oponente advers&#xe1;rio,&#xa;ganha quem derrubar todos os navios advers&#xe1;rios primeiro.&#xa;O jogo original &#xe9; jogado em duas grelhas para cada jogador &#x2014; uma que &#xa;representa a disposi&#xe7;&#xe3;o dos barcos do jogador, e outra que representa &#xa;a do oponente. As grelhas s&#xe3;o tipicamente quadradas, estando identificadas &#xa;na horizontal por n&#xfa;meros e na vertical por letras. Em cada grelha o jogador &#xa;coloca os seus navios e regista os tiros do oponente.&#xa;Antes do in&#xed;cio do jogo, cada jogador coloca os seus navios nos quadros,&#xa;alinhados horizontalmente ou verticalmente. O n&#xfa;mero de navios permitidos &#xa;&#xe9; igual para ambos jogadores e os navios n&#xe3;o podem se sobrepor.&#xa;Ap&#xf3;s os navios terem sido posicionados o jogo continua numa s&#xe9;rie de turnos, &#xa;em cada turno um jogador diz um quadrado na grelha do oponente, se houver &#xa;um navio nesse quadrado, &#xe9; colocada uma marca vermelha, sen&#xe3;o houver &#xe9; &#xa;colocada uma marca branca.&#xa;Os tipos de navios s&#xe3;o: porta-avi&#xf5;es (5 quadrados adjacentes em filinha pirilau), &#xa;barcos de dois, tr&#xea;s e quatro canos. Numa das varia&#xe7;&#xf5;es deste jogo, &#xa;as grelhas s&#xe3;o de dimens&#xe3;o 10x10, e o &#xa;n&#xfa;mero de navios s&#xe3;o: 1, 4, 3, 2, 1, respectivamente.&#xa;"/>
+          </Properties>
+        </Component>
       </SubComponents>
     </Container>
   </SubComponents>
