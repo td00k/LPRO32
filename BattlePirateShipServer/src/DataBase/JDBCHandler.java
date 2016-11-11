@@ -9,25 +9,30 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLTimeoutException;
 import java.sql.Statement;
 
 /**
  *
  * @author Vitor
  */
-public class JDBCHandler {
-    
+public class JDBCHandler 
+{
+    //  Database credentials
    private static  String JDBC_DRIVER;  
    private static  String DB_URL;
-
-   //  Database credentials
    private static  String USER;
    private static  String PASS;
    
    //  Query Operation defines
-   private static final int REGISTER = 1;
+   private static final int REGISTER = 1;  
    private static final int LOGIN = 2;
    // we need to add more..
+   
+   // Error code definitions
+   private static final int ERROR = -1;     // code for signaling an error
+   private static final int OK = 1;         // code for signaling there were no problems
+   private static final int EX_ERROR = -2;  // code for signaling there was an error on an exception
    
    // Connection to DB
    static Connection conn;
@@ -55,66 +60,80 @@ public class JDBCHandler {
        {
           //Handle errors for JDBC
           se.printStackTrace();
-          return -1;
+          return EX_ERROR;
        }
        catch(Exception e)
        {
           //Handle errors for Class.forName
           e.printStackTrace();
-          return -1;
+          return EX_ERROR;
        } 
-        return 1;
+       return OK;
     }
     
     public int executeQuery (int type, String query, String args[]) throws SQLException
     {
             
             Statement stmt = null;
-        
+            
+            //variable we are going to return
+            int error=1;
+            
             //Execute a query
             stmt = conn.createStatement();
             
             switch(type)
             {
                 case REGISTER: 
-                                stmt.executeUpdate(query);
-                                    
+                                try
+                                {
+                                    stmt.executeUpdate(query);
+                                }
+                                catch(SQLException e)
+                                {
+                                    error = EX_ERROR;
+                                }
+                                
                                 if(stmt!=null)
                                 stmt.close();
                                 break;
                 case LOGIN:
-                                   try 
-                                   {
-                                       ResultSet rs = stmt.executeQuery(query);
-                                       String username;
-                                       String password;
-                                       int uid;
-                                       //going through the whole table in database
-                                       while ( rs.next() ) 
-                                       {
-                                           //getting the id, username and password
-                                           uid = rs.getInt("user_id");
-                                           username = rs.getString("username");
-                                           password = rs.getString("password");
+                             try 
+                             {
+                                 ResultSet rs = stmt.executeQuery(query);
+                                 String username;
+                                 String password;
+                                 int uid;
+                                   
+                                 //going through the whole table in database
+                                 while ( rs.next() ) 
+                                 {
+                                     //getting the id, username and password
+                                     uid = rs.getInt("user_id");
+                                     username = rs.getString("username");
+                                     password = rs.getString("password");
 
-                                           //comparing the results to see if the user is in the database
-                                           if( username.equals(args[0]) && password.equals(args[1]) )
-                                           {
-                                               // We found the user in the database
-                                               stmt.close();
-                                               return 1;
-                                           }
-                                       }
-                                       // Didn't find user in database, now we continue 
-                                   } 
-                                catch (SQLException e ) 
-                                {
-                                //JOptionPane.showMessageDialog(null,"SQL Exception");
-                                } 
-                                break;
+                                     //comparing the results to see if the user is in the database
+                                     if( username.equals(args[0]) && password.equals(args[1]) )
+                                     {
+                                         // We found the user in the database
+                                         stmt.close();
+                                     }
+                                 }
+                                 //user not found in database
+                                 stmt.close();
+                                 error = ERROR;
+                             } 
+                             catch (SQLException e ) 
+                             {
+                                //SQL error
+                                error = EX_ERROR;
+                             } 
+                             break;
+                           
             }
-            
-            return 1;
+      // returns the appropriate value
+      return error;
     }
     
     public int close()
@@ -128,9 +147,9 @@ public class JDBCHandler {
           catch(SQLException se)
           {
              se.printStackTrace();
-             return -1;
+             return EX_ERROR;
           }
-          return 1;
+          return OK;
     }
     
 }
