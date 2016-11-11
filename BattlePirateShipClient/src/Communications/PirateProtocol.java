@@ -15,12 +15,14 @@ import java.io.*;
  
 public class PirateProtocol {
     
-    public String encode(String Input[], int argnum) {
+    
+    
+    public String encode(int type, String Input[], int argnum) {
         int i=0;
-        String tosend = "";
+        String tosend = type + ""; //Placing type in 1st position
         while (i < argnum) {
         
-        tosend = tosend + "#" + Input[i];
+        tosend = tosend + "#" + Input[i]; //Rest of arguments separeted by #
         i++;
         
     }

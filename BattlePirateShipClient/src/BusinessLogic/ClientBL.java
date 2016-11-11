@@ -7,17 +7,22 @@ package BusinessLogic;
 
 import java.net.Socket;
 import java.sql.Connection;
+import Communications.PirateProtocol; 
+import Communications.SocketClient;
+
 
 /**
  *
  * @author Vitor
  */
 public class ClientBL  {
-    private String cmd;
     
-     public ClientBL(String cmd) {
-      this.cmd = cmd;
-    }
+   private static final int REGISTER = 1;  
+   private static final int LOGIN = 2;
+    
+     public ClientBL() 
+     {
+     }
 
     public String encrypt(String str)
     {
@@ -41,11 +46,30 @@ public class ClientBL  {
     
     public void login(String user, String pass) 
     {
-        
-    }   
+       String[] aux = {user, pass};
+       String encoded;
+       int num = 2; 
+       PirateProtocol pirate = new PirateProtocol();
+       encoded = pirate.encode(LOGIN,aux,num);
+       SocketClient socket = new SocketClient();
+       
+       
+       
+       
+       
+       
+       
+    }
     
-    public void register() 
+    public void register(String name, String user, String pass,String email, String question, String answer ) 
     {
+       String[] aux = {name, user, pass, email, question, answer };
+       String encoded;
+       int num = 6; 
+       PirateProtocol pirate = new PirateProtocol();
+       encoded = pirate.encode(REGISTER,aux,num);
+       
+       
         
     }   
 
