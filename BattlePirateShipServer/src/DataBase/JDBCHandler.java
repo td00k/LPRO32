@@ -71,7 +71,7 @@ public class JDBCHandler
        return OK;
     }
     
-    public int executeQuery (int type, String query, String args[]) throws SQLException
+    public int execQuery (int type, String query, String args[]) throws SQLException
     {
             
             Statement stmt = null;

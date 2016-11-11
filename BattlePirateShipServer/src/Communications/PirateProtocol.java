@@ -20,4 +20,8 @@ public class PirateProtocol {
 
         return theOutput;
     }
+    public static int decode(String arg)
+    {
+        return 1;
+    }
 }

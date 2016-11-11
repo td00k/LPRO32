@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.lang.String;
 import DataBase.JDBCHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,6 +28,12 @@ public class ServerBL
     private static final int REGISTER = 1;
     private static final int LOGIN = 2;
     
+    // Error code definitions
+   private static final int ERROR = -1;     // code for signaling an error
+   private static final int OK = 1;         // code for signaling there were no problems
+   private static final int EX_ERROR = -2;  // code for signaling there was an error on an exception
+    
+   
         public ServerBL() 
         {
             //constructor method
@@ -44,46 +51,71 @@ public class ServerBL
         //registered on the login table.
         String query = "select * " + "from login";
         
+        //variable we use to pass to the handler function
+        String[] args = new String[20];
+        
         //handler variable for database access
         JDBCHandler handler = new JDBCHandler("org.postgresql.Driver","jdbc:postgresql://dbm.fe.up.pt/lpro1632","lpro1632","ttva32");
         
+        //variable to check the return of the handler function
+        int handler_check = OK;
+        
+        //opening the connection to the database
+        handler_check = handler.open();
+        if(handler_check != OK)
+        {
+            //error opening the connection to the database
+            return handler_check;
+        }
+        
+        //placing the data on args so we can pass it to the handler.
+        args[0] = user; 
+        args[1] = pass; 
         
         //accessing the database
-        if(handler.executeQuery(query,LOGIN));
+        handler_check = handler.execQuery(LOGIN,query,args);
+        if( handler_check != OK)
+        {
+            return handler_check;
+        }
         
-            
+        //closing connection to the database
+        handler_check = handler.close();
+        
+        return handler_check;     
     }   
     
-    public int register(String user, String pass, Connection connection) 
+    public int register(String name, String user, String pass, String email, String question, String answer) throws SQLException
     {
         Statement stmt = null;
-        String query = "INSERT INTO login " + "VALUES (DEFAULT,'"+ user +"','"+ pass +"')";
-        try 
+        String query = "INSERT INTO user_info " + "VALUES (DEFAULT,'"+ user +"','"+ email +"','"+ pass +"','"+ question +"','"+ answer +"')";
+        
+        //handler variable for database access
+        JDBCHandler handler = new JDBCHandler("org.postgresql.Driver","jdbc:postgresql://dbm.fe.up.pt/lpro1632","lpro1632","ttva32");
+        
+        //variable to check the return of the handler function
+        int handler_check = OK;
+        
+        //opening the connection to the database
+        handler_check = handler.open();
+        
+        if(handler_check != OK)
         {
-            stmt = connection.createStatement();
-            stmt.executeUpdate(query);
-        } 
-        catch (SQLException e ) 
-        {
-            JOptionPane.showMessageDialog(null,"SQL Exception");
-            return 0;
-        } 
-        finally 
-        {
-            if (stmt != null) 
-            { 
-                try 
-                {
-                    JOptionPane.showMessageDialog(null," User:"+user+"\n Password:"+pass+" \n Success!");
-                    stmt.close();
-                } 
-                catch (SQLException ex) 
-                {
-                return 0;
-                }
-            } 
-        return 1;
+            //error opening the connection to the database
+            return handler_check;
         }
+        
+        //accessing the database
+        handler_check = handler.execQuery(REGISTER,query,null);
+        if( handler_check != OK)
+        {
+            return handler_check;
+        }
+        
+        //closing connection to the database
+        handler_check = handler.close();
+        
+        return handler_check;     
     }   
 }
 

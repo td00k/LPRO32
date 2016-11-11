@@ -16,20 +16,44 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
  
 public class SocketServer {
-   public static void main(String[] args) throws IOException {
- 
-     
+    
+   public static void main(String[] args) throws IOException 
+   {
+       
+      // creates an executor variable so we can handle clients
       ExecutorService executor = null;
-      try ( ServerSocket serverSocket = new ServerSocket(3216); ){
       
-        executor = Executors.newFixedThreadPool(5);
-        System.out.println("Waiting on 3216.");
-       while (true) {
-        Socket clientSocket = serverSocket.accept();
-        Runnable worker = new HandleClient(clientSocket);
-        executor.execute(worker);
-         }
-      } catch (IOException e) {
+      // socket variable so we can listen to the client
+      ServerSocket serverSocket;
+      
+      // variable to accept a new client
+      Socket clientSocket;
+      
+      //variable to deal with a new client
+      Runnable worker;
+      
+      try 
+      {
+        //listening to port number 3216
+        serverSocket = new ServerSocket(3216);
+        
+        // maximum number of clients that can be handled at the same time 
+        executor = Executors.newFixedThreadPool(20);
+        
+        while (true) 
+        {
+            //accepting a client
+            clientSocket = serverSocket.accept();
+            
+            //calling Handle client to deal with the new client
+            worker = new HandleClient(clientSocket);
+            
+            //dealing with the new client
+            executor.execute(worker);
+        }
+      } 
+      catch (IOException e) 
+      {
          System.err.println("Could not listen on port: 3216.");
          System.exit(1);
       }
