@@ -14,10 +14,35 @@ import java.net.*;
 import java.io.*;
  
 public class PirateProtocol {
-    public String processInput(String theInput) {
-        String theOutput = null;
- 
-
-        return theOutput;
+    
+    public String encode(String Input[], int argnum) {
+        int i=0;
+        String tosend = "";
+        while (i < argnum) {
+        
+        tosend = tosend + "#" + Input[i];
+        i++;
+        
+    }
+        
+        
+        return tosend;
+    }
+    
+      public String decode(String Input[], int argnum) {
+        int i=0;
+        String tosend = "";
+        while (i < argnum) {
+        
+        tosend = tosend + "#" + Input[i];
+        i++;
+        
+    }
+        
+        
+        return tosend;
     }
 }
+
+
+
