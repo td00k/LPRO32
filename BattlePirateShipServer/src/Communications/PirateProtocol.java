@@ -15,29 +15,29 @@ import java.io.*;
  
 public class PirateProtocol {
     
-    public String encode(String Input[], int argnum) {
+    
+    
+    public String encode(int type, String Input[], int argnum) { //enter type of connection (register/login/etc),array of strings, and argument number.
         int i=0;
-        String tosend = "";
+        String tosend = type + ""; //Placing type in 1st position
         while (i < argnum) {
         
-        tosend = tosend + "#" + Input[i];
+        tosend = tosend + "#" + Input[i]; //Rest of arguments separeted by #
         i++;
         
     }
         
         
-        return tosend;
+        return tosend;//returns string separated by  #. 
     }
     
-      public String decode(String Input) {
-        int i=0;
-        String tosend = "";
-        while (i<5) 
-        {
-        i++;  
-        }
+      public String[] decode(String Input) { //enter string separated by  #.  
+        String toreceive = Input;
+        String decoded[] = toreceive.split("#"); 
         
-        
-        return tosend;
-    }
+        return decoded; //returns array os strings 
+   }
+       
+
 }
+
