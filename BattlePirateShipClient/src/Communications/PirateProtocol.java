@@ -31,20 +31,14 @@ public class PirateProtocol {
         return tosend;
     }
     
-      public String decode(String Input[], int argnum) {
+      public String[] decode(String Input, int argnum) {
         int i=0;
-        String tosend = "";
-        while (i < argnum) {
+        String toreceive = Input;
+        String decoded[] = toreceive.split("#"); 
         
-        tosend = tosend + "#" + Input[i];
-        i++;
-        
-    }
-        
-        
-        return tosend;
-    }
+        return decoded;
+   }
+       
+
 }
-
-
 
