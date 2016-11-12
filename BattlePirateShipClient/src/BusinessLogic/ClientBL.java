@@ -44,6 +44,10 @@ public class ClientBL  {
         }
     }
     
+    
+    
+    
+    
     public void login(String user, String pass) 
     {
        String[] aux = {user, pass};
@@ -59,11 +63,16 @@ public class ClientBL  {
        
        
        
+       
     }
     
     public void register(String name, String user, String pass,String email, String question, String answer ) 
     {
-       String[] aux = {name, user, pass, email, question, answer };
+       
+       
+       ClientBL lock = new ClientBL();
+       String lockpass = lock.encrypt(pass);
+       String[] aux = {name, user, lockpass, email, question, answer };
        String encoded;
        int num = 6; 
        PirateProtocol pirate = new PirateProtocol();
