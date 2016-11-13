@@ -146,7 +146,7 @@ public class Login extends javax.swing.JFrame {
                         if(handler_return == 1)
                         {
                             JOptionPane.showMessageDialog(null,"Welcome " + user + "!");
-                            Login2 on = new Login2();
+                            MainView on = new MainView();
                             on.setVisible(true);
                             this.dispose();
                         }
