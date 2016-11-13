@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package DataBase;
+package DataAccess;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -118,6 +118,7 @@ public class JDBCHandler
                                      {
                                          // We found the user in the database
                                          stmt.close();
+                                         return OK;
                                      }
                                  }
                                  //user not found in database

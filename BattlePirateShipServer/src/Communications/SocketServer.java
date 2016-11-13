@@ -9,7 +9,7 @@ package Communications;
  *
  * @author Vitor
  */
-import Communications.HandleClient;
+
 import java.net.*;
 import java.io.*;
 import java.util.concurrent.ExecutorService;
@@ -17,7 +17,7 @@ import java.util.concurrent.Executors;
  
 public class SocketServer {
     
-   public static void main(String[] args) throws IOException 
+   public static void main(String[] args) 
    {
        
       // creates an executor variable so we can handle clients

@@ -6,6 +6,9 @@
 package GUI;
 
 import javax.swing.JOptionPane;
+import BusinessLogic.ClientBL;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  *
@@ -13,11 +16,31 @@ import javax.swing.JOptionPane;
  */
 public class Login extends javax.swing.JFrame {
 
+   private final ClientBL handler = new ClientBL();
+   private int handler_return;
+   private String user;
+   private String pass;
+
     /**
      * Creates new form Login
      */
     public Login() {
         initComponents();
+        
+        UserField.addActionListener(new ActionListener(){   // listener to click login button on ENTER key press
+
+                public void actionPerformed(ActionEvent e){
+                        LoginButton.doClick();
+
+                }});
+        PasswordField.addActionListener(new ActionListener(){ 
+
+                public void actionPerformed(ActionEvent e){
+                        LoginButton.doClick();
+
+                }});
+
+
     }
 
     /**
@@ -30,12 +53,12 @@ public class Login extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        UserField = new javax.swing.JTextField();
+        PasswordField = new javax.swing.JPasswordField();
+        UserLabel = new javax.swing.JLabel();
+        PasswordLabel = new javax.swing.JLabel();
+        LoginButton = new javax.swing.JButton();
+        ForgotPasswordButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -43,54 +66,54 @@ public class Login extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        UserField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                UserFieldActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(91, 67, 218, 29));
+        jPanel1.add(UserField, new org.netbeans.lib.awtextra.AbsoluteConstraints(91, 67, 218, 29));
 
-        jPasswordField1.addActionListener(new java.awt.event.ActionListener() {
+        PasswordField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jPasswordField1ActionPerformed(evt);
+                PasswordFieldActionPerformed(evt);
             }
         });
-        jPanel1.add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(91, 125, 218, -1));
+        jPanel1.add(PasswordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(91, 125, 218, -1));
 
-        jLabel1.setFont(new java.awt.Font("Charlemagne Std", 0, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("User");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(91, 36, 91, 25));
+        UserLabel.setFont(new java.awt.Font("Charlemagne Std", 0, 14)); // NOI18N
+        UserLabel.setForeground(new java.awt.Color(255, 255, 255));
+        UserLabel.setText("User");
+        jPanel1.add(UserLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(91, 36, 91, 25));
 
-        jLabel2.setFont(new java.awt.Font("Charlemagne Std", 0, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Password");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(91, 102, -1, -1));
+        PasswordLabel.setFont(new java.awt.Font("Charlemagne Std", 0, 14)); // NOI18N
+        PasswordLabel.setForeground(new java.awt.Color(255, 255, 255));
+        PasswordLabel.setText("Password");
+        jPanel1.add(PasswordLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(91, 102, -1, -1));
 
-        jButton1.setBackground(new java.awt.Color(102, 102, 102));
-        jButton1.setFont(new java.awt.Font("Charlemagne Std", 0, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Enter");
-        jButton1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        LoginButton.setBackground(new java.awt.Color(102, 102, 102));
+        LoginButton.setFont(new java.awt.Font("Charlemagne Std", 0, 14)); // NOI18N
+        LoginButton.setForeground(new java.awt.Color(255, 255, 255));
+        LoginButton.setText("log in");
+        LoginButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        LoginButton.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        LoginButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                LoginButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 190, 120, 40));
+        jPanel1.add(LoginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 190, 120, 40));
 
-        jButton2.setBackground(new java.awt.Color(102, 102, 102));
-        jButton2.setFont(new java.awt.Font("Charlemagne Std", 0, 10)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Forgot Password");
-        jButton2.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        ForgotPasswordButton.setBackground(new java.awt.Color(102, 102, 102));
+        ForgotPasswordButton.setFont(new java.awt.Font("Charlemagne Std", 0, 10)); // NOI18N
+        ForgotPasswordButton.setForeground(new java.awt.Color(255, 255, 255));
+        ForgotPasswordButton.setText("Forgot Password");
+        ForgotPasswordButton.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        ForgotPasswordButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                ForgotPasswordButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 212, 120, 20));
+        jPanel1.add(ForgotPasswordButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1, 212, 120, 20));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -107,46 +130,49 @@ public class Login extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void UserFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+        
+    }//GEN-LAST:event_UserFieldActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void LoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginButtonActionPerformed
         // TODO add your handling code here:
-        
-        if(jTextField1.getText().equals("root") && jPasswordField1.getText().equals("root"))
+         user = UserField.getText(); //received username
+         pass = PasswordField.getText(); //received password
+       
+        if( handler.validate(user,pass) ) //return will be true if user and pass are valid, false otherwise
             {
-                        JOptionPane.showMessageDialog(null,"Welcome");
-                        
-                        this.dispose();
-                       
-                         Login2 on = new Login2();
-                         on.setVisible(true);
-                        
-                        //new First().setVisible(false);
-        
-                        
-                    
+                        handler_return = handler.login(user,pass); //checking if login is successful
+                        if(handler_return == 1)
+                        {
+                            JOptionPane.showMessageDialog(null,"Welcome " + user + "!");
+                            Login2 on = new Login2();
+                            on.setVisible(true);
+                            this.dispose();
+                        }
+                        else
+                        {
+                            JOptionPane.showMessageDialog(null,"User and Password combination not found in database!");
+                        }         
             }
             else
             {
-            
-                     JOptionPane.showMessageDialog(null,"Wrong Login or Password");
-            
+                    JOptionPane.showMessageDialog(null,"Invalid Username/Password");
+                    UserField.requestFocus();
             }
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_LoginButtonActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void ForgotPasswordButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ForgotPasswordButtonActionPerformed
         // TODO add your handling code here:
         
         ForgotPassword fp = new ForgotPassword();
         fp.setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_ForgotPasswordButtonActionPerformed
 
-    private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
+    private void PasswordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PasswordFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jPasswordField1ActionPerformed
+    }//GEN-LAST:event_PasswordFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -184,12 +210,12 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JButton ForgotPasswordButton;
+    private javax.swing.JButton LoginButton;
+    private javax.swing.JPasswordField PasswordField;
+    private javax.swing.JLabel PasswordLabel;
+    private javax.swing.JTextField UserField;
+    private javax.swing.JLabel UserLabel;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

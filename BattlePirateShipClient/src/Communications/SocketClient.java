@@ -15,45 +15,65 @@ package Communications;
  
 import java.io.*;
 import java.net.*;
+
  
 public class SocketClient {
-   public static void SocketClient(String[] args) throws IOException {
- 
-      Socket kkSocket = null;
-      PrintWriter out = null;
-      BufferedReader in = null;
- 
-      try {
-         kkSocket = new Socket("localhost", 3216);
-         System.out.println("Connected to server.");
-         out = new PrintWriter(kkSocket.getOutputStream(), true);
-         in = new BufferedReader(new InputStreamReader(kkSocket.getInputStream()));
-      } catch (UnknownHostException e) {
-         System.err.println("Don't know about host: localhost.");
+    
+     private  Socket PirateSocket;
+     private  PrintWriter writer;
+     private  BufferedReader reader;
+   
+    public SocketClient()
+    {
+         try 
+         {
+             PirateSocket = new Socket("gnomo.fe.up.pt", 3216);
+             writer = new PrintWriter(PirateSocket.getOutputStream(), true);
+             reader = new BufferedReader(new InputStreamReader(PirateSocket.getInputStream()));
+         } 
+         catch (UnknownHostException e) 
+         {
+         System.err.println("Host gnomo not found!");
          System.exit(1);
-      } catch (IOException e) {
-         System.err.println("Couldn't get I/O for the connection to: localhost.");
-         System.exit(1);
+         } 
+         catch (IOException ex) 
+         {
+             System.out.println("Error creating socket.");
+             System.exit(1);
+         } 
+    }
+    
+   public int send(String message) throws IOException 
+   {
+
+      writer.println(message); //sending message to socket
+
+      return 1;
+   }
+   
+   public String receive() throws IOException 
+   {
+      String toReturn;
+      while ((toReturn = reader.readLine()) != null) 
+      {
+         System.out.println("Received: " + toReturn);
       }
- 
-      BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
-      String fromServer;
-      String fromUser;
- 
-      while ((fromServer = in.readLine()) != null) {
-         System.out.println("Received: " + fromServer);
-         if (fromServer.equals("Bye."))
-            break;
- 
-         fromUser = stdIn.readLine();
-         if (fromUser != null) {
-            out.println(fromUser);
+        return toReturn;
+   }
+   
+      public int close()
+   {
+         try 
+         {
+             writer.close();
+             reader.close();
+             PirateSocket.close();
          }
-      }
- 
-      out.close();
-      in.close();
-      stdIn.close();
-      kkSocket.close();
+         catch (IOException ex) 
+         {
+             return 0;
+         }
+     
+      return 1;
    }
 }

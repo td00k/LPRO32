@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.lang.String;
-import DataBase.JDBCHandler;
+import DataAccess.JDBCHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -33,10 +33,13 @@ public class ServerBL
    private static final int OK = 1;         // code for signaling there were no problems
    private static final int EX_ERROR = -2;  // code for signaling there was an error on an exception
     
+   private JDBCHandler DBhandler; 
+   private String query;
    
         public ServerBL() 
         {
-            //constructor method
+            //handler variable for database access
+            DBhandler = new JDBCHandler("org.postgresql.Driver","jdbc:postgresql://dbm.fe.up.pt/lpro1632","lpro1632","ttva32");
         }
 
     public int login(String user, String pass) throws SQLException 
@@ -49,19 +52,16 @@ public class ServerBL
   
         //query we are executing on the database. This selects all the users
         //registered on the login table.
-        String query = "select * " + "from login";
+        query = "select * " + "from login";
         
         //variable we use to pass to the handler function
         String[] args = new String[20];
         
-        //handler variable for database access
-        JDBCHandler handler = new JDBCHandler("org.postgresql.Driver","jdbc:postgresql://dbm.fe.up.pt/lpro1632","lpro1632","ttva32");
-        
         //variable to check the return of the handler function
-        int handler_check = OK;
+        int handler_check;
         
         //opening the connection to the database
-        handler_check = handler.open();
+        handler_check = DBhandler.open();
         if(handler_check != OK)
         {
             //error opening the connection to the database
@@ -73,14 +73,14 @@ public class ServerBL
         args[1] = pass; 
         
         //accessing the database
-        handler_check = handler.execQuery(LOGIN,query,args);
+        handler_check = DBhandler.execQuery(LOGIN,query,args);
         if( handler_check != OK)
         {
             return handler_check;
         }
         
         //closing connection to the database
-        handler_check = handler.close();
+        handler_check = DBhandler.close();
         
         return handler_check;     
     }   
@@ -88,16 +88,13 @@ public class ServerBL
     public int register(String name, String user, String pass, String email, String question, String answer) throws SQLException
     {
         Statement stmt = null;
-        String query = "INSERT INTO user_info " + "VALUES (DEFAULT,'"+ user +"','"+ email +"','"+ pass +"','"+ question +"','"+ answer +"')";
-        
-        //handler variable for database access
-        JDBCHandler handler = new JDBCHandler("org.postgresql.Driver","jdbc:postgresql://dbm.fe.up.pt/lpro1632","lpro1632","ttva32");
+        query = "INSERT INTO user_info " + "VALUES (DEFAULT,'"+ user +"','"+ email +"','"+ pass +"','"+ question +"','"+ answer +"')";
         
         //variable to check the return of the handler function
         int handler_check = OK;
         
         //opening the connection to the database
-        handler_check = handler.open();
+        handler_check = DBhandler.open();
         
         if(handler_check != OK)
         {
@@ -106,14 +103,14 @@ public class ServerBL
         }
         
         //accessing the database
-        handler_check = handler.execQuery(REGISTER,query,null);
+        handler_check = DBhandler.execQuery(REGISTER,query,null);
         if( handler_check != OK)
         {
             return handler_check;
         }
         
         //closing connection to the database
-        handler_check = handler.close();
+        handler_check = DBhandler.close();
         
         return handler_check;     
     }   
