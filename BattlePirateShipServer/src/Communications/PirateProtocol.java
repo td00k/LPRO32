@@ -27,8 +27,8 @@ public class PirateProtocol {
         tosend = tosend + "#" + Input[i]; //Rest of arguments separeted by #
         i++;  
         }
-        
-        
+       
+        System.out.println("Pirate encode finished!");
         return tosend;//returns string separated by  #. 
     }
     
@@ -45,7 +45,7 @@ public class PirateProtocol {
                       i++;
         }
         decoded[i]=null;
-        
+        System.out.println("Pirate decode finished!");
         return decoded; //returns array os strings 
     }
        

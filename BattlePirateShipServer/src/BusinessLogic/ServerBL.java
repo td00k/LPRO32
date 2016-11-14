@@ -52,7 +52,7 @@ public class ServerBL
   
         //query we are executing on the database. This selects all the users
         //registered on the login table.
-        query = "select * " + "from login";
+        query = "select * " + "from user_info";
         
         //variable we use to pass to the handler function
         String[] args = new String[20];
@@ -62,6 +62,7 @@ public class ServerBL
         
         //opening the connection to the database
         handler_check = DBhandler.open();
+        
         if(handler_check != OK)
         {
             //error opening the connection to the database
@@ -74,6 +75,7 @@ public class ServerBL
         
         //accessing the database
         handler_check = DBhandler.execQuery(LOGIN,query,args);
+        System.out.println("Query executed!");
         if( handler_check != OK)
         {
             return handler_check;
@@ -81,6 +83,7 @@ public class ServerBL
         
         //closing connection to the database
         handler_check = DBhandler.close();
+         
         
         return handler_check;     
     }   
@@ -95,6 +98,8 @@ public class ServerBL
         
         //opening the connection to the database
         handler_check = DBhandler.open();
+        System.out.println("Connection to DB opened register!");
+        
         
         if(handler_check != OK)
         {
@@ -104,6 +109,7 @@ public class ServerBL
         
         //accessing the database
         handler_check = DBhandler.execQuery(REGISTER,query,null);
+        System.out.println("Query Executed!");
         if( handler_check != OK)
         {
             return handler_check;
@@ -111,6 +117,7 @@ public class ServerBL
         
         //closing connection to the database
         handler_check = DBhandler.close();
+        System.out.println("Closing DB Register!");
         
         return handler_check;     
     }   

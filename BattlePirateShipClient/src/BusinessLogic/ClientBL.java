@@ -73,7 +73,9 @@ public class ClientBL  {
        try 
        {
            client.send(encoded);
+            System.out.println("Client Sent encoded!");
            received = client.receive();
+            System.out.println("Client received reply!");
        } 
        catch (IOException ex) 
        {

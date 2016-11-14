@@ -6,13 +6,11 @@
 package Communications;
 
 import BusinessLogic.ServerBL;
-import Communications.PirateProtocol;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -68,6 +66,7 @@ public class HandleClient implements Runnable{
         {
             System.out.println("Thread started with name:" + Thread.currentThread().getName());
             encoded = receive();
+            System.out.println("Server Received encoded string!");
             decoded = pirate.decode(encoded);
             if(decoded[0].equals("1"))
             {
@@ -99,6 +98,7 @@ public class HandleClient implements Runnable{
             }
 
             send(toSend);
+            System.out.println("Sent Reply to Client!");
             
         } 
 	catch (IOException e) 
@@ -108,7 +108,7 @@ public class HandleClient implements Runnable{
 		
 	catch (Exception ex) 
         {
-	   System.out.println("Exceprion in Thread Run. Exception : " + ex);
+	   System.out.println("Exception in Thread Run. Exception : " + ex);
 	}
     
         ////////////////
@@ -128,11 +128,14 @@ public class HandleClient implements Runnable{
    public String receive() throws IOException 
    {
       String toReturn;
-      while ((toReturn = reader.readLine()) != null) 
-      {
+      toReturn = "1";
+      //while (toReturn != null) 
+      //{
+         toReturn = reader.readLine();
          System.out.println("Received: " + toReturn);
-      }
-        return toReturn;
+      //}
+      System.out.println("Out of cycle");
+      return toReturn;
    }
   
    

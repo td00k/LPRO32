@@ -52,9 +52,10 @@ public class JDBCHandler
         {
             //Register JDBC driver
             Class.forName(JDBC_DRIVER);
-
+            System.out.println("DB Driver Exists!");
             //Open a connection
             this.conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            System.out.println("Connection to DB established!");
         }
        catch(SQLException se)
        {
@@ -79,10 +80,11 @@ public class JDBCHandler
             Statement stmt = null;
             
             //variable we are going to return
-            int error=1;
+            int ret=OK;
             
             //Execute a query
             stmt = conn.createStatement();
+            System.out.println("Query statement created!");
             
             switch(type)
             {
@@ -90,14 +92,18 @@ public class JDBCHandler
                                 try
                                 {
                                     stmt.executeUpdate(query);
+                                    ret=OK;
+                                    System.out.println("Valid Register Query!");
                                 }
                                 catch(SQLException e)
                                 {
-                                    error = EX_ERROR;
+                                    ret = EX_ERROR;
+                                    System.out.println("Register Query failed!");
                                 }
                                 
-                                if(stmt!=null)
+                                if(stmt != null)
                                 stmt.close();
+                                
                                 break;
                 case LOGIN:
                              try 
@@ -111,9 +117,13 @@ public class JDBCHandler
                                  while ( rs.next() ) 
                                  {
                                      //getting the id, username and password
-                                     uid = rs.getInt("user_id");
+                                     uid = rs.getInt("id");
                                      username = rs.getString("username");
                                      password = rs.getString("password");
+                                     System.out.println("user: " + username);
+                                     System.out.println("pass: " + password);
+                                     System.out.println("user: " + args[0]);
+                                     System.out.println("pass: " + args[1]);
 
                                      //comparing the results to see if the user is in the database
                                      if( username.equals(args[0]) && password.equals(args[1]) )
@@ -125,22 +135,23 @@ public class JDBCHandler
                                  }
                                  //user not found in database
                                  stmt.close();
-                                 error = ERROR;
+                                 ret = ERROR;
                              } 
                              catch (SQLException e ) 
                              {
                                 //SQL error
-                                error = EX_ERROR;
+                                ret = EX_ERROR;
                              } 
                              break;
                            
             }
       // returns the appropriate value
-      return error;
+      return ret;
     }
     
     public int close()
     {
+        
           try
           {
              if(conn!=null)
@@ -150,8 +161,10 @@ public class JDBCHandler
           catch(SQLException se)
           {
              se.printStackTrace();
+             System.out.println("Closing DB and returning!");
              return EX_ERROR;
           }
+          System.out.println("Closing DB and returning!");
           return OK;
     }
     

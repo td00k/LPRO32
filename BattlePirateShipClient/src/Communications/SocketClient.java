@@ -27,7 +27,7 @@ public class SocketClient {
     {
          try 
          {
-             PirateSocket = new Socket("localhost", 3217);
+             PirateSocket = new Socket("gnomo.fe.up.pt", 3217);
              writer = new PrintWriter(PirateSocket.getOutputStream(), true);
              reader = new BufferedReader(new InputStreamReader(PirateSocket.getInputStream()));
          } 
@@ -55,10 +55,11 @@ public class SocketClient {
    public String receive() throws IOException 
    {
       String toReturn;
-      while ((toReturn = reader.readLine()) != null) 
-      {
+      //while ((toReturn = reader.readLine()) != null) 
+      //{
+          toReturn = reader.readLine();
          System.out.println("Received: " + toReturn);
-      }
+      //}
         return toReturn;
    }
    
