@@ -158,6 +158,7 @@ public class First extends javax.swing.JFrame {
         Registration r= new Registration(this);
         
         r.setVisible(true);
+        setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jButton2FocusGained
