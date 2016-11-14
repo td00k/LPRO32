@@ -59,12 +59,14 @@ public class JDBCHandler
        catch(SQLException se)
        {
           //Handle errors for JDBC
+          System.out.println("Error SQL Exception!");
           se.printStackTrace();
           return EX_ERROR;
        }
        catch(Exception e)
        {
           //Handle errors for Class.forName
+          System.out.println("Error Exception on DB!");
           e.printStackTrace();
           return EX_ERROR;
        } 

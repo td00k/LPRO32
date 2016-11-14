@@ -35,7 +35,8 @@ public class SocketServer {
       try 
       {
         //listening to port number 3216
-        serverSocket = new ServerSocket(3216);
+        serverSocket = new ServerSocket(3217);
+        System.out.println("Port 3217 Waiting for clients!");
         
         // maximum number of clients that can be handled at the same time 
         executor = Executors.newFixedThreadPool(20);
@@ -43,8 +44,9 @@ public class SocketServer {
         while (true) 
         {
             //accepting a client
+            System.out.println("Waiting to accept connection!");
             clientSocket = serverSocket.accept();
-            
+            System.out.println("Accepting connection! Creating new thread!");
             //calling Handle client to deal with the new client
             worker = new HandleClient(clientSocket);
             
@@ -56,6 +58,7 @@ public class SocketServer {
       {
          System.err.println("Could not listen on port: 3216.");
          System.exit(1);
+         
       }
 
    }

@@ -27,7 +27,7 @@ public class SocketClient {
     {
          try 
          {
-             PirateSocket = new Socket("gnomo.fe.up.pt", 3216);
+             PirateSocket = new Socket("localhost", 3217);
              writer = new PrintWriter(PirateSocket.getOutputStream(), true);
              reader = new BufferedReader(new InputStreamReader(PirateSocket.getInputStream()));
          } 
@@ -41,6 +41,7 @@ public class SocketClient {
              System.out.println("Error creating socket.");
              System.exit(1);
          } 
+      
     }
     
    public int send(String message) throws IOException 

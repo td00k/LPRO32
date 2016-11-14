@@ -32,19 +32,20 @@ public class HandleClient implements Runnable{
      private static final int LOGIN = 2;
      /// more to add...
 
-    public HandleClient(Socket PirateSocket) 
+    public HandleClient(Socket PSocket) 
     {
-      this.PirateSocket = PirateSocket;
+      this.PirateSocket = PSocket;
       try 
          {
              writer = new BufferedWriter(new OutputStreamWriter(PirateSocket.getOutputStream()));
              reader = new BufferedReader(new InputStreamReader(PirateSocket.getInputStream()));
              pirate = new PirateProtocol();
              handler = new ServerBL();
+             System.out.println("Created HandleClient!");
          } 
          catch (UnknownHostException e) 
          {
-         System.err.println("Host gnomo not found!");
+         System.out.println("Host gnomo not found!");
          System.exit(1);
          } 
          catch (IOException ex) 
