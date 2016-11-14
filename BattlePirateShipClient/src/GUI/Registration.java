@@ -8,6 +8,7 @@ package GUI;
 import BusinessLogic.ClientBL;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -18,8 +19,8 @@ public class Registration extends javax.swing.JFrame {
     /**
      * Creates new form Registration
      */
-    
-   //private final ClientBL handler = new ClientBL();
+   private static First mainFirst;
+   private final ClientBL handler = new ClientBL();
    private int handler_return;
    private String name;
    private String user;
@@ -28,9 +29,9 @@ public class Registration extends javax.swing.JFrame {
    private String question;
    private String answer;
    
-    public Registration() {
+    public Registration(First main) {
         initComponents();
-        
+        this.mainFirst = main;
         NameField.addActionListener(new ActionListener(){   // listener to click login button on ENTER key press
 
                 public void actionPerformed(ActionEvent e){
@@ -230,13 +231,37 @@ public class Registration extends javax.swing.JFrame {
 
     private void SignUpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SignUpButtonActionPerformed
             // TODO add your handling code here:
+         
+         name = NameField.getText();  
          user = LoginField.getText(); //received username
          pass = PasswordField.getText(); //received password
          email = EmailField.getText();
-         
          question = QuestionCombo.getSelectedItem().toString();
-         System.out.println("question:" + question);
-            
+         answer = AnswerField.getText();
+         
+         if ( !handler.validate(name,user) || !handler.validate(pass,email) || !handler.validate(question,answer) ) // if any argument is not valid
+         {
+             JOptionPane.showMessageDialog(null,"Invalid Details! Every field must contain more than 3 characters!");
+         }
+         else 
+         {
+             handler_return = handler.register(name,user,pass,email,question,answer); //checking if login is successful
+                        if(handler_return == 1)
+                        {
+                            JOptionPane.showMessageDialog(null,"Registration successful! Username: " + user);
+                            mainFirst.setVisible(true);
+                            setVisible(false);
+                            dispose();
+                        }
+                        else
+                        {
+                            JOptionPane.showMessageDialog(null,"Error creating user in database! Try again!");
+                            mainFirst.setVisible(true);
+                            setVisible(false);
+                            dispose();
+                        }
+
+         } 
     }//GEN-LAST:event_SignUpButtonActionPerformed
 
     private void PasswordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PasswordFieldActionPerformed
@@ -277,11 +302,11 @@ public class Registration extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Registration.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Registration().setVisible(true);
+                new Registration(mainFirst).setVisible(true);
             }
         });
     }
