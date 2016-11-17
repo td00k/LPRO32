@@ -52,7 +52,7 @@ public class ServerBL
   
         //query we are executing on the database. This selects all the users
         //registered on the login table.
-        query = "select * " + "from user_info";
+        query = "select * " + "from userinfo";
         
         //variable we use to pass to the handler function
         String[] args = new String[20];
@@ -91,7 +91,7 @@ public class ServerBL
     public int register(String name, String user, String pass, String email, String question, String answer) throws SQLException
     {
         Statement stmt = null;
-        query = "INSERT INTO user_info " + "VALUES (DEFAULT,'"+ user +"','"+ email +"','"+ pass +"','"+ question +"','"+ answer +"')";
+        query = "INSERT INTO userinfo " + "VALUES (DEFAULT,'"+ name +"','"+ user +"','"+ email +"','"+ pass +"','"+ question +"','"+ answer +"')";
         System.out.println(query);
         //variable to check the return of the handler function
         int handler_check = OK;

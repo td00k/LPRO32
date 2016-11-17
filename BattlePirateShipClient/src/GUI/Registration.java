@@ -233,9 +233,17 @@ public class Registration extends javax.swing.JFrame {
          question = QuestionCombo.getSelectedItem().toString();
          answer = AnswerField.getText();
          
-         if ( !handler.validate(name,user) || !handler.validate(pass,email) || !handler.validate(question,answer) ) // if any argument is not valid
+         if ( !handler.validate(name,user) || !handler.validate(pass,pass) || !handler.validate(question,answer) ) // if any argument is not valid
          {
              JOptionPane.showMessageDialog(null,"Invalid Details! Every field must contain more than 3 characters!");
+         }
+         else if (!handler.emailcheck(email))
+         {
+             JOptionPane.showMessageDialog(null,"Invalid email! Please fill in a valid one!");
+         }
+         else if (!pass.equals(ConfirmPasswordField.getText()))
+         {
+             JOptionPane.showMessageDialog(null,"Passwords don't match! Please fill the same password on both fields!");
          }
          else 
          {

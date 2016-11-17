@@ -137,6 +137,7 @@ public class JDBCHandler
                              {
                                 //SQL error
                                 ret = EX_ERROR;
+                                System.out.println(e);
                              } 
                              break;
                            

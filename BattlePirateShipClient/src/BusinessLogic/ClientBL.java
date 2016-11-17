@@ -39,6 +39,15 @@ public class ClientBL  {
          return true;        
      }
      
+     public boolean emailcheck(String email)
+     {
+        String regex;
+        regex = "^([a-zA-Z0-9]+[a-zA-Z0-9._%\\-\\+]*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,4})$";
+        return email.matches(regex);        
+     }
+     
+     
+     
     public String encrypt(String str)
     {
         // Encrypting string with MD5 Hash algorithm
