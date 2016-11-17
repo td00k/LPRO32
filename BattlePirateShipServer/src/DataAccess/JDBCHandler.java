@@ -91,14 +91,14 @@ public class JDBCHandler
                 case REGISTER: 
                                 try
                                 {
-                                    stmt.executeUpdate(query);
+                                    stmt.execute(query);
                                     ret=OK;
                                     System.out.println("Valid Register Query!");
                                 }
                                 catch(SQLException e)
                                 {
                                     ret = EX_ERROR;
-                                    System.out.println("Register Query failed!");
+                                    System.out.println(e);
                                 }
                                 
                                 if(stmt != null)
@@ -120,10 +120,6 @@ public class JDBCHandler
                                      uid = rs.getInt("id");
                                      username = rs.getString("username");
                                      password = rs.getString("password");
-                                     System.out.println("user: " + username);
-                                     System.out.println("pass: " + password);
-                                     System.out.println("user: " + args[0]);
-                                     System.out.println("pass: " + args[1]);
 
                                      //comparing the results to see if the user is in the database
                                      if( username.equals(args[0]) && password.equals(args[1]) )

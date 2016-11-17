@@ -153,14 +153,16 @@ public class Login extends javax.swing.JFrame {
                         else
                         {
                             JOptionPane.showMessageDialog(null,"User and Password combination not found in database!");
+                            dispose();
                         }         
             }
             else
             {
                     JOptionPane.showMessageDialog(null,"Invalid Username/Password");
                     UserField.requestFocus();
+                    
             }
-        
+
     }//GEN-LAST:event_LoginButtonActionPerformed
 
     private void ForgotPasswordButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ForgotPasswordButtonActionPerformed

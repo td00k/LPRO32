@@ -92,7 +92,7 @@ public class ServerBL
     {
         Statement stmt = null;
         query = "INSERT INTO user_info " + "VALUES (DEFAULT,'"+ user +"','"+ email +"','"+ pass +"','"+ question +"','"+ answer +"')";
-        
+        System.out.println(query);
         //variable to check the return of the handler function
         int handler_check = OK;
         

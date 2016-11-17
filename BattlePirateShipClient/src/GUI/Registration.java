@@ -91,9 +91,7 @@ public class Registration extends javax.swing.JFrame {
         PasswordLabel = new javax.swing.JLabel();
         NameField = new javax.swing.JTextField();
         LoginField = new javax.swing.JTextField();
-        PasswordField = new javax.swing.JTextField();
         ConfirmPasswordLabel = new javax.swing.JLabel();
-        ConfirmPasswordField = new javax.swing.JTextField();
         EmailLabel = new javax.swing.JLabel();
         EmailField = new javax.swing.JTextField();
         PassWordRecoveryText = new javax.swing.JLabel();
@@ -101,6 +99,8 @@ public class Registration extends javax.swing.JFrame {
         AnswerLabel = new javax.swing.JLabel();
         AnswerField = new javax.swing.JTextField();
         SignUpButton = new javax.swing.JButton();
+        PasswordField = new javax.swing.JPasswordField();
+        ConfirmPasswordField = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -138,24 +138,10 @@ public class Registration extends javax.swing.JFrame {
         });
         RegisterPanel.add(LoginField, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 124, 509, -1));
 
-        PasswordField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PasswordFieldActionPerformed(evt);
-            }
-        });
-        RegisterPanel.add(PasswordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 184, 509, -1));
-
         ConfirmPasswordLabel.setFont(new java.awt.Font("Charlemagne Std", 0, 12)); // NOI18N
         ConfirmPasswordLabel.setForeground(new java.awt.Color(255, 255, 255));
         ConfirmPasswordLabel.setText("Confirm Password");
         RegisterPanel.add(ConfirmPasswordLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 240, -1, -1));
-
-        ConfirmPasswordField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ConfirmPasswordFieldActionPerformed(evt);
-            }
-        });
-        RegisterPanel.add(ConfirmPasswordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 262, 509, -1));
 
         EmailLabel.setFont(new java.awt.Font("Charlemagne Std", 0, 12)); // NOI18N
         EmailLabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -175,7 +161,12 @@ public class Registration extends javax.swing.JFrame {
         RegisterPanel.add(PassWordRecoveryText, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 401, -1, -1));
 
         QuestionCombo.setFont(new java.awt.Font("Charlemagne Std", 0, 10)); // NOI18N
-        QuestionCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "What's the name of your first pet?", "Who's your best mate?", "What's your favorite sport?" }));
+        QuestionCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "What is the name of your first pet?", "Who is your best mate?", "What is your favorite sport?" }));
+        QuestionCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                QuestionComboActionPerformed(evt);
+            }
+        });
         RegisterPanel.add(QuestionCombo, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 429, -1, -1));
 
         AnswerLabel.setFont(new java.awt.Font("Charlemagne Std", 0, 10)); // NOI18N
@@ -195,13 +186,20 @@ public class Registration extends javax.swing.JFrame {
         SignUpButton.setForeground(new java.awt.Color(255, 255, 255));
         SignUpButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/folder/musket.png"))); // NOI18N
         SignUpButton.setText("SIGN UP");
-        SignUpButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         SignUpButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 SignUpButtonActionPerformed(evt);
             }
         });
         RegisterPanel.add(SignUpButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 510, 136, 54));
+
+        PasswordField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PasswordFieldActionPerformed(evt);
+            }
+        });
+        RegisterPanel.add(PasswordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, 510, -1));
+        RegisterPanel.add(ConfirmPasswordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 270, 510, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -220,10 +218,6 @@ public class Registration extends javax.swing.JFrame {
     private void NameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NameFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_NameFieldActionPerformed
-
-    private void ConfirmPasswordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ConfirmPasswordFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ConfirmPasswordFieldActionPerformed
 
     private void AnswerFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AnswerFieldActionPerformed
         // TODO add your handling code here:
@@ -264,10 +258,6 @@ public class Registration extends javax.swing.JFrame {
          } 
     }//GEN-LAST:event_SignUpButtonActionPerformed
 
-    private void PasswordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PasswordFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_PasswordFieldActionPerformed
-
     private void EmailFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmailFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_EmailFieldActionPerformed
@@ -275,6 +265,14 @@ public class Registration extends javax.swing.JFrame {
     private void LoginFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_LoginFieldActionPerformed
+
+    private void QuestionComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_QuestionComboActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_QuestionComboActionPerformed
+
+    private void PasswordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PasswordFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_PasswordFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -314,7 +312,7 @@ public class Registration extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField AnswerField;
     private javax.swing.JLabel AnswerLabel;
-    private javax.swing.JTextField ConfirmPasswordField;
+    private javax.swing.JPasswordField ConfirmPasswordField;
     private javax.swing.JLabel ConfirmPasswordLabel;
     private javax.swing.JTextField EmailField;
     private javax.swing.JLabel EmailLabel;
@@ -323,7 +321,7 @@ public class Registration extends javax.swing.JFrame {
     private javax.swing.JTextField NameField;
     private javax.swing.JLabel NameLabel;
     private javax.swing.JLabel PassWordRecoveryText;
-    private javax.swing.JTextField PasswordField;
+    private javax.swing.JPasswordField PasswordField;
     private javax.swing.JLabel PasswordLabel;
     private javax.swing.JComboBox<String> QuestionCombo;
     private javax.swing.JPanel RegisterPanel;
