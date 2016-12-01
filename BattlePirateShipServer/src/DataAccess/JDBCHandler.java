@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package DataAccess;
 
 import java.sql.Connection;
@@ -12,22 +7,23 @@ import java.sql.SQLException;
 import java.sql.SQLTimeoutException;
 import java.sql.Statement;
 
-/**
- *
- * @author Vitor
- */
 public class JDBCHandler 
 {
-    //  Database credentials
-   private static  String JDBC_DRIVER;  
-   private static  String DB_URL;
-   private static  String USER;
-   private static  String PASS;
+    
+   /** This class deals with the the Database itself.
+    * It has methods to open a connection, execute a given query on the DB, and close a connection.
+    */
    
+   //  Database credentials
+   private static  String JDBC_DRIVER;      // This is the driver used to connect with the DB
+   private static  String DB_URL;           // This is the database URL
+   private static  String USER;             // This is the username
+   private static  String PASS;             // This is the pass
+    
    //  Query Operation defines
-   private static final int REGISTER = 1;  
-   private static final int LOGIN = 2;
-   // we need to add more..
+   private static final int REGISTER = 1;   // code for signaling it's a Register query
+   private static final int LOGIN = 2;      // code for signaling it's a login query
+    
    
    // Error code definitions
    private static final int ERROR = -1;     // code for signaling an error
@@ -39,7 +35,9 @@ public class JDBCHandler
     
     // Creates a connection 
     public JDBCHandler(String JDBC_DRIVER, String DB_URL, String USER, String PASS) 
-    {   
+    {
+        /** The constructor method saves the variables as class specific ones
+         */
         this.JDBC_DRIVER = JDBC_DRIVER;
         this.DB_URL = DB_URL;
         this.USER = USER;
@@ -48,6 +46,12 @@ public class JDBCHandler
     
     public int open()
     {
+        /** This methods opens a connection to the DB
+         *
+         * @return 1 if it worked, or -1 if there was an exception
+         *
+         */
+
         try
         {
             //Register JDBC driver
@@ -76,13 +80,23 @@ public class JDBCHandler
     
     public int execQuery (int type, String query, String args[]) throws SQLException
     {
-            
+            /** This method executes a given query on the Database
+             *
+             * @param type the type of query we are executing, like login, example etc...
+             * @param query the string we will be executing on the DB
+             * @param args variable to check if what we have on the DB is what's expected
+             *
+             * @return value 1 on success, 0 on error, and -1 on an exception error
+             *
+             */
+        
+            // variable to deal with the connection to execute the query
             Statement stmt = null;
             
-            //variable we are going to return
+            // variable we are going to return
             int ret=OK;
             
-            //Execute a query
+            // Execute a query
             stmt = conn.createStatement();
             System.out.println("Query statement created!");
             
@@ -91,6 +105,7 @@ public class JDBCHandler
                 case REGISTER: 
                                 try
                                 {
+                                    // executing the Query
                                     stmt.execute(query);
                                     ret=OK;
                                     System.out.println("Valid Register Query!");
@@ -108,6 +123,7 @@ public class JDBCHandler
                 case LOGIN:
                              try 
                              {
+                                 // executing the query
                                  ResultSet rs = stmt.executeQuery(query);
                                  String username;
                                  String password;
@@ -142,15 +158,21 @@ public class JDBCHandler
                              break;
                            
             }
+        
       // returns the appropriate value
       return ret;
     }
     
     public int close()
     {
-        
+         /** This method closes the connection to the DB
+          *
+          * @return 1 on success and 0 on exception error
+          *
+          */
           try
           {
+              // closing the connection
              if(conn!=null)
                 conn.close();
           }
