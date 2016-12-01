@@ -1,6 +1,6 @@
 package Communications;
 
-import BusinessLogic.ServerBL;
+import BusinessLogic.Authentication;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -23,7 +23,7 @@ public class HandleClient implements Runnable{
      ServerSocket serverSocket = null;
     
      // handler variable for the DB methods
-     ServerBL handler;
+     Authentication handler;
     
      // writer, read and protocol variables
      private  BufferedWriter writer;
@@ -46,7 +46,7 @@ public class HandleClient implements Runnable{
              writer = new BufferedWriter(new OutputStreamWriter(PirateSocket.getOutputStream()));
              reader = new BufferedReader(new InputStreamReader(PirateSocket.getInputStream()));
              pirate = new PirateProtocol();
-             handler = new ServerBL();
+             handler = new Authentication();
              System.out.println("Created HandleClient!");
          } 
          catch (UnknownHostException e) 

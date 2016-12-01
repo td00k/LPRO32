@@ -5,7 +5,7 @@
  */
 package GUI;
 
-import BusinessLogic.ClientBL;
+import BusinessLogic.Authentication;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
@@ -20,7 +20,7 @@ public class Registration extends javax.swing.JFrame {
      * Creates new form Registration
      */
    private static First mainFirst;
-   private final ClientBL handler = new ClientBL();
+   private final Authentication handler = new Authentication();
    private int handler_return;
    private String name;
    private String user;

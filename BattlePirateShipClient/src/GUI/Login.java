@@ -6,7 +6,7 @@
 package GUI;
 
 import javax.swing.JOptionPane;
-import BusinessLogic.ClientBL;
+import BusinessLogic.Authentication;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -16,7 +16,7 @@ import java.awt.event.ActionListener;
  */
 public class Login extends javax.swing.JFrame {
 
-   private final ClientBL handler = new ClientBL();
+   private final Authentication handler = new Authentication();
    private int handler_return;
    private String user;
    private String pass;
