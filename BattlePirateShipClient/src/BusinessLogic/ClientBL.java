@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package BusinessLogic;
 
 import Communications.PirateProtocol; 
@@ -11,13 +6,13 @@ import java.io.IOException;
 
 
 
-
 public class ClientBL  {
     
-     // This class represents the ClientBL of the server.
-     // It has methods to validate parameters passed from the interface package,
-     // a method to encrypt the password using MD5 and login/register methods.
-  
+     /** 
+     * This class represents the ClientBL of the server.
+     * It has methods to validate parameters passed from the interface package,
+     * a method to encrypt the password and login/register methods.
+     */
     
      //codes to signal what we will be passing to other layers
      private static final int REGISTER = 1;  
@@ -31,7 +26,9 @@ public class ClientBL  {
      //constructor
      public ClientBL() 
      {
-        // the constructor simply initializes the class variables
+        /**
+        * the constructor initializes the class variables
+        */
         pirate = new PirateProtocol();
         client = new SocketClient();
      }
@@ -39,12 +36,14 @@ public class ClientBL  {
      
      public boolean validate(String user, String pass)
      {
-         // this method checks if the user and pass strings have more than 3 chars.
-         
-         // user -> string to be checked
-         // pass -> string to be checked
-         
-         // return value : 1 if user and pass are valid, 0 if either of them fail the test.
+         /** 
+          *this method checks if the user and pass strings have more than 3 chars.
+          *
+          * @param user string that's going to be checked
+          * @param pass string that's going to be checked
+          *
+          * @return true if user and pass are valid, false if either of them fail the test.
+          */
          
          if( user.equals("") || pass.equals("") || (user.length() < 3) || (pass.length() < 3) )
          return false;
@@ -55,14 +54,16 @@ public class ClientBL  {
      
      public boolean emailcheck(String email)
      {
-        // This method checks if the string email is a valid email address
+         /**
+         * This method checks if the email is a valid email address
+         *
+         * @param email string that's going to be checked
+         *
+         * @return 1 if the email is valid and 0 if the the email isn't valid
+         */
          
-        // email -> string to be checked
-         
-        // return value : 1 if the email is valid and 0 if the the email isn't valid
-         
-        // This string has the parameters we want to check the email with.
-        String regex;
+        
+        String regex; // This string has the parameters we want to check the email with.
         regex = "^([a-zA-Z0-9]+[a-zA-Z0-9._%\\-\\+]*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,4})$";
         
         return email.matches(regex);        
@@ -72,11 +73,14 @@ public class ClientBL  {
      
     public String encrypt(String str)
     {
-        // This method encrypts the str using the MD5 algorithm
+        /**
+        * This method encrypts the str using the MD5 algorithm
+        *
+        * @param str string that's going to be encrypted
+        *
+        * @return encrypted string if it worked, null if it didn't
+        */
         
-        // str -> string to be encrypted
-        
-        // return value: encrypted string if it worked, null if it didn't
         try 
         {
             java.security.MessageDigest md = java.security.MessageDigest.getInstance("MD5");
@@ -96,21 +100,30 @@ public class ClientBL  {
     
     public int login(String user, String pass) 
     {
-       // This method logs the user in, by sending the user and password through
-       // a socket so the server can validate the login
         
-       // user -> username of the person trying to login
-       // pass -> password of the person trying to login
-        
-       // return value : 1 if it worked, zero in case of an exception and -1 if
-       // an unkown error occured
-        
+       /**
+        * This method attempts to logs a user in.
+        * <p> 
+        * It starts by sending the username and password ( encrypted ), encoded using the protocol through a socket.
+        * Afterwards, we wait for a response,decode it using the protocol and return the appropriate value ( either success or failure ).
+        *
+        * @param user username of the person trying to login
+        * @param pass password of the person trying to login ( This password must not be encrypted )
+        *
+        * @return 1 if it worked, zero in case of an exception and -1 if an unkown error occured
+        *
+        * @see BusinessLogic.ClientBL#encrypt(String str)                                       encrypt(String)
+        * @see Communications.PirateProtocol#encode(int type, String Input[], int argnum)       encode(int,String[],int)
+        * @see Communications.PirateProtocol#decode(String Input)                               decode(String)
+        * @see Communications.SocketClient#send(String message)                                 send(String)
+        * @see Communications.SocketClient#receive()                                            receive()
+        */
         
        // String variables
        String encoded;                  // variable that stores the encoded string we will send through the socket
        String received;                 // variable that stores the string we receive from the socket
        String[] decoded;                // variable that stores the decoded version of the received message
-       String[] aux = new String[2];    // variable that contains the information to be passed to the encode
+       String[] aux = new String[2];    // variable that contains the information to be encoded
        
        // encrypting the password
        pass = encrypt(pass);
@@ -161,17 +174,27 @@ public class ClientBL  {
     
     public int register(String name, String user, String pass,String email, String question, String answer ) 
     {
-       // This method registers the user in the database, by sending all strings
-       // on the arguments to the socket
-       // name -> string containing the name
-       // user -> string containing the username
-       // pass -> string containing the password
-       // email -> string containing the email
-       // question -> string containing the security question
-       // answer -> string containing the answer to the security question
+       /** This method attempts to register a user in the database.
+        * <p>
+        * It starts by sending the name, username, password ( encrypted ), email, security question and answer encoded using the protocol through a socket.
+        * Afterwards, we wait for a response,decode it using the protocol and return the appropriate value ( either success or failure ).
+        *
+        * @param user           string containing the name
+        * @param pass           string containing the username
+        * @param pass           string containing the password
+        * @param email          string containing the email
+        * @param question       string containing the security question
+        * @param answer         string containing the answer to the security question
+        *
+        * @return 1 if it worked, zero in case of an exception and -1 if an unkown error occured
+        *
+        * @see BusinessLogic.ClientBL#encrypt(String str)                                       encrypt(String)
+        * @see Communications.PirateProtocol#encode(int type, String Input[], int argnum)       encode(type,String[],int)
+        * @see Communications.PirateProtocol#decode(String Input)                               decode(String Input)
+        * @see Communications.SocketClient#send(String message)                                 send(String)
+        * @see Communications.SocketClient#receive()                                            receive()
+        */
         
-       // return value : 1 if it worked, zero in case of an exception and -1 if
-       // an unkown error occured
         
        // string variables
        String lockpass;                 // variable that stores the encrypted pass
