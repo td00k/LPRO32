@@ -1,14 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package Communications;
 
-/**
- *
- * @author Vitor
- */
+package Communications;
 
 import java.net.*;
 import java.io.*;
@@ -19,6 +10,12 @@ public class SocketServer {
     
    public static void main(String[] args) 
    {
+      /** This class is the socket class for the server side.
+      * It creates a connection to the socket and listens for clients.
+      * After receiving a client, it calls the HandleClient class
+      *
+      * @see Communications.HandleClient#run() run()
+      */
        
       // creates an executor variable so we can handle clients
       ExecutorService executor = null;
@@ -47,6 +44,7 @@ public class SocketServer {
             System.out.println("Waiting to accept connection!");
             clientSocket = serverSocket.accept();
             System.out.println("Accepting connection! Creating new thread!");
+            
             //calling Handle client to deal with the new client
             worker = new HandleClient(clientSocket);
             
