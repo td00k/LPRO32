@@ -188,7 +188,6 @@
             </Property>
             <Property name="doubleBuffered" type="boolean" value="false"/>
             <Property name="enabled" type="boolean" value="false"/>
-            <Property name="focusTraversalKeysEnabled" type="boolean" value="false"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="opaque" type="boolean" value="false"/>
             <Property name="requestFocusEnabled" type="boolean" value="false"/>
@@ -208,6 +207,9 @@
                 <Property name="actionCommand" type="java.lang.String" value="boton1"/>
                 <Property name="name" type="java.lang.String" value="boton1" noResource="true"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
               </AuxValues>
@@ -1626,7 +1628,6 @@
             </Property>
             <Property name="doubleBuffered" type="boolean" value="false"/>
             <Property name="enabled" type="boolean" value="false"/>
-            <Property name="focusTraversalKeysEnabled" type="boolean" value="false"/>
             <Property name="focusable" type="boolean" value="false"/>
             <Property name="opaque" type="boolean" value="false"/>
             <Property name="requestFocusEnabled" type="boolean" value="false"/>

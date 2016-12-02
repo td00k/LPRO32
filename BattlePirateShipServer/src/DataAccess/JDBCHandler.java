@@ -7,13 +7,13 @@ import java.sql.SQLException;
 import java.sql.SQLTimeoutException;
 import java.sql.Statement;
 
-public class JDBCHandler 
-{
-    
-   /** This class deals with the the Database itself.
+/** This class deals with the the Database itself.
     * It has methods to open a connection, execute a given query on the DB, and close a connection.
     */
-   
+
+public class JDBCHandler 
+{
+
    //  Database credentials
    private static  String JDBC_DRIVER;      // This is the driver used to connect with the DB
    private static  String DB_URL;           // This is the database URL
@@ -44,13 +44,14 @@ public class JDBCHandler
         this.PASS = PASS;
     }
     
-    public int open()
-    {
-        /** This methods opens a connection to the DB
+          /** This methods opens a connection to the DB
          *
          * @return 1 if it worked, or -1 if there was an exception
          *
          */
+    
+    public int open()
+    {
 
         try
         {
@@ -78,17 +79,18 @@ public class JDBCHandler
        return OK;
     }
     
-    public int execQuery (int type, String query, String args[]) throws SQLException
-    {
-            /** This method executes a given query on the Database
+    /** This method executes a given query on the Database
              *
              * @param type the type of query we are executing, like login, example etc...
              * @param query the string we will be executing on the DB
              * @param args variable to check if what we have on the DB is what's expected
-             *
+             * @throws SQLException When there is an error executing the Query (SQL error)
              * @return value 1 on success, 0 on error, and -1 on an exception error
              *
              */
+    
+    public int execQuery (int type, String query, String args[]) throws SQLException
+    {     
         
             // variable to deal with the connection to execute the query
             Statement stmt = null;
@@ -163,13 +165,14 @@ public class JDBCHandler
       return ret;
     }
     
-    public int close()
-    {
-         /** This method closes the connection to the DB
+    /** This method closes the connection to the DB
           *
           * @return 1 on success and 0 on exception error
           *
           */
+    
+    public int close()
+    {
           try
           {
               // closing the connection

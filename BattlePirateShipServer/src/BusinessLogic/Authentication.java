@@ -11,12 +11,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
+ /**
+    * This class represents the BusinessLogic of the server. It has methods to login and to register the user ( so far ).
+    */
 
 public class Authentication 
 {
-   /**
-    * This class represents the BusinessLogic of the server. It has methods to login and to register the user ( so far ).
-    */
    //  Query operation defines
    private static final int REGISTER = 1;
    private static final int LOGIN = 2;
@@ -32,26 +32,27 @@ public class Authentication
    // Query we are executing on the database
    private String query;
    
+   /** This function initializes the Handler Variable so we can execute querys on the DB
+             */
+   
         public Authentication() 
         {
-            /** This function initializes the Handler Variable so we can execute querys on the DB
-             */
             // handler variable for database access
             DBhandler = new JDBCHandler("org.postgresql.Driver","jdbc:postgresql://dbm.fe.up.pt/lpro1632","lpro1632","ttva32");
         }
 
-    public int login(String user, String pass) throws SQLException 
-    {
-        
         /** This method checks if there is an user in the database with name user
         * and password pass.
         *
         * @param user Username of the user trying to login
         * @param pass Password of the user trying to login ( already encrypted ! )
-        *
+        * @throws SQLException If there is an error executing SQL commands
         * @return 1 on sucess and 0 on failure
         */
         
+    public int login(String user, String pass) throws SQLException 
+    {
+
         // query we are executing on the database. This selects all the users registered on the login table.
         query = "select * " + "from userinfo";
         
@@ -89,9 +90,7 @@ public class Authentication
         return handler_check;     
     }   
     
-    public int register(String name, String user, String pass, String email, String question, String answer) throws SQLException
-    {
-        /** This method registers a user in by executing a query on the Database to register the new user.
+    /** This method registers a user in by executing a query on the Database to register the new user.
          * It fails if, for example, there's already a user registered with the same username.
          *
          * @param name name passed to the query
@@ -100,10 +99,13 @@ public class Authentication
          * @param email email passed to the query
          * @param question security question passed to the query
          * @param answer answer to the security question passed to the query
-         *
+         * @throws SQLException If there is an error executing SQL commands
          * @return 1 on sucess, 0 on failure
          */
-        
+    
+    public int register(String name, String user, String pass, String email, String question, String answer) throws SQLException
+    {
+
         // variable to access the database
         Statement stmt = null;
         

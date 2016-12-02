@@ -10,14 +10,13 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-
-public class HandleClient implements Runnable{
-    
-     /** This is the class that deals with the clients when they attempt to communicate. 
+ /** This is the class that deals with the clients when they attempt to communicate. 
       * It has the run method that executes what we need to do in order to handle the client request.
       * It also has several other methods like send, receive and close to aid the run method in whatever in needs.
      */
-    
+
+public class HandleClient implements Runnable
+{
      // Socket variables to create the write and read variables to it
      private Socket PirateSocket;
      ServerSocket serverSocket = null;
@@ -34,11 +33,12 @@ public class HandleClient implements Runnable{
      private static final int REGISTER = 1;
      private static final int LOGIN = 2;
   
-    
+     /** The constructor method initializes all the class specific variables
+         * @param PSocket Socket connection to use on communications
+         */
+     
     public HandleClient(Socket PSocket) 
     {
-        /** The constructor method initializes all the class specific variables
-         */
       this.PirateSocket = PSocket;
       try 
          {
@@ -63,13 +63,14 @@ public class HandleClient implements Runnable{
       
     }
     
-    public void run() 
-    {
-        /** This method is called when we receive a client. 
+    /** This method is called when we receive a client. 
         * It reads a message from the socket and executes the request we receive.
         * Then, it sends an appropriate answer depending on what happened.
         */
-        
+    
+    public void run() 
+    {
+
         // String variables
         String encoded;         // variable to keep the encoded string
         String[] decoded;       // variable to keep the decoded string
@@ -144,14 +145,15 @@ public class HandleClient implements Runnable{
 
     }
 
-    public int send(String message) throws IOException 
-   {
       /** This method writes a string to the socket
        *
        * @param message string that is sent
-       *
+       * @throws IOException When there is an error writing to socket
        * @return 1
        */
+    
+    public int send(String message) throws IOException 
+   {
 	  writer.write(message);
 	  writer.newLine();
 	  writer.flush();
@@ -159,13 +161,14 @@ public class HandleClient implements Runnable{
       return 1;
    }
    
-   public String receive() throws IOException 
-   {
-      /** This method receives a string from the socket
-       *
+    /** This method receives a string from the socket
+       *  @throws IOException When there is an error reading to socket
        *  @return the received string
        *
        */
+    
+   public String receive() throws IOException 
+   {
       String toReturn;
       toReturn = "1";
       toReturn = reader.readLine();
@@ -174,11 +177,11 @@ public class HandleClient implements Runnable{
       return toReturn;
    }
   
+   /* This method closes the class variables
+        */
    
    public int close()
    {
-       /* This method closes the class variables
-        */
          try 
          {
              writer.close();

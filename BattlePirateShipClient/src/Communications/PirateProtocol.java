@@ -1,16 +1,13 @@
 package Communications;
 
- 
-public class PirateProtocol {
-    
-    /** This class represents the communication protocol between the client and the server.
+  /** This class represents the communication protocol between the client and the server.
     * It has a method to decode a string, and a method to encode a string
     * based on a protocol we chose.
     */
+
+public class PirateProtocol {
     
-    public String encode(int type, String Input[], int argnum) 
-    { 
-        /** This method encodes various strings into a single string, separated by the '#' character
+     /** This method encodes various strings into a single string, separated by the '#' character
         *
         * @param type this is a variable that contains the type of what we are encoding ( 1 for register, 2 for login etc... )
         * @param Input this contains all the strings which will be concatenated into a single one
@@ -18,7 +15,10 @@ public class PirateProtocol {
         *
         * @return encoded string
         */
-        
+    
+    public String encode(int type, String Input[], int argnum) 
+    { 
+       
         // variable for cycle control
         int i=0;
         
@@ -41,18 +41,17 @@ public class PirateProtocol {
         return tosend;//returns string separated by  #. 
     }
     
-    public String[] decode(String Input) 
-    { 
-        /** This method decodes a string previously encoded into all the strings that composed it.
+    /** This method decodes a string previously encoded into all the strings that composed it.
          *
          * @param Input string that will be separated
          *
          * @return an array of strings with the information
          *
-         * @see Communications.PirateProtocol#encode(int type, String Input[], int argnum)       encode(int,String[],int)
+         * @see Communications.PirateProtocol       
          */
-        
-        
+    
+    public String[] decode(String Input) 
+    { 
         
         // variable for cycle control
         int i=0;

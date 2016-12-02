@@ -1,16 +1,18 @@
+/** This package has everything that deals with Communications to Server.
+* It has SocketClient class that is responsible of establishing a communication and sending/receiving data
+*/ 
 package Communications;
 
 
 import java.io.*;
 import java.net.*;
 
- 
+/** This class has all methods that deal with the connection to the server and that deal with the socket.
+      *It has methods to send a string, receive a string, and close connection.
+      */ 
+
 public class SocketClient
 {
-    
-     /** This class has all methods that deal with the connection to the server and that deal with the socket.
-      *It has methods to send a string, receive a string, and close connection.
-      */
     
      // variable so we can connect to the server
      private  Socket PirateSocket;
@@ -20,12 +22,13 @@ public class SocketClient
     
      // variable to read from the socket
      private  BufferedReader reader;
-   
+
+     /** Opens the socket to gnomo.fe.up.pt and initializes variables to write to the socket and read from the socket
+         */
     
     public SocketClient()
     {
-        /** Opens the socket to gnomo.fe.up.pt and initializes variables to write to the socket and read from the socket
-         */
+        
          try
          {
              // connecting to the server
@@ -53,28 +56,32 @@ public class SocketClient
       
     }
     
-   public int send(String message) throws IOException 
-   {
-      /** This function sends a string through the socket
+    /** This function sends a string through the socket
        *
        * @param message string which is sent
-       *
+       * @throws IOException Whenever there's a problem on IO
        * @return 1
        */
+    
+   public int send(String message) throws IOException 
+   {
+      
       //sending message to socket
       writer.println(message);
 
       return 1;
    }
    
-    
-   public String receive() throws IOException 
-   {
-      /** This method receives a message from the socket
+   /** This method receives a message from the socket
        *
+       * @throws IOException Whenever there's a problem on IO
        * @return received String
        *
        */
+    
+   public String receive() throws IOException 
+   {
+      
       // String where we store the received value
       String toReturn;
        
@@ -86,15 +93,14 @@ public class SocketClient
       return toReturn;
    }
    
-    
-      public int close()
-   {
-         /** This method closes the connection to the server and closes the write and read variables
+   /** This method closes the connection to the server and closes the write and read variables
          *
          * @return 1 if it worked and 0 if there was an error
          *
          */
-       
+    
+      public int close()
+   {   
          try 
          {
              writer.close();

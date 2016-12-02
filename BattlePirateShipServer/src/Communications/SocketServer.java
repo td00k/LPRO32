@@ -6,17 +6,17 @@ import java.io.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
  
-public class SocketServer {
-    
-   public static void main(String[] args) 
-   {
-      /** This class is the socket class for the server side.
+/** This class is the socket class for the server side.
       * It creates a connection to the socket and listens for clients.
       * After receiving a client, it calls the HandleClient class
       *
       * @see Communications.HandleClient#run() run()
       */
-       
+
+public class SocketServer {
+    
+   public static void main(String[] args) 
+   {
       // creates an executor variable so we can handle clients
       ExecutorService executor = null;
       

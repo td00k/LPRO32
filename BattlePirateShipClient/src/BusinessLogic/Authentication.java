@@ -4,15 +4,15 @@ import Communications.PirateProtocol;
 import Communications.SocketClient;
 import java.io.IOException;
 
-
-
-public class Authentication  {
-    
-     /** 
+/** 
      * This class represents the Authentication of the server.
      * It has methods to validate parameters passed from the interface package,
      * a method to encrypt the password and login/register methods.
      */
+
+public class Authentication  {
+    
+     
     
      //codes to signal what we will be passing to other layers
      private static final int REGISTER = 1;  
@@ -22,28 +22,29 @@ public class Authentication  {
      PirateProtocol pirate;       // variable to use the protocol methods
      SocketClient client;         // variable for client communications
    
+        /**
+        * the constructor initializes the class variables
+        */
    
      //constructor
      public Authentication() 
      {
-        /**
-        * the constructor initializes the class variables
-        */
+        
         pirate = new PirateProtocol();
         client = new SocketClient();
      }
      
-     
-     public boolean validate(String user, String pass)
-     {
-         /** 
-          *this method checks if the user and pass strings have more than 3 chars.
+     /** 
+          *This method checks if the user and pass strings have more than 3 chars.
           *
           * @param user string that's going to be checked
           * @param pass string that's going to be checked
           *
           * @return true if user and pass are valid, false if either of them fail the test.
           */
+     
+     public boolean validate(String user, String pass)
+     {
          
          if( user.equals("") || pass.equals("") || (user.length() < 3) || (pass.length() < 3) )
          return false;
@@ -52,15 +53,17 @@ public class Authentication  {
          return true;        
      }
      
-     public boolean emailcheck(String email)
-     {
-         /**
+    /**
          * This method checks if the email is a valid email address
          *
          * @param email string that's going to be checked
          *
          * @return 1 if the email is valid and 0 if the the email isn't valid
          */
+          
+    
+     public boolean emailcheck(String email)
+     {
          
         
         String regex; // This string has the parameters we want to check the email with.
@@ -69,17 +72,16 @@ public class Authentication  {
         return email.matches(regex);        
      }
      
-     
-     
-    public String encrypt(String str)
-    {
-        /**
+     /**
         * This method encrypts the str using the MD5 algorithm
         *
         * @param str string that's going to be encrypted
         *
         * @return encrypted string if it worked, null if it didn't
         */
+     
+    public String encrypt(String str)
+    {
         
         try 
         {
@@ -98,10 +100,7 @@ public class Authentication  {
         }
     }
     
-    public int login(String user, String pass) 
-    {
-        
-       /**
+     /**
         * This method attempts to logs a user in.
         * <p> 
         * It starts by sending the username and password ( encrypted ), encoded using the protocol through a socket.
@@ -112,13 +111,15 @@ public class Authentication  {
         *
         * @return 1 if it worked, zero in case of an exception and -1 if an unkown error occured
         *
-        * @see BusinessLogic.ClientBL#encrypt(String str)                                       encrypt(String)
-        * @see Communications.PirateProtocol#encode(int type, String Input[], int argnum)       encode(int,String[],int)
-        * @see Communications.PirateProtocol#decode(String Input)                               decode(String)
-        * @see Communications.SocketClient#send(String message)                                 send(String)
-        * @see Communications.SocketClient#receive()                                            receive()
+        * @see BusinessLogic.Authentication#encrypt(String str)
+        * @see Communications.PirateProtocol#encode(int, java.lang.String[], int)
+        * @see Communications.SocketClient#send(String message)
+        * @see Communications.SocketClient#receive()
         */
-        
+    
+    public int login(String user, String pass) 
+    {
+
        // String variables
        String encoded;                  // variable that stores the encoded string we will send through the socket
        String received;                 // variable that stores the string we receive from the socket
@@ -172,15 +173,13 @@ public class Authentication  {
       
     }
     
-    public int register(String name, String user, String pass,String email, String question, String answer ) 
-    {
-       /** This method attempts to register a user in the database.
+    /** This method attempts to register a user in the database.
         * <p>
         * It starts by sending the name, username, password ( encrypted ), email, security question and answer encoded using the protocol through a socket.
         * Afterwards, we wait for a response,decode it using the protocol and return the appropriate value ( either success or failure ).
         *
-        * @param user           string containing the name
-        * @param pass           string containing the username
+        * @param name           string containing the name
+        * @param user           string containing the username
         * @param pass           string containing the password
         * @param email          string containing the email
         * @param question       string containing the security question
@@ -188,14 +187,16 @@ public class Authentication  {
         *
         * @return 1 if it worked, zero in case of an exception and -1 if an unkown error occured
         *
-        * @see BusinessLogic.ClientBL#encrypt(String str)                                       encrypt(String)
-        * @see Communications.PirateProtocol#encode(int type, String Input[], int argnum)       encode(type,String[],int)
-        * @see Communications.PirateProtocol#decode(String Input)                               decode(String Input)
-        * @see Communications.SocketClient#send(String message)                                 send(String)
-        * @see Communications.SocketClient#receive()                                            receive()
+        * @see BusinessLogic.Authentication#encrypt(String str)                                       
+        * @see Communications.PirateProtocol#encode(int, java.lang.String[], int)      
+        * @see Communications.PirateProtocol#decode(String )                               
+        * @see Communications.SocketClient#send(String message)                                
+        * @see Communications.SocketClient#receive()
         */
-        
-        
+    
+    public int register(String name, String user, String pass,String email, String question, String answer ) 
+    {
+       
        // string variables
        String lockpass;                 // variable that stores the encrypted pass
        String[] aux = new String[6];    // variable that stores the information we are encoding

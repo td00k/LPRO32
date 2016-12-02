@@ -5,17 +5,25 @@
  */
 package GUI;
 
+import java.awt.Color;
+
 /**
  *
  * @author tiagodias
  */
 public class InGame extends javax.swing.JFrame {
 
-    /**
+    
+    private final int gameid;
+    
+    public InGame(int gameid) {
+        /**
      * Creates new form InGame
+     * @param gameid receives the gameid from the previous form
      */
-    public InGame() {
         initComponents();
+        this.gameid = gameid;
+        
     }
 
     /**
@@ -344,7 +352,6 @@ public class InGame extends javax.swing.JFrame {
         jPanel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
         jPanel2.setDoubleBuffered(false);
         jPanel2.setEnabled(false);
-        jPanel2.setFocusTraversalKeysEnabled(false);
         jPanel2.setFocusable(false);
         jPanel2.setOpaque(false);
         jPanel2.setRequestFocusEnabled(false);
@@ -354,6 +361,11 @@ public class InGame extends javax.swing.JFrame {
         jButton2.setToolTipText("");
         jButton2.setActionCommand("boton1");
         jButton2.setName("boton1"); // NOI18N
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
         jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 24, 25, 25));
         jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 24, 25, 25));
         jPanel2.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(69, 24, 25, 25));
@@ -636,7 +648,6 @@ public class InGame extends javax.swing.JFrame {
         jPanel5.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
         jPanel5.setDoubleBuffered(false);
         jPanel5.setEnabled(false);
-        jPanel5.setFocusTraversalKeysEnabled(false);
         jPanel5.setFocusable(false);
         jPanel5.setOpaque(false);
         jPanel5.setRequestFocusEnabled(false);
@@ -1711,41 +1722,12 @@ public class InGame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton271ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(InGame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(InGame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(InGame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(InGame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        jButton2.setBackground(Color.yellow);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new InGame().setVisible(true);
-            }
-        });
-    }
-
+   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     public javax.swing.JButton jButton10;
