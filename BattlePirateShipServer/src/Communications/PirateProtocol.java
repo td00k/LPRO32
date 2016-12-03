@@ -4,6 +4,7 @@ import BusinessLogic.*;
 import java.io.IOException;
 import java.net.Socket;
 import java.sql.SQLException;
+import java.lang.String;
 
 
   /** This class represents the communication protocol between the client and the server.
@@ -14,19 +15,10 @@ import java.sql.SQLException;
 public class PirateProtocol {
 
     private final Authentication auth;
-    private final Game game;
-    private final User user;
-    private final HandleClient handler;
     
-    
-    
-    public PirateProtocol(Socket PSocket)
+    public PirateProtocol()
     {
         auth = new Authentication();
-        game = new Game();
-        user = new User();
-        handler = new HandleClient();
-        
     }
     
      /** This method encodes various strings into a single string, separated by the '#' character and sends the string to the Socket Class
@@ -38,7 +30,27 @@ public class PirateProtocol {
         * @return 1 on success, 0 on error
         */
     
-    public boolean encode(int type, String Input[], int argnum) 
+    public String run(String Input)
+    {
+        String encoded;
+        String[] decoded;
+        String[] received;
+        String[] args = new String[1];
+        int type;
+        
+        
+        decoded = decode(Input);
+        
+        received = auth.run(decoded);
+        args[0] = received[1];
+        
+        encoded = encode(Integer.parseInt( received[0]),args,1 );
+        
+        return encoded;
+    }
+    
+    
+    public String encode(int type, String Input[], int argnum) 
     { 
        
         // variable for cycle control
@@ -57,20 +69,8 @@ public class PirateProtocol {
             encoded = encoded + "#" + Input[i]; 
             i++;  
         }
-        
-         try 
-       {
-           // sending the string
-           client.send(encoded);
-           System.out.println("Client Sent encoded!");
-           
-       } 
-       catch (IOException ex) 
-       {
-           return false; //Whenever an exception occurs, it must return an error.
-       }
-        
-        return true; //returns true to signal everything is ok. 
+    
+        return encoded;
     }
     
     /** This method decodes a string previously encoded into all the strings that composed it.
@@ -89,17 +89,7 @@ public class PirateProtocol {
         int i=0;
         
         String decoded[] = new String[20]; // 20 as the max size because we will never pass more than 20 strings
-        String encoded;
-        
-        try 
-        {
-            encoded = handler.receive();
-        } 
-        catch (IOException ex) 
-        {
-            System.out.println(ex);
-        }
-        
+     
         // splitting the string
         for (String retval: received.split("#")) 
         {
@@ -110,95 +100,9 @@ public class PirateProtocol {
         
         //placing null on the last string
         decoded[i]=null;
-        
-        // received register request
-            if(decoded[0].equals("1"))
-            {
-                register(decoded);
-            }
-            // received a login request
-            else if(decoded[0].equals("2"))
-            {
-                login(decoded);
-            }
-            
-          
-        
+       
         return decoded; 
     }
        
-    private int register(String[] decoded)
-    {
-        int auth_return=0; // this variable is used to keep the return of the handler method when we execute the query on the database
-        String[] arg = {"OK"};  // variable created so we can send the OK message if everything went okay or Error if it didn't
-        
-        
-        try {
-                // executing the query on the DB
-                auth_return = auth.register(decoded[1],decoded[2],decoded[3],decoded[4],decoded[5],decoded[6]);
-            } 
-        catch (SQLException ex) 
-            {
-                System.out.println(ex);
-            }
-                if(auth_return == 1)
-                {
-                    // it worked!
-                    arg[0]="OK";
-                    toSend = encode(1,arg,1);
-                }   
-                else
-                {
-                    // something went wrong
-                    arg[0]="ERROR";
-                    toSend = encode(1,arg,1);
-                }
-        return 1;
-    }
-    
-    private int login(String[] decoded)
-    {
-        int auth_return=0;
-        String[] arg = {"OK"};  // variable created so we can send the OK message if everything went okay or Error if it didn't
-        
-        try {
-            auth_return = auth.login(decoded[1],decoded[2]);
-        } 
-        catch (SQLException ex) 
-        {
-            System.out.println(ex);
-        }
-                 if(auth_return == 1)
-                {
-                    // it worked!
-                    arg[0]="OK";
-                    toSend = encode(2,arg,1);
-                }  
-                else
-                 {
-                     // something went wrong
-                     arg[0]="ERROR";
-                    toSend = encode(2,arg,1);
-                 }
-        return 1;
-    }
-    
-    private int quickmatch(String decoded)
-    {
-        return 1;
-    }
-    
-    private int playwithfriend(String decoded)
-    {
-        return 1;
-    }
-    
-    private int sendShot(String received)
-    {
-        return 1;
-    }
-    
-    
-
 }
 

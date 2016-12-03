@@ -45,7 +45,7 @@ public class HandleClient implements Runnable
              // initializing variables
              writer = new BufferedWriter(new OutputStreamWriter(PirateSocket.getOutputStream()));
              reader = new BufferedReader(new InputStreamReader(PirateSocket.getInputStream()));
-             pirate = new PirateProtocol(PSocket);
+             pirate = new PirateProtocol();
              handler = new Authentication();
              System.out.println("Created HandleClient!");
          } 
@@ -72,23 +72,19 @@ public class HandleClient implements Runnable
     {
 
         // String variables
-        String encoded;         // variable to keep the encoded string
         String[] decoded;       // variable to keep the decoded string
+        String received;        // variable to keep the received string
         String toSend="";       // variable created so we can send the OK message if everything went okay or Error if it didn't
 
-        
         try 
         {
             // reading the string from the socket
             System.out.println("Thread started with name:" + Thread.currentThread().getName());
+            received = receive();
             
-            
-            
-            // decoding the string
+            // calling the protocol
             System.out.println("Server Received encoded string!");
-            decoded = pirate.decode();
-            
-          
+            toSend = pirate.run(received);
             
             // sending the reply to the client
             send(toSend);
