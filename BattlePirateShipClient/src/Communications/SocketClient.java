@@ -34,7 +34,7 @@ public class SocketClient
          try
          {
              // connecting to the server
-             PirateSocket = new Socket("gnomo.fe.up.pt", 3217);
+             PirateSocket = new Socket("localhost", 3217);
              
              // connecting the write variable with the socket
              writer = new PrintWriter(PirateSocket.getOutputStream(), true);

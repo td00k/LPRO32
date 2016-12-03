@@ -58,11 +58,11 @@ public class Authentication
                           toreturn[0] = REGISTER + "";
                           if(check == 1)
                           {
-                              toreturn[1] = OK + "";
+                              toreturn[1] = "OK";
                           }
                           else
                           {
-                              toreturn[1] = ERROR + "";
+                              toreturn[1] = "ERROR";
                           }
                           break;
                           
@@ -71,11 +71,11 @@ public class Authentication
                           toreturn[0] = LOGIN + "";
                           if(check == 1)
                           {
-                              toreturn[1] = OK + "";
+                              toreturn[1] = "OK";
                           }
                           else
                           {
-                              toreturn[1] = ERROR + "";
+                              toreturn[1] ="ERROR";
                           }
                           break;
        }
