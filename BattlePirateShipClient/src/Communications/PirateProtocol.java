@@ -1,6 +1,8 @@
 package Communications;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
   /** This class represents the communication protocol between the client and the server.
     * It has a method to decode a string and return it, and a method to encode a string and send to the Socket Class
@@ -17,7 +19,24 @@ public class PirateProtocol {
         client = new SocketClient();
     }
     
-     /** This method encodes various strings into a single string, separated by the '#' character and sends the string to the Socket Class
+   
+    public String[] run(int type, String[] Input, int argnum) 
+    {
+        String encoded;
+        String received;
+        String[] decoded;
+        
+        
+        encoded = encode(type,Input,argnum);
+        received = client.run(encoded);
+        
+        decoded = decode(received);
+        return decoded;
+    }
+    
+    
+    
+      /** This method encodes various strings into a single string, separated by the '#' character and sends the string to the Socket Class
         *
         * @param type this is a variable that contains the type of what we are encoding ( 1 for register, 2 for login etc... )
         * @param Input this contains all the strings which will be concatenated into a single one
@@ -26,7 +45,7 @@ public class PirateProtocol {
         * @return 1 on success, 0 on error
         */
     
-    public boolean encode(int type, String Input[], int argnum) 
+    public String encode(int type, String[] Input, int argnum) 
     { 
        
         // variable for cycle control
@@ -46,53 +65,30 @@ public class PirateProtocol {
             i++;  
         }
         
-         try 
-       {
-           // sending the string
-           client.send(encoded);
-           System.out.println("Client Sent encoded!");
-           
-       } 
-       catch (IOException ex) 
-       {
-           return false; //Whenever an exception occurs, it must return an error.
-       }
-        
-        return true; //returns true to signal everything is ok. 
+        return encoded; //returns true to signal everything is ok. 
     }
     
     /** This method decodes a string previously encoded into all the strings that composed it.
          *
          *  Waits for Client Socket to reply with a message. Then it splits all the information and returns it.
          *
+         * @param Input String that is going to be split
+         * 
          * @return an array of strings with the information
          *
          * @see Communications.PirateProtocol       
          */
     
-    public String[] decode() 
+    public String[] decode(String Input) 
     { 
         
         // variable for cycle control
         int i=0;
         
-        String decoded[] = new String[20]; // 20 as the max size because we will never pass more than 20 strings
-        String received; // variable that stores the string we receive from the socket
-        
-        
-          try 
-       { 
-           // waiting for a response
-           received = client.receive();
-           System.out.println("Client received reply!");
-       } 
-       catch (IOException ex) 
-       {
-           return null; //Whenever an exception occurs, it must return an error.
-       }
+        String decoded[] = new String[20];  // 20 as the max size because we will never pass more than 20 strings
           
         // splitting the string
-        for (String retval: received.split("#")) 
+        for (String retval: Input.split("#")) 
         {
                       System.out.println(retval);
                       decoded[i] = retval;
@@ -106,7 +102,6 @@ public class PirateProtocol {
         System.out.println("Pirate decode finished!");
         return decoded; 
     }
-       
-
+      
 }
 

@@ -6,6 +6,8 @@ package Communications;
 
 import java.io.*;
 import java.net.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /** This class has all methods that deal with the connection to the server and that deal with the socket.
       *It has methods to send a string, receive a string, and close connection.
@@ -56,13 +58,34 @@ public class SocketClient
       
     }
     
-    /** This function sends a string through the socket
+    
+   public String run(String encoded)
+   {
+         try 
+         {
+             String received;
+             send(encoded);
+             received = receive();
+             close();
+             return received;
+         } 
+         catch (IOException ex) 
+         {
+            System.out.println(ex);
+            return null;
+         }
+   }
+   
+       
+    /** This method sends a string through the socket
        *
        * @param message string which is sent
        * @throws IOException Whenever there's a problem on IO
        * @return 1
        */
     
+
+   
    public int send(String message) throws IOException 
    {
       
