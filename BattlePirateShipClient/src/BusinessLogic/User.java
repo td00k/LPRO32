@@ -1,6 +1,6 @@
 
 package BusinessLogic;
 
-public class UserInfo {
+public class User {
     
 }

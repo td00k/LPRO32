@@ -31,7 +31,7 @@ public class Authentication  {
      {
         
         pirate = new PirateProtocol();
-        client = new SocketClient();
+        
      }
      
      /** 
@@ -121,8 +121,6 @@ public class Authentication  {
     {
 
        // String variables
-       String encoded;                  // variable that stores the encoded string we will send through the socket
-       String received;                 // variable that stores the string we receive from the socket
        String[] decoded;                // variable that stores the decoded version of the received message
        String[] aux = new String[2];    // variable that contains the information to be encoded
        
@@ -133,26 +131,14 @@ public class Authentication  {
        aux[0] = user;
        aux[1] = pass;
        
-       // encoding the string so it's ready to be sent
-       encoded = pirate.encode(LOGIN,aux,2);
-     
-       try 
+       // encoding the string  to be sent
+       if(!pirate.encode(LOGIN,aux,2))
        {
-           // sending the string
-           client.send(encoded);
-           System.out.println("Client Sent encoded!");
-           
-           // waiting for a response
-           received = client.receive();
-           System.out.println("Client received reply!");
-       } 
-       catch (IOException ex) 
-       {
-           return 0;
+           return -1; // return -1 if there is an error on encoding
        }
-       
+     
        // decoding the received string
-       decoded = pirate.decode(received);
+       decoded = pirate.decode();
        
        // checking what we received and returning
        if (decoded[0].equals("2") && decoded[1].equals("OK"))
@@ -200,8 +186,6 @@ public class Authentication  {
        // string variables
        String lockpass;                 // variable that stores the encrypted pass
        String[] aux = new String[6];    // variable that stores the information we are encoding
-       String encoded;                  // variable that stores the encoded string
-       String received;                 // variable that stores the received string
        String[] decoded;                // variable that stores the decoded information from the received message
        
        // encrypting the password
@@ -216,23 +200,13 @@ public class Authentication  {
        aux[5] = answer;
        
        // encoding the string so it's ready to be sent
-       encoded = pirate.encode(REGISTER,aux,6);
-       
-       try 
+       if(!pirate.encode(REGISTER,aux,6))
        {
-           // sending the string
-           client.send(encoded);
-           
-           // waiting for a response
-           received = client.receive();
-       } 
-       catch (IOException ex) 
-       {
-           return 0;
+           return -1;
        }
        
        // decoding the received string
-       decoded = pirate.decode(received);
+       decoded = pirate.decode();
        
        //checking what we received and returning
        if (decoded[0].equals("1") && decoded[1].equals("OK"))

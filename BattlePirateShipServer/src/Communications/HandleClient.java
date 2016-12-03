@@ -45,7 +45,7 @@ public class HandleClient implements Runnable
              // initializing variables
              writer = new BufferedWriter(new OutputStreamWriter(PirateSocket.getOutputStream()));
              reader = new BufferedReader(new InputStreamReader(PirateSocket.getInputStream()));
-             pirate = new PirateProtocol();
+             pirate = new PirateProtocol(PSocket);
              handler = new Authentication();
              System.out.println("Created HandleClient!");
          } 
@@ -75,58 +75,20 @@ public class HandleClient implements Runnable
         String encoded;         // variable to keep the encoded string
         String[] decoded;       // variable to keep the decoded string
         String toSend="";       // variable created so we can send the OK message if everything went okay or Error if it didn't
-        String[] arg = {"OK"};  // variable created so we can send the OK message if everything went okay or Error if it didn't
-        
-        // variables for checking
-        int handler_return;     // this variable is used to keep the return of the handler method when we execute the query on the database
-        
+
         
         try 
         {
             // reading the string from the socket
             System.out.println("Thread started with name:" + Thread.currentThread().getName());
             
-            encoded = receive();
+            
             
             // decoding the string
             System.out.println("Server Received encoded string!");
-            decoded = pirate.decode(encoded);
+            decoded = pirate.decode();
             
-            // received register request
-            if(decoded[0].equals("1"))
-            {
-                // executing the query on the DB
-                handler_return = handler.register(decoded[1],decoded[2],decoded[3],decoded[4],decoded[5],decoded[6]);
-                if(handler_return == 1)
-                {
-                    // it worked!
-                    arg[0]="OK";
-                    toSend = pirate.encode(1,arg,1);
-                }   
-                else
-                {
-                    // something went wrong
-                    arg[0]="ERROR";
-                    toSend = pirate.encode(1,arg,1);
-                }
-            }
-            // received a login request
-            else if(decoded[0].equals("2"))
-            {
-                handler_return = handler.login(decoded[1],decoded[2]);
-                 if(handler_return == 1)
-                {
-                    // it worked!
-                    arg[0]="OK";
-                    toSend = pirate.encode(2,arg,1);
-                }  
-                else
-                 {
-                     // something went wrong
-                     arg[0]="ERROR";
-                    toSend = pirate.encode(2,arg,1);
-                 }
-            }
+          
             
             // sending the reply to the client
             send(toSend);
