@@ -108,7 +108,7 @@ public class Authentication  {
         *
         * @see BusinessLogic.Authentication#encrypt(String str)
         * @see Communications.PirateProtocol#encode(int, java.lang.String[], int)
-        * @see Communications.PirateProtocol#decode()
+        * @see Communications.PirateProtocol
         * @see Communications.SocketClient#send(String message)
         * @see Communications.SocketClient#receive()
         */

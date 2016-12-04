@@ -1,29 +1,60 @@
-
 package BusinessLogic;
 
+import Communications.PirateProtocol;
+import Communications.HandleClient;
+import java.net.Socket;
+
+
 public class Game {
-      private static int GamesCount;  
+    
+   private static int GamesCount;
+   private static int player1;
+   private static int player2;
+   private static int time;
+   private static int[] viewers;
    
-   public Game() 
+     //class variables
+     PirateProtocol pirate;       // variable to use the protocol methods
+     HandleClient client;  
+ 
+     
+   public Game(Socket Psocket) 
      {
+        pirate = new PirateProtocol();
+        client = new HandleClient(Psocket);
+     }
+   
+   public int create(int userid)
+     {
+         int gameid = 0;
          
+         if( 1 == 0 )
+         return 0;
+         
+         else 
+         return gameid;        
      }
      
-     public int create(int userid, int rank)
+     public int quickgame(int userid)
      {
-         if( userid == 0 )
+         if( 1 == 0 )
          return 0;
          
          else 
          return 1;        
      }
     
-     public int search(String user, String pass)
+     public int playwithfriend(int userid1, int userid2)
      {
          return 1;
      }
      
-     public int remove(int player1, int player2 )
+     private int search()
+     {
+         return 1;
+     }
+     
+     public int remove()
      {
          return 1;
      }

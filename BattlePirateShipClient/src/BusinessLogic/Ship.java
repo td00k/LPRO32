@@ -4,29 +4,33 @@ package BusinessLogic;
 
 public class Ship {
     
-  private static int GamesCount;  
+  private static int size; 
+  private static int health; 
+  private static boolean vertical; 
+  private static int xpos; 
+  private static int ypos; 
    
-   public Ship() 
+   public Ship(int xpos, int ypos, int size, boolean vertical) 
      {
-         
+         this.size = size;
+         this.xpos = xpos;
+         this.ypos = ypos;
+         this.vertical = vertical;
      }
      
-     public int create(int userid, int rank)
+     public int place(int xpos, int ypos, int health, boolean vertical)
      {
-         if( userid == 0 )
+         if( xpos == 0 )
          return 0;
          
          else 
          return 1;        
      }
     
-     public int search(String user, String pass)
+     public int hit()
      {
-         return 1;
+         int health=0;
+         return health;
      }
-     
-     public int remove(int player1, int player2 )
-     {
-         return 1;
-     }
+
 }

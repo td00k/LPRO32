@@ -7,12 +7,17 @@ import Communications.SocketClient;
 
 public class Game {
     
-   private static int GamesCount; 
+   private static int GamesCount;
+   private static int player1;
+   private static int player2;
+   private static int time;
+   private static int[] viewers;
    
      //class variables
      PirateProtocol pirate;       // variable to use the protocol methods
      SocketClient client;  
-   
+ 
+     
    public Game() 
      {
         pirate = new PirateProtocol();
@@ -40,6 +45,11 @@ public class Game {
      }
     
      public int playwithfriend(int userid1, int userid2)
+     {
+         return 1;
+     }
+     
+     public int search()
      {
          return 1;
      }
