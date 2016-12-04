@@ -8,7 +8,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
  /**
-    * This class represents the BusinessLogic of the server. It has methods to login and to register the user ( so far ).
+    * This class represents the Authentication of the server. 
+    * <p>
+    * It has the main method 'run' which calls the other methods present in this class based on the information we received from the protocol.
+    * So far, the login and register methods have been implemented.
     */
 
 public class Authentication 
@@ -28,7 +31,7 @@ public class Authentication
    // Query we are executing on the database
    private String query;
    
-   /** This function initializes the Handler Variable so we can execute querys on the DB
+   /** This method initializes the Handler Variable so we can execute a query on the DB
              */
    
         public Authentication() 
@@ -37,15 +40,15 @@ public class Authentication
             DBhandler = new JDBCHandler("org.postgresql.Driver","jdbc:postgresql://dbm.fe.up.pt/lpro1632","lpro1632","ttva32");
         }
 
-        /** This method checks if there is an user in the database with name user
-        * and password pass.
-        *
-        * @param user Username of the user trying to login
-        * @param pass Password of the user trying to login ( already encrypted ! )
-        * @throws SQLException If there is an error executing SQL commands
-        * @return 1 on sucess and 0 on failure
-        */
-    
+     
+    /** This method is the main method of this class.
+     * <p>
+     * It receives a series of strings from the protocol, and calls a method to  execute what we received.
+     * 
+     * @param Input information received from the protocol
+     * 
+     * @return an appropriate String[] which contains the information to be based based on what was asked for us to execute and if it was a success or not.
+     */
     public String[] run(String[] Input)
     {
         
@@ -91,8 +94,8 @@ public class Authentication
          * @param email email passed to the query
          * @param question security question passed to the query
          * @param answer answer to the security question passed to the query
-         * @throws SQLException If there is an error executing SQL commands
-         * @return 1 on sucess, 0 on failure
+         * 
+         * @return 1 on success, 0 on failure
          */
     
     public int register(String name, String user, String pass, String email, String question, String answer)
@@ -140,6 +143,14 @@ public class Authentication
         return handler_check;     
     }   
     
+       /** This method checks if there is an user in the database with name user
+        * and password pass.
+        *
+        * @param user Username of the user trying to login
+        * @param pass Password of the user trying to login ( already encrypted ! )
+        * 
+        * @return 1 on success and 0 on failure
+        */
     
     public int login(String user, String pass)  
     {

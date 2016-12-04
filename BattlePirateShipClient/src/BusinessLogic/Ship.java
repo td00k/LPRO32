@@ -1,6 +1,9 @@
 
 package BusinessLogic;
 
+/** 
+     * This class handles the creation and placement of ships.
+     */
 
 public class Ship {
     

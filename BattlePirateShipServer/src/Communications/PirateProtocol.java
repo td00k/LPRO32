@@ -1,9 +1,6 @@
 package Communications;
 
 import BusinessLogic.*;
-import java.io.IOException;
-import java.net.Socket;
-import java.sql.SQLException;
 import java.lang.String;
 
 
@@ -21,14 +18,17 @@ public class PirateProtocol {
         auth = new Authentication();
     }
     
-     /** This method encodes various strings into a single string, separated by the '#' character and sends the string to the Socket Class
-        *
-        * @param type this is a variable that contains the type of what we are encoding ( 1 for register, 2 for login etc... )
-        * @param Input this contains all the strings which will be concatenated into a single one
-        * @param argnum this contains the amount of strings on Input
-        *
-        * @return 1 on success, 0 on error
-        */
+     /**
+      * This method is the main method of the class. 
+      * <p>
+      * It decodes a string and sends it to the authentication
+      * When we get a response from the authentication, we encode it and send it to the handle client class
+      * 
+      * @param Input string received from the socket
+      * 
+      * 
+      * @return the message to be sent to the client
+      */
     
     public String run(String Input)
     {
@@ -37,7 +37,6 @@ public class PirateProtocol {
         String[] received;
         String[] args = new String[1];
         int type;
-        
         
         decoded = decode(Input);
         
@@ -49,6 +48,18 @@ public class PirateProtocol {
         return encoded;
     }
     
+     /** This method encodes various strings into a single string.
+       * <p>
+       * It does this by placing the type in the first position, and then a '#'.
+       * Afterwards, it places one string of Input at a time, and then a '#'.
+       * The result is one single string with all the information required separated by '#'
+       * 
+       * @param type this is a variable that contains the type of what we are encoding ( 1 for register, 2 for login etc... )
+       * @param Input this contains all the strings which will be concatenated into a single one
+       * @param argnum this contains the amount of strings on Input
+       *
+       * @return encoded string
+       */
     
     public String encode(int type, String Input[], int argnum) 
     { 
@@ -73,16 +84,16 @@ public class PirateProtocol {
         return encoded;
     }
     
-    /** This method decodes a string previously encoded into all the strings that composed it.
-         *
-         *  Waits for Client Socket to reply with a message. Then it splits all the information and returns it.
-         *
-         * @return an array of strings with the information
-         *
-         * @see Communications.PirateProtocol       
-         */
+     /** This method decodes a string previously encoded into all the strings that composed it.
+      * 
+      * It does this by using the string split method
+      * 
+      * @param Input String that is going to be split
+      * 
+      * @return an array of strings with the information
+      */    
     
-    public String[] decode(String received) 
+    public String[] decode(String Input) 
     { 
         
         // variable for cycle control
@@ -91,7 +102,7 @@ public class PirateProtocol {
         String decoded[] = new String[20]; // 20 as the max size because we will never pass more than 20 strings
      
         // splitting the string
-        for (String retval: received.split("#")) 
+        for (String retval: Input.split("#")) 
         {
                       System.out.println(retval);
                       decoded[i] = retval;
@@ -100,7 +111,9 @@ public class PirateProtocol {
         
         //placing null on the last string
         decoded[i]=null;
-       
+        
+        // we're done!
+        System.out.println("Pirate decode finished!");
         return decoded; 
     }
        

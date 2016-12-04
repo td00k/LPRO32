@@ -12,8 +12,8 @@ import java.net.UnknownHostException;
 
  /** This is the class that deals with the clients when they attempt to communicate. 
       * It has the run method that executes what we need to do in order to handle the client request.
-      * It also has several other methods like send, receive and close to aid the run method in whatever in needs.
-     */
+      * It also has several other methods like send, receive and close all called in the run method
+      */
 
 public class HandleClient implements Runnable
 {
@@ -64,9 +64,10 @@ public class HandleClient implements Runnable
     }
     
     /** This method is called when we receive a client. 
-        * It reads a message from the socket and executes the request we receive.
-        * Then, it sends an appropriate answer depending on what happened.
-        */
+     * <p>
+     * It reads a message from the socket, and calls the protocol to decode it.
+     * When we get an answer from the protocol we send it through the socket
+     */
     
     public void run() 
     {

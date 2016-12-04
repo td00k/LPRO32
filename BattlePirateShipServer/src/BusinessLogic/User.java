@@ -1,6 +1,10 @@
 
 package BusinessLogic;
 
+    /** 
+     * This class handles user information to send to interface.
+     */
+
 public class User 
 {
   private static int userid; 

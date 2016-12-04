@@ -6,6 +6,7 @@ import java.io.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
  
+
 /** This class is the socket class for the server side.
       * It creates a connection to the socket and listens for clients.
       * After receiving a client, it calls the HandleClient class
@@ -31,7 +32,7 @@ public class SocketServer {
       
       try 
       {
-        //listening to port number 3216
+        //listening to port number 3217
         serverSocket = new ServerSocket(3217);
         System.out.println("Port 3217 Waiting for clients!");
         

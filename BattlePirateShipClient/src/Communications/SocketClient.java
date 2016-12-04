@@ -6,16 +6,15 @@ package Communications;
 
 import java.io.*;
 import java.net.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-/** This class has all methods that deal with the connection to the server and that deal with the socket.
-      *It has methods to send a string, receive a string, and close connection.
-      */ 
+    /** This class has all methods that deal with the connection to the server and that deal with the socket.
+     * It has the run method, which is the main method of this class, 
+     * and has calls to several other methods inside the class,
+     * like send or receive a string and close connection.
+     */ 
 
 public class SocketClient
 {
-    
      // variable so we can connect to the server
      private  Socket PirateSocket;
     
@@ -25,9 +24,10 @@ public class SocketClient
      // variable to read from the socket
      private  BufferedReader reader;
 
-     /** Opens the socket to gnomo.fe.up.pt and initializes variables to write to the socket and read from the socket
-         */
-    
+     
+     /**
+      * Opens the socket to gnomo.fe.up.pt and initializes variables to write to the socket and read from the socket
+      */
     public SocketClient()
     {
         
@@ -58,7 +58,15 @@ public class SocketClient
       
     }
     
-    
+   /**
+    * This is the main method of the class. it sends a string and waits for a response from the server
+    * This method interacts with the pirateprotocol class directly.
+    * @param encoded string that is sent to the socket
+    * 
+    * @return returns the response from the server
+    * 
+    * @see Communications.PirateProtocol
+    */
    public String run(String encoded)
    {
          try 
@@ -122,7 +130,7 @@ public class SocketClient
          *
          */
     
-      public int close()
+   public int close()
    {   
          try 
          {

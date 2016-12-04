@@ -3,7 +3,7 @@ package BusinessLogic;
 import Communications.PirateProtocol; 
 
     /** 
-     * This class represents the Authentication of the server.
+     * This class represents the Authentication of the client.
      * It has methods to validate parameters passed from the interface package,
      * a method to encrypt the password and login/register methods.
      */
@@ -24,7 +24,6 @@ public class Authentication  {
         * the constructor initializes the class variables
         */
    
-     //constructor
      public Authentication() 
      {
         pirate = new PirateProtocol();
@@ -108,7 +107,7 @@ public class Authentication  {
         *
         * @see BusinessLogic.Authentication#encrypt(String str)
         * @see Communications.PirateProtocol#encode(int, java.lang.String[], int)
-        * @see Communications.PirateProtocol
+        * @see Communications.PirateProtocol#decode(String)
         * @see Communications.SocketClient#send(String message)
         * @see Communications.SocketClient#receive()
         */
@@ -198,11 +197,11 @@ public class Authentication  {
        }
        else if (decoded[0].equals("1") && decoded[1].equals("ERROR"))
        {
-           return 0;
+           return 0; // Error occurred
        }
        else 
        {
-           return -1; //Error occurred
+           return -1; //unkown Error occurred
        }
        
     }   
