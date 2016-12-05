@@ -47,7 +47,7 @@ public class UserInfo
         } 
         catch (SQLException ex) 
         {
-            System.out.println("ex");
+            System.out.println(ex);
             return false;
         }
     }
@@ -78,7 +78,7 @@ public class UserInfo
              int uid;
                                    
              //going through the whole table in database
-             while ( rs.next() ) 
+             while (rs.next()) 
              {
                 //getting the id, username and password
                 uid = rs.getInt("id");
@@ -90,6 +90,7 @@ public class UserInfo
                 {
                  // We found the user in the database
                  stmt.close();
+                 return true;
                 }
                 
                }
@@ -97,11 +98,11 @@ public class UserInfo
             //closing the statement
             stmt.close();
             
-            return true;
+            return false;
         } 
         catch (SQLException ex) 
         {
-            System.out.println("ex");
+            System.out.println(ex);
             return false;
         }
         
