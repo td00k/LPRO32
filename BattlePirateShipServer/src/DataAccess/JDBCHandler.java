@@ -67,11 +67,11 @@ public class JDBCHandler
         switch (type)
         {
             case REGISTER:
-                            if ( Uinfo.Register(query,conn) == false)
+                            if ( Uinfo.register(query,conn) == false)
                                 return ERROR;
                             break;
             case LOGIN:
-                            if ( Uinfo.Login(query,conn,args) == false)
+                            if ( Uinfo.login(query,conn,args) == false)
                                 return ERROR;
                             break;
         }

@@ -25,7 +25,7 @@ public class UserInfo
      * @return true on success, false on failure
      */
     
-    public boolean Register(String query, Connection con)
+    public boolean register(String query, Connection con)
     {
         try 
         {
@@ -60,7 +60,7 @@ public class UserInfo
      * 
      * @return true on success, false on failure
      */
-    public boolean Login(String query, Connection con, String args[])
+    public boolean login(String query, Connection con, String args[])
     {
         try 
         {
