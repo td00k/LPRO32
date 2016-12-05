@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLTimeoutException;
-import java.sql.Statement;
+
 
 /** This class deals with the the Database itself.
     * It has methods to open a connection, execute a given query on the DB, and close a connection.
@@ -44,12 +44,50 @@ public class JDBCHandler
         this.PASS = PASS;
     }
     
-          /** This methods opens a connection to the DB
-         *
-         * @return 1 if it worked, or -1 if there was an exception
-         *
-         */
+    /** This method is the main method of this class. 
+     * It executes a query on the DB depending on the type of query wanted by passing the information to a class that deals with the tables in the DB.
+     * 
+     * @param type type of query that is going to be executed
+     * @param query query that is going to be executed
+     * @param args this variable contains the user and password strings to be compared when a user is trying to login
+     * 
+     * @return 1 if everything worked, 0 if there was an error
+     */
     
+    
+    public int run(int type, String query, String args[])
+    {
+        
+        UserInfo Uinfo = new UserInfo();
+        if(open() != OK)
+        {
+            return ERROR;
+        }
+        
+        switch (type)
+        {
+            case REGISTER:
+                            if ( Uinfo.Register(query,conn) == false)
+                                return ERROR;
+                            break;
+            case LOGIN:
+                            if ( Uinfo.Login(query,conn,args) == false)
+                                return ERROR;
+                            break;
+        }
+        
+        if(close() != OK)
+        {
+            return ERROR;
+        }
+        return OK;
+    }
+    
+    /** 
+     * This method attempts to open a connection to the DB
+     *  
+     * @return 1 if a connection was opened or 0 if there was an error
+     */
     public int open()
     {
 
@@ -78,92 +116,7 @@ public class JDBCHandler
        } 
        return OK;
     }
-    
-    /** This method executes a given query on the Database
-             *
-             * @param type the type of query we are executing, like login, example etc...
-             * @param query the string we will be executing on the DB
-             * @param args variable to check if what we have on the DB is what's expected
-             * @throws SQLException When there is an error executing the Query (SQL error)
-             * @return value 1 on success, 0 on error, and -1 on an exception error
-             *
-             */
-    
-    public int execQuery (int type, String query, String args[]) throws SQLException
-    {     
-        
-            // variable to deal with the connection to execute the query
-            Statement stmt = null;
-            
-            // variable we are going to return
-            int ret=OK;
-            
-            // Execute a query
-            stmt = conn.createStatement();
-            System.out.println("Query statement created!");
-            
-            switch(type)
-            {
-                case REGISTER: 
-                                try
-                                {
-                                    // executing the Query
-                                    stmt.execute(query);
-                                    ret=OK;
-                                    System.out.println("Valid Register Query!");
-                                }
-                                catch(SQLException e)
-                                {
-                                    ret = EX_ERROR;
-                                    System.out.println(e);
-                                }
-                                
-                                if(stmt != null)
-                                stmt.close();
-                                
-                                break;
-                case LOGIN:
-                             try 
-                             {
-                                 // executing the query
-                                 ResultSet rs = stmt.executeQuery(query);
-                                 String username;
-                                 String password;
-                                 int uid;
-                                   
-                                 //going through the whole table in database
-                                 while ( rs.next() ) 
-                                 {
-                                     //getting the id, username and password
-                                     uid = rs.getInt("id");
-                                     username = rs.getString("username");
-                                     password = rs.getString("password");
 
-                                     //comparing the results to see if the user is in the database
-                                     if( username.equals(args[0]) && password.equals(args[1]) )
-                                     {
-                                         // We found the user in the database
-                                         stmt.close();
-                                         return OK;
-                                     }
-                                 }
-                                 //user not found in database
-                                 stmt.close();
-                                 ret = ERROR;
-                             } 
-                             catch (SQLException e ) 
-                             {
-                                //SQL error
-                                ret = EX_ERROR;
-                                System.out.println(e);
-                             } 
-                             break;
-                           
-            }
-        
-      // returns the appropriate value
-      return ret;
-    }
     
     /** This method closes the connection to the DB
           *

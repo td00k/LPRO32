@@ -85,7 +85,7 @@ public class Authentication
       return toreturn;
     }
     
-    /** This method registers a user in by executing a query on the Database to register the new user.
+    /** This method registers a user in by creating a query and passing it to the handler so it can be executed.
          * It fails if, for example, there's already a user registered with the same username.
          *
          * @param name name passed to the query
@@ -100,51 +100,20 @@ public class Authentication
     
     public int register(String name, String user, String pass, String email, String question, String answer)
     {
-
-        // variable to access the database
-        Statement stmt = null;
         
         query = "INSERT INTO userinfo " + "VALUES (DEFAULT,'"+ name +"','"+ user +"','"+ email +"','"+ pass +"','"+ question +"','"+ answer +"')";
         System.out.println("Executing" + query + "On the database");
         
         // variable to check the return of the handler function
-        int handler_check = OK;
-        
-        // opening the connection to the database
-        handler_check = DBhandler.open();
-        System.out.println("Connection to DB opened register!");
-        if(handler_check != OK)
-        {
-            // error opening the connection to the database
-            return handler_check;
-        }
+        if ( DBhandler.run(REGISTER,query,null) == OK)
+            return OK;
+        return ERROR;
         
         
-       try 
-       {
-           //accessing the database
-           handler_check = DBhandler.execQuery(REGISTER,query,null);
-       } 
-       catch (SQLException ex) 
-       {
-           System.out.println("ex");
-       }
-        System.out.println("Query Executed!");
-        if( handler_check != OK)
-        {
-            return handler_check;
-        }
-        
-        // closing connection to the database
-        handler_check = DBhandler.close();
-        System.out.println("Closing DB Register!");
-        
-        // We're done!
-        return handler_check;     
     }   
     
-       /** This method checks if there is an user in the database with name user
-        * and password pass.
+       /** This method creates a query to check if there is an user in the database with name user
+        * and password pass and passes it to the handler so it can be executed
         *
         * @param user Username of the user trying to login
         * @param pass Password of the user trying to login ( already encrypted ! )
@@ -161,43 +130,13 @@ public class Authentication
         // variable we use to pass to the handler function
         String[] args = new String[20];
         
-        // variable to check the return of the handler function
-        int handler_check;
-        
-        // opening the connection to the database
-        handler_check = DBhandler.open();
-        
-        if( handler_check != OK)
-        {
-            //error opening the connection to the database
-            return handler_check;
-        }
-        
         // placing the data on args so we can pass it to the handler.
         args[0] = user; 
         args[1] = pass; 
         
-       try 
-       {
-           // accessing the database
-           handler_check = DBhandler.execQuery(LOGIN,query,args);
-       } 
-       catch (SQLException ex) 
-       {
-           System.out.println("ex");
-       }
-       
-       System.out.println("Query executed!");
-       if( handler_check != OK)
-       {
-           return handler_check;
-       }
-        
-        //closing connection to the database
-        handler_check = DBhandler.close();
-         
-        
-        return handler_check;     
+        if ( DBhandler.run(LOGIN,query,args) == OK)
+            return OK;
+        return ERROR;
     }   
     
     
