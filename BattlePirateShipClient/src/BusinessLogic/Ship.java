@@ -5,7 +5,8 @@ package BusinessLogic;
      * This class handles the creation and placement of ships.
      */
 
-public class Ship {
+public class Ship
+{
     
   private static int size; 
   private static int health; 
@@ -21,19 +22,18 @@ public class Ship {
          this.vertical = vertical;
      }
      
-     public int place(int xpos, int ypos, int health, boolean vertical)
+     public int[] place()
      {
-         if( xpos == 0 )
-         return 0;
+         // listener aqui
          
-         else 
-         return 1;        
-     }
-    
-     public int hit()
-     {
-         int health=0;
-         return health;
-     }
+         int[] returnval;
 
+         //returnval[0] = xpos;
+         //returnval[1] = ypos;
+         //returnval[2] = health;
+         //returnval[3] = orientation ( 1 for vertical, 0 for horizontal)
+         
+         // returns both positions, health and orientation
+         return returnval;
+     }
 }

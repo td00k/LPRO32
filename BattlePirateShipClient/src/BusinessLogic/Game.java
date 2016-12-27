@@ -8,7 +8,8 @@ import Communications.SocketClient;
      * This class serves the purpose of creating games and assigning boards, players and ships into them.
      */  
   
-public class Game {
+public class Game
+{
     
    private static int GamesCount;
    private static int player1;
@@ -17,20 +18,20 @@ public class Game {
    private static int[] viewers;
    
      //class variables
-     PirateProtocol pirate;       // variable to use the protocol methods
-     SocketClient client;  
+    
+     // variable to use the protocol methods
+     PirateProtocol pirate;
  
      /** 
      * This method creates and initializes the game's class components.
      */
-   public Game() 
+     public Game()
      {
         pirate = new PirateProtocol();
-        client = new SocketClient();
      }
    
-   /** 
-     * This method will send a request to the server to join any game.
+   /**
+     * This method sends a request to the server to join/create a game.
      * @param userid id of user 
      * 
      * @return returns the assigned game id
@@ -38,11 +39,29 @@ public class Game {
    
      public int quickgame(int userid)
      {
-         if( 1 == 0 )
-         return 0;
+         // variable that is going to be sent to the protocol
+         String[] tosend;
          
-         else 
-         return 1;        
+         // variable to receive from the protocol
+         String[] received;
+         
+         // placing info on the string that is going to be sent
+         tosend[0] = userid;
+         
+         // calling the protocol and receiving an answer
+         received[] = pirate.run(3,tosend,1);
+         
+         // checking what was received
+         if(received[1] == "OK")
+         {
+             // returning the gameid
+             return received[2];
+         }
+         else
+         {
+             // error
+             return -1;
+         }
      }
     
     /** 
@@ -54,8 +73,58 @@ public class Game {
      
      public int playwithfriend(int userid1, int userid2)
      {
-         return 1;
+         // variable that is going to be sent to the protocol
+         String[] tosend;
+         
+         // variable to receive from the protocol
+         String[] received;
+         
+         // placing info on the string that is going to be sent
+         tosend[0] = userid1;
+         tosend[1] = userid2;
+         
+         // calling the protocol and receiving an answer
+         received[] = pirate.run(4,tosend,2);
+         
+         // checking what was received
+         if(received[1] == "OK")
+         {
+             // returning the gameid
+             return received[2];
+         }
+         else
+         {
+             // error
+             return -1;
+         }
      }
- 
-     
+    
+    public int removegame(int gameid)
+    {
+        // variable that is going to be sent to the protocol
+        String[] tosend;
+        
+        // variable to receive from the protocol
+        String[] received;
+        
+        // placing info on the string that is going to be sent
+        tosend[0] = gameid;
+        
+        // calling the protocol and receiving an answer
+        received[] = pirate.run(5,tosend,1);
+        
+        // checking what was received
+        if(received[1] == "OK")
+        {
+            // returning 1 on success
+            return 1;
+        }
+        else
+        {
+            // error
+            return -1;
+        }
+        
+        
+    }
 }
