@@ -1,6 +1,8 @@
 
 package BusinessLogic;
 
+import Communications.PirateProtocol;
+
  /** 
      * This class represents the Board where the game will be played.
      * It has methods to make a shot and to place Ships on the board.
@@ -40,7 +42,7 @@ public class Board
      * @return ship id if a ship was hit or false otherwise
      */  
   
-  public int shot(int gameid)
+  public String shot(int gameid, int xpos, int ypos)
   {
       //variable to check the return of ship.hit
       int health;
@@ -48,29 +50,29 @@ public class Board
       // listener aqui
       
       // variable that is going to be sent to the protocol
-      String[] tosend;
+      String[] tosend = new String[12];
       
       // variable to receive from the protocol
       String[] received;
       
       // placing info on the string that is going to be sent
-      tosend[0] = gameid;
-      tosend[1] = xpos;
-      tosend[2] = ypos;
+      tosend[0] = Integer.toString(gameid);
+      tosend[1] = Integer.toString(xpos);
+      tosend[2] = Integer.toString(ypos);
       
       // calling the protocol and receiving an answer
-      received[] = pirate.run(7,tosend,3);
+      received = pirate.run(7,tosend,3);
       
       // checking what was received
       if(received[1] == "OK")
       {
-          // received[2] is a string containing hitalive, hitdead or fail, to the interface knows what happened.
+          // received[2] is a string containing hitalive, hitdead or fail, to the interface to know what happened.
           return received[2];
       }
       else
       {
           // error
-          return -1;
+          return "fail";
       }
   }
   
@@ -84,7 +86,7 @@ public class Board
   public boolean PlaceShips()
   {
       // variables for cicle control
-      int i = 0,j=0;
+      int i=0, j=0;
       
       // variable for the return of ship.place
       int[] info;
@@ -96,7 +98,7 @@ public class Board
           //info[2] = health;
           //info[3] = orientation ( 1 for vertical, 0 for horizontal)
           info = ship.place();
-          switch( info[3])
+          switch( info[3] )
           {
               case 0:
                         // horizontal
@@ -125,14 +127,14 @@ public class Board
       int i=0,j=0;
       
       // variable that is going to be sent to the protocol
-      String[] tosend;
+      String[] tosend = new String[12];
       
       // variable to receive from the protocol
-      String[] received;
+      String[] received = {};
       
       // placing info on the string that is going to be sent
-      tosend[0] = gameid;
-      tosend[1] = userid;
+      tosend[0] = Integer.toString(gameid);
+      tosend[1] = Integer.toString(userid);
       for(i=2;i<12;i++)
       {
           for(j=0;j<10;j++)
@@ -143,17 +145,17 @@ public class Board
       }
       
       // calling the protocol and receiving an answer
-      received[] = pirate.run(6,tosend,12);
+      received = pirate.run(6,tosend,12);
       
       // checking what was received
       if(received[1] == "OK")
       {
-          return 1;
+          return true;
       }
       else
       {
           // error
-          return -1;
+          return false;
       }
       
   }

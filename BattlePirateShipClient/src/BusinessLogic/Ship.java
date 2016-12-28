@@ -26,7 +26,7 @@ public class Ship
      {
          // listener aqui
          
-         int[] returnval;
+         int[] returnval = null;
 
          //returnval[0] = xpos;
          //returnval[1] = ypos;

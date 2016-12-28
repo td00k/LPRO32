@@ -40,22 +40,22 @@ public class Game
      public int quickgame(int userid)
      {
          // variable that is going to be sent to the protocol
-         String[] tosend;
+         String[] tosend = new String[12];
          
          // variable to receive from the protocol
          String[] received;
          
          // placing info on the string that is going to be sent
-         tosend[0] = userid;
+         tosend[0] = Integer.toString(userid);
          
          // calling the protocol and receiving an answer
-         received[] = pirate.run(3,tosend,1);
+         received = pirate.run(3,tosend,1);
          
          // checking what was received
          if(received[1] == "OK")
          {
              // returning the gameid
-             return received[2];
+             return Integer.parseInt(received[2]);
          }
          else
          {
@@ -74,23 +74,23 @@ public class Game
      public int playwithfriend(int userid1, int userid2)
      {
          // variable that is going to be sent to the protocol
-         String[] tosend;
+         String[] tosend = new String[12];
          
          // variable to receive from the protocol
          String[] received;
          
          // placing info on the string that is going to be sent
-         tosend[0] = userid1;
-         tosend[1] = userid2;
+         tosend[0] = Integer.toString(userid1);
+         tosend[1] = Integer.toString(userid2);
          
          // calling the protocol and receiving an answer
-         received[] = pirate.run(4,tosend,2);
+         received = pirate.run(4,tosend,2);
          
          // checking what was received
          if(received[1] == "OK")
          {
              // returning the gameid
-             return received[2];
+             return Integer.parseInt(received[2]);
          }
          else
          {
@@ -102,16 +102,16 @@ public class Game
     public int removegame(int gameid)
     {
         // variable that is going to be sent to the protocol
-        String[] tosend;
+        String[] tosend = new String[12];
         
         // variable to receive from the protocol
         String[] received;
         
         // placing info on the string that is going to be sent
-        tosend[0] = gameid;
+        tosend[0] = Integer.toString(gameid);
         
         // calling the protocol and receiving an answer
-        received[] = pirate.run(5,tosend,1);
+        received = pirate.run(5,tosend,1);
         
         // checking what was received
         if(received[1] == "OK")
