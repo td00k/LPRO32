@@ -77,7 +77,16 @@ public class User
     }
   
   
-    public int 
+    public int getfriends(int userid)
+     {
+          String query;
+          String[] toreturn;
+     
+     query= "SELECT * " + "FROM userfriends" + "WHERE id1 =" + userid;
+     
+      return DBhandler.run(9,query,null);
+          
+     }      
   
   
  }   
