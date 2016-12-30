@@ -31,7 +31,7 @@ public class User
       String[] tosend = new String[1];
       tosend[0] = Integer.toString(userid);
       
-      return pirate.run(8,tosend,1);
+      return pirate.run(9,tosend,1);
   }
     
   public String[] getFriends(int userid)

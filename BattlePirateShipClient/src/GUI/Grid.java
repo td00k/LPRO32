@@ -14,7 +14,7 @@ import java.awt.Color;
 
 public class Grid extends JPanel implements ActionListener{
 
-  public static void main(String[] args) {
+  /*public static void main(String[] args) {
         Grid g = new Grid();
         JFrame frame = new JFrame();
         frame.add(g);
@@ -24,7 +24,7 @@ public class Grid extends JPanel implements ActionListener{
         g.setFocusable(true);
         g.requestFocus();
         g.placePlayerShips();
-    }
+    }*/
 
     private Cell squares[][];
     private boolean horizontal;
@@ -32,14 +32,15 @@ public class Grid extends JPanel implements ActionListener{
     private boolean ShipPlaced;
     private boolean keyToggled;
 
-    public Grid(){
-        this.setSize(400,400);
+    public Grid(String player){
+        this.setSize(300,300);
         this.setLayout(new GridLayout(10,10));
         squares = new Cell[10][10];
         buildButtons();
         horizontal = false;
         size = 5;  
         ShipPlaced = false;
+       
     }
 
     private void buildButtons()
@@ -49,35 +50,11 @@ public class Grid extends JPanel implements ActionListener{
         {
             for(j=0;j<10;j++)
             {
-                 final Cell cell = new Cell(j,i);
+                final Cell cell = new Cell(j,i);
                 squares[j][i] = cell;
                // squares[i][j].setSize(400,400);
-                this.add(cell);
-                
-                squares[j][i].addMouseListener(new MouseListener() {
-                    public void mouseClicked(MouseEvent e) {
-                        
-                    }
-                    @Override
-                    public void mouseEntered(MouseEvent arg0) {
-                            Grid.this.mouseEntered(cell);
-                    }
-
-                    @Override
-                    public void mouseExited(MouseEvent arg0) {
-                            Grid.this.mouseExited(cell);
-                    }
-
-                    @Override
-                    public void mousePressed(MouseEvent e) 
-                    {
-                        Grid.this.placeShip(e,cell);
-                    }
-
-                    @Override
-                    public void mouseReleased(MouseEvent arg0) {
-                    }
-                });
+                this.add(squares[j][i]);
+                createMListener(squares[j][i]);
             }
         }
     
@@ -305,13 +282,14 @@ public class Grid extends JPanel implements ActionListener{
        {
             size = shipsizes[j];
             System.out.println("Waiting Ship placement!");
-            do
-            {    
+            while(!ShipPlaced)   
+            {
+                System.out.println("");
             }
-            while(!ShipPlaced);
             System.out.println("Out of while!");
             ShipPlaced = false;
        }
+       removeMListener();
        return;
     }  
     
@@ -319,4 +297,46 @@ public class Grid extends JPanel implements ActionListener{
     {
        
     } 
+     
+     
+    public void createMListener(Cell cell)
+     {
+       cell.Mlistener =  new MouseListener() {
+                    public void mouseClicked(MouseEvent e) {
+                        
+                    }
+                    @Override
+                    public void mouseEntered(MouseEvent arg0) {
+                            Grid.this.mouseEntered(cell);
+                    }
+
+                    @Override
+                    public void mouseExited(MouseEvent arg0) {
+                            Grid.this.mouseExited(cell);
+                    }
+
+                    @Override
+                    public void mousePressed(MouseEvent e) 
+                    {
+                        Grid.this.placeShip(e,cell);
+                    }
+
+                    @Override
+                    public void mouseReleased(MouseEvent arg0) {
+                    }
+                };
+                cell.addMouseListener(cell.Mlistener);
+     }
+     
+     private void removeMListener()
+     {
+         int i = 0, j = 0;
+          for(i=0;i<10;i++)
+          {
+            for(j=0;j<10;j++)
+            {
+                squares[j][i].removeMouseListener(squares[j][i].Mlistener);
+            }
+          }
+     }
 }

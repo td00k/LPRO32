@@ -62,7 +62,6 @@ public class JDBCHandler
     
     public int run(int type, String query, String args[])
     {
-        
         UserInfo Uinfo = new UserInfo();
         UserStats Ustats= new UserStats();
         

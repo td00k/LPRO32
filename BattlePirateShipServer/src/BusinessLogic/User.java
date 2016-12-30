@@ -20,11 +20,10 @@ public class User
   
   private static String infoargs[];
   
- private JDBCHandler DBhandler;
+  private JDBCHandler DBhandler;
   
   public User()
   {
-   
       infoargs[0]="id";
       infoargs[1]="state";
       infoargs[2]="gamesplayed";
@@ -33,8 +32,7 @@ public class User
       infoargs[5]="surrenders";
       infoargs[6]="rank";
       
-      DBhandler = new JDBCHandler("org.postgresql.Driver","jdbc:postgresql://dbm.fe.up.pt/lpro1632","lpro1632","ttva32");
-                                        
+      DBhandler = new JDBCHandler("org.postgresql.Driver","jdbc:postgresql://dbm.fe.up.pt/lpro1632","lpro1632","ttva32");                                   
   }
   
   public int get(int userid)
@@ -42,10 +40,9 @@ public class User
       String query;
       String[] toreturn;
      
-     query= "SELECT * " + "FROM userstats" + "WHERE id =" + userid;
+      query= "SELECT * " + "FROM userstats" + "WHERE id =" + userid;
      
-      return DBhandler.run(9,query,null);
-       
+      return DBhandler.run(9,query,null);   
   }
   
   
@@ -54,8 +51,7 @@ public class User
       String query;
       query = "UPDATE userstats SET ";
       
-      
-    int i;
+      int i;
               
      for(i=1;i<6;i++)
      {
@@ -75,6 +71,17 @@ public class User
   
   
     public int getfriends(int userid)
+     {
+        String query;
+        String[] toreturn;
+     
+      query= "SELECT * " + "FROM userfriends" + "WHERE id1 =" + userid;
+     
+      return DBhandler.run(9,query,null);
+          
+     }   
+    
+    public int addfriend(int userid, int userid2)
      {
         String query;
         String[] toreturn;

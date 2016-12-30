@@ -11,6 +11,8 @@ package GUI;
  */
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -21,6 +23,7 @@ public class Cell extends JPanel {
     private int xPos;
     private int yPos;
     public boolean clickflag;
+    public MouseListener Mlistener;
 
     public Cell (int y, int x) {
         xPos = x;
@@ -58,4 +61,6 @@ public class Cell extends JPanel {
 	return yPos;
     }
     
+    
+     
 }
