@@ -49,25 +49,22 @@ public class User
   }
   
   
-  
-  
-  
   public int updateinfo(String[] args)
   {
       String query;
       query = "UPDATE userstats SET ";
       
       
-      int i;
+    int i;
               
      for(i=1;i<6;i++)
      {
          query= query + infoargs[i] +"="+ Integer.parseInt(args[i]) + "," ;
      }
      
-     query= query + infoargs[i] +"="+ Integer.parseInt(args[i]);
+     query = query + infoargs[i] +"="+ Integer.parseInt(args[i]);
      
-     query= query+ "WHERE id=" + args[0];
+     query = query + "WHERE id=" + args[0];
       
      
      //E POSSIVEL A ULTIMA VIRGULA DO CICLO ESTAR A DAR ERRO MAS PARECE ME QUE ESTA A DAR
@@ -79,10 +76,10 @@ public class User
   
     public int getfriends(int userid)
      {
-          String query;
-          String[] toreturn;
+        String query;
+        String[] toreturn;
      
-     query= "SELECT * " + "FROM userfriends" + "WHERE id1 =" + userid;
+      query= "SELECT * " + "FROM userfriends" + "WHERE id1 =" + userid;
      
       return DBhandler.run(9,query,null);
           

@@ -6,6 +6,7 @@ package Communications;
 
 import java.io.*;
 import java.net.*;
+import javax.swing.JOptionPane;
 
     /** This class has all methods that deal with the connection to the server and that deal with the socket.
      * It has the run method, which is the main method of this class, 
@@ -47,15 +48,17 @@ public class SocketClient
              
          // Can't find host
          System.err.println("Host gnomo not found!");
-         System.exit(1);
+         JOptionPane.showMessageDialog(null, "Unable to connect to server! Check if server is running");
+         System.exit(-1);
          } 
          catch (IOException ex) 
          {
              // Can't create socket
              System.out.println("Error creating socket.");
-             System.exit(1);
+             JOptionPane.showMessageDialog(null, "Unable to connect to server! Check if server is running");
+             System.exit(-1);
          } 
-      
+
     }
     
    /**
