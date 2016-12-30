@@ -2,6 +2,7 @@
 package GUI;
 
 import java.awt.Color;
+import javax.swing.*;
 
 /**
  * This class contains the Ingame Window, that shows player's information and both player's boards. It allows the player to play the game.
@@ -10,6 +11,8 @@ public class InGame extends javax.swing.JFrame {
 
     
     private final int gameid;
+    private  Grid playergrid;
+    private  Grid enemygrid;
     
     public InGame(int gameid) {
      /**
@@ -17,8 +20,44 @@ public class InGame extends javax.swing.JFrame {
      * @param gameid receives the gameid that was given when creating or joining a game
      */
         initComponents();
+        playergrid = new Grid();
+        enemygrid = new Grid();
+        jPanel2.add(new JLabel());
         this.gameid = gameid;
         
+    }
+
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(First.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(First.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(First.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(First.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new InGame(1).setVisible(true);
+            }
+        });
     }
 
     @SuppressWarnings("unchecked")
@@ -27,126 +66,6 @@ public class InGame extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
-        jButton11 = new javax.swing.JButton();
-        jButton17 = new javax.swing.JButton();
-        jButton18 = new javax.swing.JButton();
-        jButton19 = new javax.swing.JButton();
-        jButton20 = new javax.swing.JButton();
-        jButton21 = new javax.swing.JButton();
-        jButton22 = new javax.swing.JButton();
-        jButton23 = new javax.swing.JButton();
-        jButton24 = new javax.swing.JButton();
-        jButton25 = new javax.swing.JButton();
-        jButton26 = new javax.swing.JButton();
-        jButton32 = new javax.swing.JButton();
-        jButton33 = new javax.swing.JButton();
-        jButton34 = new javax.swing.JButton();
-        jButton35 = new javax.swing.JButton();
-        jButton36 = new javax.swing.JButton();
-        jButton37 = new javax.swing.JButton();
-        jButton38 = new javax.swing.JButton();
-        jButton39 = new javax.swing.JButton();
-        jButton40 = new javax.swing.JButton();
-        jButton41 = new javax.swing.JButton();
-        jButton47 = new javax.swing.JButton();
-        jButton48 = new javax.swing.JButton();
-        jButton49 = new javax.swing.JButton();
-        jButton50 = new javax.swing.JButton();
-        jButton51 = new javax.swing.JButton();
-        jButton52 = new javax.swing.JButton();
-        jButton53 = new javax.swing.JButton();
-        jButton54 = new javax.swing.JButton();
-        jButton55 = new javax.swing.JButton();
-        jButton56 = new javax.swing.JButton();
-        jButton62 = new javax.swing.JButton();
-        jButton63 = new javax.swing.JButton();
-        jButton64 = new javax.swing.JButton();
-        jButton65 = new javax.swing.JButton();
-        jButton66 = new javax.swing.JButton();
-        jButton67 = new javax.swing.JButton();
-        jButton68 = new javax.swing.JButton();
-        jButton69 = new javax.swing.JButton();
-        jButton70 = new javax.swing.JButton();
-        jButton71 = new javax.swing.JButton();
-        jButton77 = new javax.swing.JButton();
-        jButton78 = new javax.swing.JButton();
-        jButton79 = new javax.swing.JButton();
-        jButton80 = new javax.swing.JButton();
-        jButton81 = new javax.swing.JButton();
-        jButton82 = new javax.swing.JButton();
-        jButton83 = new javax.swing.JButton();
-        jButton84 = new javax.swing.JButton();
-        jButton85 = new javax.swing.JButton();
-        jButton86 = new javax.swing.JButton();
-        jButton92 = new javax.swing.JButton();
-        jButton93 = new javax.swing.JButton();
-        jButton94 = new javax.swing.JButton();
-        jButton95 = new javax.swing.JButton();
-        jButton96 = new javax.swing.JButton();
-        jButton97 = new javax.swing.JButton();
-        jButton98 = new javax.swing.JButton();
-        jButton99 = new javax.swing.JButton();
-        jButton100 = new javax.swing.JButton();
-        jButton101 = new javax.swing.JButton();
-        jButton107 = new javax.swing.JButton();
-        jButton108 = new javax.swing.JButton();
-        jButton109 = new javax.swing.JButton();
-        jButton110 = new javax.swing.JButton();
-        jButton111 = new javax.swing.JButton();
-        jButton112 = new javax.swing.JButton();
-        jButton113 = new javax.swing.JButton();
-        jButton114 = new javax.swing.JButton();
-        jButton115 = new javax.swing.JButton();
-        jButton116 = new javax.swing.JButton();
-        jButton122 = new javax.swing.JButton();
-        jButton123 = new javax.swing.JButton();
-        jButton124 = new javax.swing.JButton();
-        jButton125 = new javax.swing.JButton();
-        jButton126 = new javax.swing.JButton();
-        jButton127 = new javax.swing.JButton();
-        jButton128 = new javax.swing.JButton();
-        jButton129 = new javax.swing.JButton();
-        jButton130 = new javax.swing.JButton();
-        jButton131 = new javax.swing.JButton();
-        jButton140 = new javax.swing.JButton();
-        jButton141 = new javax.swing.JButton();
-        jButton142 = new javax.swing.JButton();
-        jButton143 = new javax.swing.JButton();
-        jButton144 = new javax.swing.JButton();
-        jButton145 = new javax.swing.JButton();
-        jButton146 = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
-        jLabel23 = new javax.swing.JLabel();
-        jLabel24 = new javax.swing.JLabel();
-        jLabel25 = new javax.swing.JLabel();
-        jButton220 = new javax.swing.JButton();
-        jButton224 = new javax.swing.JButton();
-        jButton225 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jLabel43 = new javax.swing.JLabel();
@@ -332,6 +251,26 @@ public class InGame extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
         jButton223 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel44 = new javax.swing.JLabel();
+        jLabel53 = new javax.swing.JLabel();
+        jLabel55 = new javax.swing.JLabel();
+        jLabel41 = new javax.swing.JLabel();
+        jLabel51 = new javax.swing.JLabel();
+        jLabel56 = new javax.swing.JLabel();
+        jLabel42 = new javax.swing.JLabel();
+        jLabel52 = new javax.swing.JLabel();
+        jLabel54 = new javax.swing.JLabel();
+        jLabel45 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -340,210 +279,14 @@ public class InGame extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(51, 51, 51));
         jPanel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 255, 255), 1, true));
+        jPanel2.setToolTipText("");
         jPanel2.setDoubleBuffered(false);
         jPanel2.setEnabled(false);
         jPanel2.setFocusable(false);
         jPanel2.setOpaque(false);
+        jPanel2.setPreferredSize(new java.awt.Dimension(300, 300));
         jPanel2.setRequestFocusEnabled(false);
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jButton2.setMnemonic('b');
-        jButton2.setToolTipText("");
-        jButton2.setActionCommand("boton1");
-        jButton2.setName("boton1"); // NOI18N
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 24, 25, 25));
-        jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 24, 25, 25));
-        jPanel2.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(69, 24, 25, 25));
-        jPanel2.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(94, 24, 25, 25));
-        jPanel2.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(119, 24, 25, 25));
-        jPanel2.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(144, 24, 25, 25));
-        jPanel2.add(jButton8, new org.netbeans.lib.awtextra.AbsoluteConstraints(169, 24, 25, 25));
-        jPanel2.add(jButton9, new org.netbeans.lib.awtextra.AbsoluteConstraints(194, 24, 25, 25));
-        jPanel2.add(jButton10, new org.netbeans.lib.awtextra.AbsoluteConstraints(219, 24, 25, 25));
-        jPanel2.add(jButton11, new org.netbeans.lib.awtextra.AbsoluteConstraints(244, 24, 25, 25));
-        jPanel2.add(jButton17, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 49, 25, 25));
-        jPanel2.add(jButton18, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 49, 25, 25));
-        jPanel2.add(jButton19, new org.netbeans.lib.awtextra.AbsoluteConstraints(69, 49, 25, 25));
-        jPanel2.add(jButton20, new org.netbeans.lib.awtextra.AbsoluteConstraints(94, 49, 25, 25));
-        jPanel2.add(jButton21, new org.netbeans.lib.awtextra.AbsoluteConstraints(119, 49, 25, 25));
-        jPanel2.add(jButton22, new org.netbeans.lib.awtextra.AbsoluteConstraints(144, 49, 25, 25));
-        jPanel2.add(jButton23, new org.netbeans.lib.awtextra.AbsoluteConstraints(169, 49, 25, 25));
-        jPanel2.add(jButton24, new org.netbeans.lib.awtextra.AbsoluteConstraints(194, 49, 25, 25));
-        jPanel2.add(jButton25, new org.netbeans.lib.awtextra.AbsoluteConstraints(219, 49, 25, 25));
-        jPanel2.add(jButton26, new org.netbeans.lib.awtextra.AbsoluteConstraints(244, 49, 25, 25));
-        jPanel2.add(jButton32, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 74, 25, 25));
-        jPanel2.add(jButton33, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 74, 25, 25));
-        jPanel2.add(jButton34, new org.netbeans.lib.awtextra.AbsoluteConstraints(69, 74, 25, 25));
-        jPanel2.add(jButton35, new org.netbeans.lib.awtextra.AbsoluteConstraints(94, 74, 25, 25));
-        jPanel2.add(jButton36, new org.netbeans.lib.awtextra.AbsoluteConstraints(119, 74, 25, 25));
-        jPanel2.add(jButton37, new org.netbeans.lib.awtextra.AbsoluteConstraints(144, 74, 25, 25));
-        jPanel2.add(jButton38, new org.netbeans.lib.awtextra.AbsoluteConstraints(169, 74, 25, 25));
-        jPanel2.add(jButton39, new org.netbeans.lib.awtextra.AbsoluteConstraints(194, 74, 25, 25));
-        jPanel2.add(jButton40, new org.netbeans.lib.awtextra.AbsoluteConstraints(219, 74, 25, 25));
-        jPanel2.add(jButton41, new org.netbeans.lib.awtextra.AbsoluteConstraints(244, 74, 25, 25));
-        jPanel2.add(jButton47, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 99, 25, 25));
-        jPanel2.add(jButton48, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 99, 25, 25));
-        jPanel2.add(jButton49, new org.netbeans.lib.awtextra.AbsoluteConstraints(69, 99, 25, 25));
-        jPanel2.add(jButton50, new org.netbeans.lib.awtextra.AbsoluteConstraints(94, 99, 25, 25));
-
-        jButton51.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.add(jButton51, new org.netbeans.lib.awtextra.AbsoluteConstraints(119, 99, 25, 25));
-        jPanel2.add(jButton52, new org.netbeans.lib.awtextra.AbsoluteConstraints(144, 99, 25, 25));
-        jPanel2.add(jButton53, new org.netbeans.lib.awtextra.AbsoluteConstraints(169, 99, 25, 25));
-        jPanel2.add(jButton54, new org.netbeans.lib.awtextra.AbsoluteConstraints(194, 99, 25, 25));
-        jPanel2.add(jButton55, new org.netbeans.lib.awtextra.AbsoluteConstraints(219, 99, 25, 25));
-        jPanel2.add(jButton56, new org.netbeans.lib.awtextra.AbsoluteConstraints(244, 99, 25, 25));
-        jPanel2.add(jButton62, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 124, 25, 25));
-        jPanel2.add(jButton63, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 124, 25, 25));
-        jPanel2.add(jButton64, new org.netbeans.lib.awtextra.AbsoluteConstraints(69, 124, 25, 25));
-        jPanel2.add(jButton65, new org.netbeans.lib.awtextra.AbsoluteConstraints(94, 124, 25, 25));
-
-        jButton66.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton66ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton66, new org.netbeans.lib.awtextra.AbsoluteConstraints(119, 124, 25, 25));
-        jPanel2.add(jButton67, new org.netbeans.lib.awtextra.AbsoluteConstraints(144, 124, 25, 25));
-        jPanel2.add(jButton68, new org.netbeans.lib.awtextra.AbsoluteConstraints(169, 124, 25, 25));
-        jPanel2.add(jButton69, new org.netbeans.lib.awtextra.AbsoluteConstraints(194, 124, 25, 25));
-        jPanel2.add(jButton70, new org.netbeans.lib.awtextra.AbsoluteConstraints(219, 124, 25, 25));
-        jPanel2.add(jButton71, new org.netbeans.lib.awtextra.AbsoluteConstraints(244, 124, 25, 25));
-        jPanel2.add(jButton77, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 149, 25, 25));
-        jPanel2.add(jButton78, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 149, 25, 25));
-        jPanel2.add(jButton79, new org.netbeans.lib.awtextra.AbsoluteConstraints(69, 149, 25, 25));
-        jPanel2.add(jButton80, new org.netbeans.lib.awtextra.AbsoluteConstraints(94, 149, 25, 25));
-        jPanel2.add(jButton81, new org.netbeans.lib.awtextra.AbsoluteConstraints(119, 149, 25, 25));
-        jPanel2.add(jButton82, new org.netbeans.lib.awtextra.AbsoluteConstraints(144, 149, 25, 25));
-        jPanel2.add(jButton83, new org.netbeans.lib.awtextra.AbsoluteConstraints(169, 149, 25, 25));
-        jPanel2.add(jButton84, new org.netbeans.lib.awtextra.AbsoluteConstraints(194, 149, 25, 25));
-        jPanel2.add(jButton85, new org.netbeans.lib.awtextra.AbsoluteConstraints(219, 149, 25, 25));
-        jPanel2.add(jButton86, new org.netbeans.lib.awtextra.AbsoluteConstraints(244, 149, 25, 25));
-        jPanel2.add(jButton92, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 174, 25, 25));
-        jPanel2.add(jButton93, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 174, 25, 25));
-        jPanel2.add(jButton94, new org.netbeans.lib.awtextra.AbsoluteConstraints(69, 174, 25, 25));
-        jPanel2.add(jButton95, new org.netbeans.lib.awtextra.AbsoluteConstraints(94, 174, 25, 25));
-        jPanel2.add(jButton96, new org.netbeans.lib.awtextra.AbsoluteConstraints(119, 174, 25, 25));
-        jPanel2.add(jButton97, new org.netbeans.lib.awtextra.AbsoluteConstraints(144, 174, 25, 25));
-        jPanel2.add(jButton98, new org.netbeans.lib.awtextra.AbsoluteConstraints(169, 174, 25, 25));
-        jPanel2.add(jButton99, new org.netbeans.lib.awtextra.AbsoluteConstraints(194, 174, 25, 25));
-        jPanel2.add(jButton100, new org.netbeans.lib.awtextra.AbsoluteConstraints(219, 174, 25, 25));
-        jPanel2.add(jButton101, new org.netbeans.lib.awtextra.AbsoluteConstraints(244, 174, 25, 25));
-        jPanel2.add(jButton107, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 199, 25, 25));
-        jPanel2.add(jButton108, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 199, 25, 25));
-        jPanel2.add(jButton109, new org.netbeans.lib.awtextra.AbsoluteConstraints(69, 199, 25, 25));
-        jPanel2.add(jButton110, new org.netbeans.lib.awtextra.AbsoluteConstraints(94, 199, 25, 25));
-        jPanel2.add(jButton111, new org.netbeans.lib.awtextra.AbsoluteConstraints(119, 199, 25, 25));
-        jPanel2.add(jButton112, new org.netbeans.lib.awtextra.AbsoluteConstraints(144, 199, 25, 25));
-        jPanel2.add(jButton113, new org.netbeans.lib.awtextra.AbsoluteConstraints(169, 199, 25, 25));
-        jPanel2.add(jButton114, new org.netbeans.lib.awtextra.AbsoluteConstraints(194, 199, 25, 25));
-        jPanel2.add(jButton115, new org.netbeans.lib.awtextra.AbsoluteConstraints(219, 199, 25, 25));
-        jPanel2.add(jButton116, new org.netbeans.lib.awtextra.AbsoluteConstraints(244, 199, 25, 25));
-        jPanel2.add(jButton122, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 224, 25, 25));
-        jPanel2.add(jButton123, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 224, 25, 25));
-        jPanel2.add(jButton124, new org.netbeans.lib.awtextra.AbsoluteConstraints(69, 224, 25, 25));
-        jPanel2.add(jButton125, new org.netbeans.lib.awtextra.AbsoluteConstraints(94, 224, 25, 25));
-        jPanel2.add(jButton126, new org.netbeans.lib.awtextra.AbsoluteConstraints(119, 224, 25, 25));
-        jPanel2.add(jButton127, new org.netbeans.lib.awtextra.AbsoluteConstraints(144, 224, 25, 25));
-        jPanel2.add(jButton128, new org.netbeans.lib.awtextra.AbsoluteConstraints(169, 224, 25, 25));
-        jPanel2.add(jButton129, new org.netbeans.lib.awtextra.AbsoluteConstraints(194, 224, 25, 25));
-        jPanel2.add(jButton130, new org.netbeans.lib.awtextra.AbsoluteConstraints(219, 224, 25, 25));
-        jPanel2.add(jButton131, new org.netbeans.lib.awtextra.AbsoluteConstraints(244, 224, 25, 25));
-        jPanel2.add(jButton140, new org.netbeans.lib.awtextra.AbsoluteConstraints(94, 249, 25, 25));
-        jPanel2.add(jButton141, new org.netbeans.lib.awtextra.AbsoluteConstraints(119, 249, 25, 25));
-        jPanel2.add(jButton142, new org.netbeans.lib.awtextra.AbsoluteConstraints(144, 249, 25, 25));
-        jPanel2.add(jButton143, new org.netbeans.lib.awtextra.AbsoluteConstraints(169, 249, 25, 25));
-        jPanel2.add(jButton144, new org.netbeans.lib.awtextra.AbsoluteConstraints(194, 249, 25, 25));
-        jPanel2.add(jButton145, new org.netbeans.lib.awtextra.AbsoluteConstraints(219, 249, 25, 25));
-        jPanel2.add(jButton146, new org.netbeans.lib.awtextra.AbsoluteConstraints(244, 249, 25, 25));
-
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("1");
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 7, 25, -1));
-
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("2");
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 7, 25, -1));
-
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("3");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(69, 7, 25, -1));
-
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("4");
-        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(94, 7, 25, -1));
-
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("5");
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(119, 7, 25, -1));
-
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("6");
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(144, 7, 25, -1));
-
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("7");
-        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(169, 7, 25, -1));
-
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setText("8");
-        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(194, 7, 25, -1));
-
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setText("9");
-        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(219, 7, 25, -1));
-
-        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel10.setText("10");
-        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(244, 7, 25, -1));
-
-        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel16.setText("A");
-        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(275, 24, 10, 25));
-
-        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel17.setText("B");
-        jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(275, 49, 10, 25));
-
-        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel18.setText("C");
-        jPanel2.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(275, 74, 10, 25));
-
-        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel19.setText("D");
-        jPanel2.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(275, 99, -1, 25));
-
-        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel20.setText("E");
-        jPanel2.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(275, 124, 10, 25));
-
-        jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel21.setText("F");
-        jPanel2.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(275, 149, 10, 25));
-
-        jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel22.setText("G");
-        jPanel2.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(275, 174, 10, 25));
-
-        jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel23.setText("H");
-        jPanel2.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(275, 199, -1, 25));
-
-        jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel24.setText("I");
-        jPanel2.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(275, 224, 10, 25));
-
-        jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel25.setText("J");
-        jPanel2.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(275, 249, 10, 25));
-        jPanel2.add(jButton220, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 249, 25, 25));
-        jPanel2.add(jButton224, new org.netbeans.lib.awtextra.AbsoluteConstraints(44, 249, 25, 25));
-        jPanel2.add(jButton225, new org.netbeans.lib.awtextra.AbsoluteConstraints(69, 249, 25, 25));
 
         jPanel4.setBackground(new java.awt.Color(51, 51, 51));
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), "PIRATE2", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Charlemagne Std", 0, 14), new java.awt.Color(255, 255, 255))); // NOI18N
@@ -1493,6 +1236,66 @@ public class InGame extends javax.swing.JFrame {
         jButton223.setText("Replay ");
         jButton223.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("1");
+
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("2");
+
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("3");
+
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("4");
+
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("5");
+
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("6");
+
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel7.setText("7");
+
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel8.setText("8");
+
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel9.setText("9");
+
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel10.setText("10");
+
+        jLabel44.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel44.setText("C");
+
+        jLabel53.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel53.setText("I");
+
+        jLabel55.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel55.setText("E");
+
+        jLabel41.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel41.setText("F");
+
+        jLabel51.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel51.setText("H");
+
+        jLabel56.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel56.setText("D");
+
+        jLabel42.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel42.setText("A");
+
+        jLabel52.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel52.setText("G");
+
+        jLabel54.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel54.setText("B");
+
+        jLabel45.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel45.setText("J");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -1505,12 +1308,38 @@ public class InGame extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton223, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton219, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(15, 15, 15)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel42, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel54, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel44, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel56)
+                            .addComponent(jLabel55, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel52, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel51)
+                            .addComponent(jLabel53, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel45, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(7, 7, 7)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1553,8 +1382,33 @@ public class InGame extends javax.swing.JFrame {
                         .addComponent(jButton219, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(5, 5, 5)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(10, 10, 10)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel2)
+                                .addComponent(jLabel1))
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel10))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel42, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel54, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel44, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel56, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel55, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel41, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel52, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel51, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel53, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel45, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
@@ -1604,10 +1458,6 @@ public class InGame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton66ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton66ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton66ActionPerformed
-
     private void jButton267ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton267ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton267ActionPerformed
@@ -1619,10 +1469,6 @@ public class InGame extends javax.swing.JFrame {
     private void jButton268ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton268ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton268ActionPerformed
-
-    private void jButton136ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton136ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton136ActionPerformed
 
     private void jButton139ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton139ActionPerformed
         // TODO add your handling code here:
@@ -1712,140 +1558,97 @@ public class InGame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton271ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jButton136ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton136ActionPerformed
         // TODO add your handling code here:
-        jButton2.setBackground(Color.yellow);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_jButton136ActionPerformed
 
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    public javax.swing.JButton jButton10;
-    public javax.swing.JButton jButton100;
-    public javax.swing.JButton jButton101;
-    public javax.swing.JButton jButton102;
-    public javax.swing.JButton jButton103;
-    public javax.swing.JButton jButton104;
-    public javax.swing.JButton jButton105;
-    public javax.swing.JButton jButton106;
-    public javax.swing.JButton jButton107;
-    public javax.swing.JButton jButton108;
-    public javax.swing.JButton jButton109;
-    public javax.swing.JButton jButton11;
-    public javax.swing.JButton jButton110;
-    public javax.swing.JButton jButton111;
-    public javax.swing.JButton jButton112;
-    public javax.swing.JButton jButton113;
-    public javax.swing.JButton jButton114;
-    public javax.swing.JButton jButton115;
-    public javax.swing.JButton jButton116;
-    public javax.swing.JButton jButton117;
-    public javax.swing.JButton jButton118;
-    public javax.swing.JButton jButton119;
-    public javax.swing.JButton jButton12;
-    public javax.swing.JButton jButton120;
-    public javax.swing.JButton jButton121;
-    public javax.swing.JButton jButton122;
-    public javax.swing.JButton jButton123;
-    public javax.swing.JButton jButton124;
-    public javax.swing.JButton jButton125;
-    public javax.swing.JButton jButton126;
-    public javax.swing.JButton jButton127;
-    public javax.swing.JButton jButton128;
-    public javax.swing.JButton jButton129;
-    public javax.swing.JButton jButton13;
-    public javax.swing.JButton jButton130;
-    public javax.swing.JButton jButton131;
-    public javax.swing.JButton jButton132;
-    public javax.swing.JButton jButton133;
-    public javax.swing.JButton jButton134;
-    public javax.swing.JButton jButton135;
-    public javax.swing.JButton jButton136;
+    private javax.swing.JButton jButton102;
+    private javax.swing.JButton jButton103;
+    private javax.swing.JButton jButton104;
+    private javax.swing.JButton jButton105;
+    private javax.swing.JButton jButton106;
+    private javax.swing.JButton jButton117;
+    private javax.swing.JButton jButton118;
+    private javax.swing.JButton jButton119;
+    private javax.swing.JButton jButton12;
+    private javax.swing.JButton jButton120;
+    private javax.swing.JButton jButton121;
+    private javax.swing.JButton jButton13;
+    private javax.swing.JButton jButton132;
+    private javax.swing.JButton jButton133;
+    private javax.swing.JButton jButton134;
+    private javax.swing.JButton jButton135;
+    private javax.swing.JButton jButton136;
     private javax.swing.JButton jButton137;
     public javax.swing.JButton jButton139;
-    public javax.swing.JButton jButton14;
-    public javax.swing.JButton jButton140;
-    public javax.swing.JButton jButton141;
-    public javax.swing.JButton jButton142;
-    public javax.swing.JButton jButton143;
-    public javax.swing.JButton jButton144;
-    public javax.swing.JButton jButton145;
-    public javax.swing.JButton jButton146;
-    public javax.swing.JButton jButton147;
-    public javax.swing.JButton jButton148;
-    public javax.swing.JButton jButton149;
-    public javax.swing.JButton jButton15;
-    public javax.swing.JButton jButton150;
-    public javax.swing.JButton jButton151;
-    public javax.swing.JButton jButton152;
-    public javax.swing.JButton jButton153;
-    public javax.swing.JButton jButton154;
-    public javax.swing.JButton jButton155;
-    public javax.swing.JButton jButton156;
-    public javax.swing.JButton jButton157;
-    public javax.swing.JButton jButton158;
-    public javax.swing.JButton jButton159;
-    public javax.swing.JButton jButton16;
-    public javax.swing.JButton jButton160;
-    public javax.swing.JButton jButton161;
-    public javax.swing.JButton jButton162;
-    public javax.swing.JButton jButton163;
-    public javax.swing.JButton jButton164;
-    public javax.swing.JButton jButton165;
-    public javax.swing.JButton jButton166;
-    public javax.swing.JButton jButton167;
-    public javax.swing.JButton jButton168;
-    public javax.swing.JButton jButton169;
-    public javax.swing.JButton jButton17;
-    public javax.swing.JButton jButton170;
-    public javax.swing.JButton jButton171;
-    public javax.swing.JButton jButton172;
-    public javax.swing.JButton jButton173;
-    public javax.swing.JButton jButton174;
-    public javax.swing.JButton jButton175;
-    public javax.swing.JButton jButton176;
-    public javax.swing.JButton jButton177;
-    public javax.swing.JButton jButton178;
-    public javax.swing.JButton jButton179;
-    public javax.swing.JButton jButton18;
-    public javax.swing.JButton jButton180;
-    public javax.swing.JButton jButton181;
-    public javax.swing.JButton jButton182;
-    public javax.swing.JButton jButton183;
-    public javax.swing.JButton jButton184;
-    public javax.swing.JButton jButton185;
-    public javax.swing.JButton jButton186;
-    public javax.swing.JButton jButton187;
-    public javax.swing.JButton jButton188;
-    public javax.swing.JButton jButton189;
-    public javax.swing.JButton jButton19;
-    public javax.swing.JButton jButton190;
-    public javax.swing.JButton jButton191;
-    public javax.swing.JButton jButton192;
-    public javax.swing.JButton jButton193;
-    public javax.swing.JButton jButton194;
-    public javax.swing.JButton jButton195;
-    public javax.swing.JButton jButton196;
-    public javax.swing.JButton jButton197;
-    public javax.swing.JButton jButton198;
-    public javax.swing.JButton jButton199;
-    public javax.swing.JButton jButton2;
-    public javax.swing.JButton jButton20;
-    public javax.swing.JButton jButton200;
-    public javax.swing.JButton jButton201;
-    public javax.swing.JButton jButton21;
+    private javax.swing.JButton jButton14;
+    private javax.swing.JButton jButton147;
+    private javax.swing.JButton jButton148;
+    private javax.swing.JButton jButton149;
+    private javax.swing.JButton jButton15;
+    private javax.swing.JButton jButton150;
+    private javax.swing.JButton jButton151;
+    private javax.swing.JButton jButton152;
+    private javax.swing.JButton jButton153;
+    private javax.swing.JButton jButton154;
+    private javax.swing.JButton jButton155;
+    private javax.swing.JButton jButton156;
+    private javax.swing.JButton jButton157;
+    private javax.swing.JButton jButton158;
+    private javax.swing.JButton jButton159;
+    private javax.swing.JButton jButton16;
+    private javax.swing.JButton jButton160;
+    private javax.swing.JButton jButton161;
+    private javax.swing.JButton jButton162;
+    private javax.swing.JButton jButton163;
+    private javax.swing.JButton jButton164;
+    private javax.swing.JButton jButton165;
+    private javax.swing.JButton jButton166;
+    private javax.swing.JButton jButton167;
+    private javax.swing.JButton jButton168;
+    private javax.swing.JButton jButton169;
+    private javax.swing.JButton jButton170;
+    private javax.swing.JButton jButton171;
+    private javax.swing.JButton jButton172;
+    private javax.swing.JButton jButton173;
+    private javax.swing.JButton jButton174;
+    private javax.swing.JButton jButton175;
+    private javax.swing.JButton jButton176;
+    private javax.swing.JButton jButton177;
+    private javax.swing.JButton jButton178;
+    private javax.swing.JButton jButton179;
+    private javax.swing.JButton jButton180;
+    private javax.swing.JButton jButton181;
+    private javax.swing.JButton jButton182;
+    private javax.swing.JButton jButton183;
+    private javax.swing.JButton jButton184;
+    private javax.swing.JButton jButton185;
+    private javax.swing.JButton jButton186;
+    private javax.swing.JButton jButton187;
+    private javax.swing.JButton jButton188;
+    private javax.swing.JButton jButton189;
+    private javax.swing.JButton jButton190;
+    private javax.swing.JButton jButton191;
+    private javax.swing.JButton jButton192;
+    private javax.swing.JButton jButton193;
+    private javax.swing.JButton jButton194;
+    private javax.swing.JButton jButton195;
+    private javax.swing.JButton jButton196;
+    private javax.swing.JButton jButton197;
+    private javax.swing.JButton jButton198;
+    private javax.swing.JButton jButton199;
+    private javax.swing.JButton jButton200;
+    private javax.swing.JButton jButton201;
     private javax.swing.JButton jButton219;
-    public javax.swing.JButton jButton22;
-    public javax.swing.JButton jButton220;
     private javax.swing.JButton jButton222;
     private javax.swing.JButton jButton223;
-    public javax.swing.JButton jButton224;
-    public javax.swing.JButton jButton225;
     public javax.swing.JButton jButton226;
     public javax.swing.JButton jButton227;
     public javax.swing.JButton jButton228;
     public javax.swing.JButton jButton229;
-    public javax.swing.JButton jButton23;
     public javax.swing.JButton jButton230;
     public javax.swing.JButton jButton231;
     public javax.swing.JButton jButton232;
@@ -1854,10 +1657,8 @@ public class InGame extends javax.swing.JFrame {
     public javax.swing.JButton jButton235;
     public javax.swing.JButton jButton236;
     public javax.swing.JButton jButton238;
-    public javax.swing.JButton jButton24;
     public javax.swing.JButton jButton240;
     public javax.swing.JButton jButton246;
-    public javax.swing.JButton jButton25;
     public javax.swing.JButton jButton253;
     public javax.swing.JButton jButton254;
     public javax.swing.JButton jButton255;
@@ -1865,7 +1666,6 @@ public class InGame extends javax.swing.JFrame {
     public javax.swing.JButton jButton257;
     public javax.swing.JButton jButton258;
     public javax.swing.JButton jButton259;
-    public javax.swing.JButton jButton26;
     public javax.swing.JButton jButton260;
     public javax.swing.JButton jButton261;
     public javax.swing.JButton jButton262;
@@ -1876,7 +1676,7 @@ public class InGame extends javax.swing.JFrame {
     private javax.swing.JButton jButton267;
     private javax.swing.JButton jButton268;
     private javax.swing.JButton jButton269;
-    public javax.swing.JButton jButton27;
+    private javax.swing.JButton jButton27;
     private javax.swing.JButton jButton270;
     private javax.swing.JButton jButton271;
     public javax.swing.JButton jButton272;
@@ -1886,85 +1686,30 @@ public class InGame extends javax.swing.JFrame {
     public javax.swing.JButton jButton276;
     public javax.swing.JButton jButton277;
     private javax.swing.JButton jButton278;
-    public javax.swing.JButton jButton28;
-    public javax.swing.JButton jButton29;
-    public javax.swing.JButton jButton3;
-    public javax.swing.JButton jButton30;
-    public javax.swing.JButton jButton31;
-    public javax.swing.JButton jButton32;
-    public javax.swing.JButton jButton33;
-    public javax.swing.JButton jButton34;
-    public javax.swing.JButton jButton35;
-    public javax.swing.JButton jButton36;
-    public javax.swing.JButton jButton37;
-    public javax.swing.JButton jButton38;
-    public javax.swing.JButton jButton39;
-    public javax.swing.JButton jButton4;
-    public javax.swing.JButton jButton40;
-    public javax.swing.JButton jButton41;
-    public javax.swing.JButton jButton42;
-    public javax.swing.JButton jButton43;
-    public javax.swing.JButton jButton44;
-    public javax.swing.JButton jButton45;
-    public javax.swing.JButton jButton46;
-    public javax.swing.JButton jButton47;
-    public javax.swing.JButton jButton48;
-    public javax.swing.JButton jButton49;
-    public javax.swing.JButton jButton5;
-    public javax.swing.JButton jButton50;
-    public javax.swing.JButton jButton51;
-    public javax.swing.JButton jButton52;
-    public javax.swing.JButton jButton53;
-    public javax.swing.JButton jButton54;
-    public javax.swing.JButton jButton55;
-    public javax.swing.JButton jButton56;
-    public javax.swing.JButton jButton57;
-    public javax.swing.JButton jButton58;
-    public javax.swing.JButton jButton59;
-    public javax.swing.JButton jButton6;
-    public javax.swing.JButton jButton60;
-    public javax.swing.JButton jButton61;
-    public javax.swing.JButton jButton62;
-    public javax.swing.JButton jButton63;
-    public javax.swing.JButton jButton64;
-    public javax.swing.JButton jButton65;
-    public javax.swing.JButton jButton66;
-    public javax.swing.JButton jButton67;
-    public javax.swing.JButton jButton68;
-    public javax.swing.JButton jButton69;
-    public javax.swing.JButton jButton7;
-    public javax.swing.JButton jButton70;
-    public javax.swing.JButton jButton71;
-    public javax.swing.JButton jButton72;
-    public javax.swing.JButton jButton73;
-    public javax.swing.JButton jButton74;
-    public javax.swing.JButton jButton75;
-    public javax.swing.JButton jButton76;
-    public javax.swing.JButton jButton77;
-    public javax.swing.JButton jButton78;
-    public javax.swing.JButton jButton79;
-    public javax.swing.JButton jButton8;
-    public javax.swing.JButton jButton80;
-    public javax.swing.JButton jButton81;
-    public javax.swing.JButton jButton82;
-    public javax.swing.JButton jButton83;
-    public javax.swing.JButton jButton84;
-    public javax.swing.JButton jButton85;
-    public javax.swing.JButton jButton86;
-    public javax.swing.JButton jButton87;
-    public javax.swing.JButton jButton88;
-    public javax.swing.JButton jButton89;
-    public javax.swing.JButton jButton9;
-    public javax.swing.JButton jButton90;
-    public javax.swing.JButton jButton91;
-    public javax.swing.JButton jButton92;
-    public javax.swing.JButton jButton93;
-    public javax.swing.JButton jButton94;
-    public javax.swing.JButton jButton95;
-    public javax.swing.JButton jButton96;
-    public javax.swing.JButton jButton97;
-    public javax.swing.JButton jButton98;
-    public javax.swing.JButton jButton99;
+    private javax.swing.JButton jButton28;
+    private javax.swing.JButton jButton29;
+    private javax.swing.JButton jButton30;
+    private javax.swing.JButton jButton31;
+    private javax.swing.JButton jButton42;
+    private javax.swing.JButton jButton43;
+    private javax.swing.JButton jButton44;
+    private javax.swing.JButton jButton45;
+    private javax.swing.JButton jButton46;
+    private javax.swing.JButton jButton57;
+    private javax.swing.JButton jButton58;
+    private javax.swing.JButton jButton59;
+    private javax.swing.JButton jButton60;
+    private javax.swing.JButton jButton61;
+    private javax.swing.JButton jButton72;
+    private javax.swing.JButton jButton73;
+    private javax.swing.JButton jButton74;
+    private javax.swing.JButton jButton75;
+    private javax.swing.JButton jButton76;
+    private javax.swing.JButton jButton87;
+    private javax.swing.JButton jButton88;
+    private javax.swing.JButton jButton89;
+    private javax.swing.JButton jButton90;
+    private javax.swing.JButton jButton91;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1972,17 +1717,7 @@ public class InGame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
@@ -2000,13 +1735,23 @@ public class InGame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
+    private javax.swing.JLabel jLabel41;
+    private javax.swing.JLabel jLabel42;
     private javax.swing.JLabel jLabel43;
+    private javax.swing.JLabel jLabel44;
+    private javax.swing.JLabel jLabel45;
     private javax.swing.JLabel jLabel46;
     private javax.swing.JLabel jLabel47;
     private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel50;
+    private javax.swing.JLabel jLabel51;
+    private javax.swing.JLabel jLabel52;
+    private javax.swing.JLabel jLabel53;
+    private javax.swing.JLabel jLabel54;
+    private javax.swing.JLabel jLabel55;
+    private javax.swing.JLabel jLabel56;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
