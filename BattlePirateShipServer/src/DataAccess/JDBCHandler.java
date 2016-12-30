@@ -21,8 +21,13 @@ public class JDBCHandler
    private static  String PASS;             // This is the pass
     
    //  Query Operation defines
-   private static final int REGISTER = 1;   // code for signaling it's a Register query
-   private static final int LOGIN = 2;      // code for signaling it's a login query
+   private static final int REGISTER = 1;       // code for signaling it's a Register query
+   private static final int LOGIN = 2;          // code for signaling it's a login query
+   private static final int SEARCH = 3;         // code for signaling it's a search query
+   private static final int CREATE = 4;         // code for signaling it's a create query
+   private static final int UPDATE=8;           // code for signaling it's a update query
+   private static final int GET=9;              // code for signaling it's a getstats query
+   private static final int GETFRIENDS = 10;    // code for signaling it's a getfriends query
     
    
    // Error code definitions
@@ -59,6 +64,8 @@ public class JDBCHandler
     {
         
         UserInfo Uinfo = new UserInfo();
+        UserStats Ustats= new UserStats();
+        
         if(open() != OK)
         {
             return ERROR;
@@ -74,6 +81,16 @@ public class JDBCHandler
                             if ( Uinfo.login(query,conn,args) == false)
                                 return ERROR;
                             break;
+            case CREATE:
+                            games.create(); // counter
+            case UPDATE: 
+                            Ustats.update(query,conn);
+            case GET:
+                
+                            Ustats.get(query,conn);
+            case GETFRIENDS:
+                            Ufriends.get(query,conn);
+                            
         }
         
         if(close() != OK)

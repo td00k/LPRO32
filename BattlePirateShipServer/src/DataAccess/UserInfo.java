@@ -64,7 +64,7 @@ public class UserInfo
     {
         try 
         {
-            Statement stmt;
+            Statement stmt; 
             
             // creating a statement so we can execute a query on the DB
            

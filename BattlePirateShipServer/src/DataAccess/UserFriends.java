@@ -1,30 +1,25 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package DataAccess;
 
-import static DataAccess.JDBCHandler.conn;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-
-public class UserStats
+/**
+ *
+ * @author tiagodias
+ */
+public class UserFriends 
 {
-    /**
-     * 
-     */
-    public UserStats()
-    {
-                
-    }
-    
-    /** This method updates the user stats on the database
-     * 
-     * @return true on success, false on failure
-     */
-    
-    public boolean update(String query, Connection con)
-    {
-        
+
+     public boolean addfriend(String query, Connection con)
+       {
+           
         try
         {
           Statement stmt;
@@ -35,7 +30,7 @@ public class UserStats
             
             // executing the Query
             stmt.execute(query);                   
-            System.out.println("Valid Userstats UPDATE Query!");
+            System.out.println("Valid UPDATE userfriends Query!");
             
             // closing the statement
             stmt.close();
@@ -48,16 +43,13 @@ public class UserStats
             return false;
         }
         
-    }
+       }   
+     
+     
+     public String[] getfriends(String query, Connection con)
+        {
     
-    /** This method fetches all the user stats from the database
-     * 
-     * @return true on success, false on failure
-     */
-     public String[] get(String query, Connection con)
-    {
-        
-       try
+            try
         {
           Statement stmt;
           String[] toreturn = null;
@@ -68,18 +60,14 @@ public class UserStats
             
             // executing the Query
             stmt.execute(query);                   
-            System.out.println("Valid Userstats GETSTATS Query!");
+            System.out.println("Valid Userstats GETfriends Query!");
             
              ResultSet rs = stmt.executeQuery(query);
                 
                      toreturn[0] =  Integer.toString( rs.getInt("id") );
                      toreturn[1] =  Integer.toString( rs.getInt("state") );
-                     toreturn[2] =  Integer.toString( rs.getInt("gamesplayed") );
-                     toreturn[3] =  Integer.toString( rs.getInt("id") );
-                     toreturn[4] =  Integer.toString( rs.getInt("id") );
-                     toreturn[5] =  Integer.toString( rs.getInt("id") );
-                     toreturn[6] =  Integer.toString( rs.getInt("id") );
-                     toreturn[7] =  Integer.toString( rs.getInt("id") ); 
+                     toreturn[2] =  Integer.toString( rs.getInt("friendname") );
+ 
                      
             // closing the statement
             stmt.close();
@@ -92,7 +80,9 @@ public class UserStats
         {
             return null;
         }
-        
-        
-    }
+            
+            
+        }
+
+    
 }

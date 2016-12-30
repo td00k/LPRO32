@@ -2,6 +2,7 @@ package BusinessLogic;
 
 import Communications.PirateProtocol;
 import Communications.HandleClient;
+import DataAccess.JDBCHandler;
 import java.net.Socket;
 
      /** 
@@ -16,15 +17,18 @@ public class Game {
    private static int time;
    private static int[] viewers;
    
+
      //class variables
      PirateProtocol pirate;       // variable to use the protocol methods
      HandleClient client;  
- 
+     JDBCHandler DBhandler;
      
    public Game(Socket Psocket) 
      {
         pirate = new PirateProtocol();
         client = new HandleClient(Psocket);
+        DBhandler = new JDBCHandler("org.postgresql.Driver","jdbc:postgresql://dbm.fe.up.pt/lpro1632","lpro1632","ttva32");
+
      }
    
 /** 
@@ -36,13 +40,10 @@ public class Game {
    
    public int create(int userid)
      {
-         int gameid = 0;
-         
-         if( 1 == 0 )
-         return 0;
-         
-         else 
-         return gameid;        
+          String query;
+          
+          query= "INSERT INTO games" + "VALUES (DEFAULT," + userid + ",0)";
+          return DBhandler.run(, query, null);
      }
      
      /** 
