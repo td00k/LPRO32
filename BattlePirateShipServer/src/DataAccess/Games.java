@@ -24,9 +24,10 @@ public class Games
                
     }
     
-    public int search(String query, Connection con,int userid)
+    public String[] search(String query, Connection con,int userid)
     {
-         try 
+         String[] toreturn = new String[3];
+        try 
         {
             Statement stmt;
             
@@ -75,7 +76,9 @@ public class Games
                     if( Math.abs(rank - temprank) < bestrank)
                     {   
                         bestrank = Math.abs(rank - temprank);
-                        gameid = tempgameid;
+                        toreturn[0] = Integer.toString(tempgameid);
+                        toreturn[1] = Integer.toString(tempuid);
+                        
                     }
                 }
             }
@@ -83,12 +86,13 @@ public class Games
             stmt.close();
           
             // if there were no games waiting for players, or if we got an SQLexception, we return -1, otherwise, we return the assigned gameid
-            return gameid;
+            return toreturn;
         } 
         catch (SQLException ex) 
         {
             System.out.println(ex);
-            return -1;
+            toreturn[0] = Integer.toString(-1);
+            return toreturn[0];
         }
     }
     

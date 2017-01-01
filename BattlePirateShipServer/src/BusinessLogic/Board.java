@@ -98,7 +98,7 @@ public class Board
   		return tosend;
   }
 
-  public int updateboard(String[] args)
+  public int update(String[] args)
   {
       String aux1 = args[1];
       int i,j;

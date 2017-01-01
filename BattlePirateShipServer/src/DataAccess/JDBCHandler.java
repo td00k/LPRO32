@@ -84,7 +84,7 @@ public class JDBCHandler
                             returnval[0] = Integer.toString(Uinfo.login(query,conn,args));
                             break;
             case SEARCH:
-                            returnval[0] = Integer.toString(games.search(query,conn,Integer.parseInt(args[0])));
+                            returnval = games.search(query,conn,Integer.parseInt(args[0]));
                             break;
             case CREATE:
                             returnval[0] = Integer.toString(games.create(query,conn));

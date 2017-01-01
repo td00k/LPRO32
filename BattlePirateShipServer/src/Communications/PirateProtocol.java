@@ -13,17 +13,18 @@ import java.lang.String;
 public class PirateProtocol 
 {
 
-    private final Authentication auth;
-    private final Game game;
-    private final Board board[][];
-    private final User userinfo;
+    private  Authentication auth;
+    private  Game[] game;
+    private  Matchmaking matchmaking;
+    private  User userinfo;
     
     public PirateProtocol()
     {
         auth = new Authentication();
-        game = new Game();
-        board = new Board[500][2];
+        game = new Game[500];
+        matchmaking = new Matchmaking();
         userinfo = new User();
+        
     }
     
      /**
@@ -74,7 +75,8 @@ public class PirateProtocol
             case "3":
                         
                         // quickgame
-                        received = game.quickgame(Integer.parseInt(decoded[1]));
+                        received = matchmaking.quickgame(Integer.parseInt(decoded[1]));
+                        
                         if(received[1].equals("ERROR"))
                         {
                             args[0] = "ERROR";
@@ -83,12 +85,14 @@ public class PirateProtocol
                         else
                         {
                             args[0] = received[2];
+                            game[received[1]].updatePlayers(Integer.parseInt(received[1]),Integer.parseInt(received[2]));
                         }
                         encoded = encode(Integer.parseInt(received[0]),args,1);
                         break;
             case "4":
                         // play with a friend
-                        received = game.playwithfriend(Integer.parseInt(decoded[1]),Integer.parseInt(decoded[2]));
+                        received = matchmaking.playwithfriend(Integer.parseInt(decoded[1]),Integer.parseInt(decoded[2]));
+                        
                         if(received[1].equals("ERROR"))
                         {
                             args[0] = "ERROR";
@@ -105,8 +109,8 @@ public class PirateProtocol
                         break;
             case "6":
                         // sendboard
-                        System.arraycopy(decoded,3,args,0,9);
-                        board[Integer.parseInt(decoded[1])][Integer.parseInt(decoded[2])].updateboard(args); 
+                        System.arraycopy(decoded,3,args,0,10);
+                        game[Integer.parseInt(decoded[1])].updateBoard(Integer.parseInt(decoded[2]),args); 
                         break;
             case "7":
                         // send shot
