@@ -14,9 +14,10 @@ import java.awt.event.ActionListener;
 public class Login extends javax.swing.JFrame {
 
    private final Authentication handler = new Authentication();
-   private int handler_return;
+   private String handler_return;
    private String user;
    private String pass;
+   private int userid;
 
  /** Creates new form Login, initializing components and action listener for Buttons and Text Box
      * 
@@ -139,10 +140,11 @@ public class Login extends javax.swing.JFrame {
         if( handler.validate(user,pass) ) //return will be true if user and pass are valid, false otherwise
             {
                         handler_return = handler.login(user,pass); //checking if login is successful
-                        if(handler_return == 1)
+                        if(!handler_return.equals("ERROR"))
                         {
+                            userid = Integer.parseInt(handler_return);
                             JOptionPane.showMessageDialog(null,"Welcome " + user + "!");
-                            MainView on = new MainView();
+                            MainView on = new MainView(userid);
                             on.setVisible(true);
                             this.dispose();
                         }

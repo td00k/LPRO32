@@ -20,13 +20,9 @@ public class Authentication
    private static final int REGISTER = 1;
    private static final int LOGIN = 2;
     
-   // Error code definitions
-   private static final int ERROR = -1;     // code for signaling an error
-   private static final int OK = 1;         // code for signaling there were no problems
-   private static final int EX_ERROR = -2;  // code for signaling there was an error on an exception
     
    // Handler variable for the DB
-   private JDBCHandler DBhandler;
+   private static JDBCHandler DBhandler;
 
    // Query we are executing on the database
    private String query;
@@ -75,6 +71,7 @@ public class Authentication
                           if(check == 1)
                           {
                               toreturn[1] = "OK";
+                              toreturn[2] = Integer.toString(check);
                           }
                           else
                           {
@@ -95,7 +92,7 @@ public class Authentication
          * @param question security question passed to the query
          * @param answer answer to the security question passed to the query
          * 
-         * @return 1 on success, 0 on failure
+         * @return a string[] containing either "OK" or "ERROR" 
          */
     
     public int register(String name, String user, String pass, String email, String question, String answer)
@@ -104,12 +101,11 @@ public class Authentication
         query = "INSERT INTO userinfo " + "VALUES (DEFAULT,'"+ name +"','"+ user +"','"+ email +"','"+ pass +"','"+ question +"','"+ answer +"')";
         System.out.println("Executing" + query + "On the database");
         
+        String[] received;
+        
         // variable to check the return of the handler function
-        if ( DBhandler.run(REGISTER,query,null) == OK)
-            return OK;
-        return ERROR;
-        
-        
+        received = DBhandler.run(REGISTER,query,null);
+        return Integer.parseInt(received[0]);
     }   
     
        /** This method creates a query to check if there is an user in the database with name user
@@ -118,7 +114,7 @@ public class Authentication
         * @param user Username of the user trying to login
         * @param pass Password of the user trying to login ( already encrypted ! )
         * 
-        * @return 1 on success and 0 on failure
+        * @return userid on success and -1 on failure
         */
     
     public int login(String user, String pass)  
@@ -133,12 +129,34 @@ public class Authentication
         // placing the data on args so we can pass it to the handler.
         args[0] = user; 
         args[1] = pass; 
+        String[] received;
         
-        if ( DBhandler.run(LOGIN,query,args) == OK)
-            return OK;
-        return ERROR;
+        received = DBhandler.run(LOGIN,query,args);
+        return Integer.parseInt(received[0]);
+        
     }   
     
+    public String[] get(int userid)
+    {
+      String query;
+      String[] toreturn = new String[4];
+     
+      query= "SELECT * " + "FROM userinfo" + "WHERE id =" + userid;
+      String[] received;
+      received = DBhandler.run(9,query,null);
+      
+      toreturn[0] = ""+9;
+      if(received[0].equals("-1"))
+      {
+          toreturn[1] = "ERROR"; 
+      }
+      else
+      {
+          System.arraycopy(received, 0, toreturn, 1, 3);
+      }
+         
+      return toreturn;  
+    }
     
 }
 

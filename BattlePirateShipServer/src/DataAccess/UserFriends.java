@@ -12,17 +12,31 @@ import java.sql.Statement;
 
 /**
  *
- * @author tiagodias
  */
 public class UserFriends 
 {
 
-     public boolean addfriend(String query, Connection con)
-       {
-           
+    /**
+     * 
+     */
+    public UserFriends()
+    {
+                
+    }
+    
+    /** This method adds a friend to a user's friends list( the query is already set to do this)
+     * 
+     * @param query string to be executed on the db
+     * @param con connection to the db
+     * 
+     * @return 1 on success, 0 on failure
+     */
+    
+    public int addfriend(String query, Connection con)
+    {   
         try
         {
-          Statement stmt;
+            Statement stmt;
             
             // creating a statement so we can execute a query on the DB
             stmt = con.createStatement();
@@ -32,28 +46,34 @@ public class UserFriends
             stmt.execute(query);                   
             System.out.println("Valid UPDATE userfriends Query!");
             
-            // closing the statement
+            // closing the statement since we don't need it anymore
             stmt.close();
             
-            return true;
-           
+            return 1;
         }
         catch(SQLException ex)
         {
-            return false;
+            System.out.println("Error SQL Exception!");
+            return -1;
         }
         
-       }   
+    }   
      
-     
-     public String[] getfriends(String query, Connection con)
-        {
+     /** This method fetches all the user friends for a given userid ( the userid is already placed on the query string).
+      * 
+      * @param query query we will be executing on the database
+      * @param con connection to the database
+      * 
+      * @return all the user friends or -1 on error
+      */
     
-            try
+    public String[] getfriends(String query, Connection con)
+    {
+        String[] toreturn = null;
+        try
         {
-          Statement stmt;
-          String[] toreturn = null;
-         
+            Statement stmt;
+            
             // creating a statement so we can execute a query on the DB
             stmt = con.createStatement();
             System.out.println("Query statement created!");
@@ -62,27 +82,27 @@ public class UserFriends
             stmt.execute(query);                   
             System.out.println("Valid Userstats GETfriends Query!");
             
-             ResultSet rs = stmt.executeQuery(query);
-                
-                     toreturn[0] =  Integer.toString( rs.getInt("id") );
-                     toreturn[1] =  Integer.toString( rs.getInt("state") );
-                     toreturn[2] =  Integer.toString( rs.getInt("friendname") );
- 
-                     
-            // closing the statement
+            // executing the query 
+            ResultSet rs = stmt.executeQuery(query);
+            
+            while(rs.next())
+            {
+                // fetching the results
+                toreturn[0] =  Integer.toString( rs.getInt("id") );
+                toreturn[1] =  Integer.toString( rs.getInt("state") );
+                toreturn[2] =  Integer.toString( rs.getInt("friendname") );
+            }
+            // closing the statement since we don't need it anymore
             stmt.close();
-            
-            
-       
-           return toreturn ;
         }
         catch(SQLException ex)
         {
-            return null;
-        }
-            
-            
-        }
+            System.out.println("Error SQL Exception!");
+            toreturn[0] = Integer.toString(-1);
+        }  
+        return toreturn;
+    }
 
     
 }
+

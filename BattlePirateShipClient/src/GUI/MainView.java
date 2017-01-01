@@ -2,6 +2,7 @@
 package GUI;
 
 import BusinessLogic.Game;
+import BusinessLogic.User;
   /** 
      *  This class contains the interface for the Main Menu where the player can see his stats and decide to start or watch a game.
      */
@@ -9,14 +10,71 @@ import BusinessLogic.Game;
 public class MainView extends javax.swing.JFrame {
 
     private final Game gamehandler;
+    private final User userinfo;
     private int gameid;
     private int userid;
     
-    public MainView() {
+    public MainView(int userid) {
         initComponents();
+        this.userid = userid;
         gamehandler = new Game();
+        userinfo = new User();
+        fillPlayerInfo();
+        
+        
+    }
+    
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(First.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(First.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(First.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(First.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new MainView(1).setVisible(true);
+            }
+        });
     }
 
+    private int fillPlayerInfo()
+    {
+         String[] info = userinfo.get(userid);
+         if(info == null)
+         {
+             return -1;
+         }
+         //userinfo.getFriends(userid);
+         
+         UsernameText.setText(info[2]);
+         GamesPlayedText.setText(info[4]);
+         WinsText.setText(info[5]);
+         DefeatsText.setText(info[6]);
+         SurrendersText.setText(info[7]);
+         RankingText.setText(info[8]);
+         PlayerID.setText(""+userid);
+           
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -31,21 +89,23 @@ public class MainView extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         jTable3 = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
-        PlayerID = new javax.swing.JLabel();
+        IDLabel = new javax.swing.JLabel();
         Ranking = new javax.swing.JLabel();
-        jButton14 = new javax.swing.JButton();
+        RankingText = new javax.swing.JButton();
         Surrenders = new javax.swing.JLabel();
         Defeats = new javax.swing.JLabel();
         Wins = new javax.swing.JLabel();
         GamesPlayed = new javax.swing.JLabel();
-        jButton11 = new javax.swing.JButton();
-        jButton12 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
+        SurrendersText = new javax.swing.JButton();
+        DefeatsText = new javax.swing.JButton();
+        WinsText = new javax.swing.JButton();
+        GamesPlayedText = new javax.swing.JButton();
         Username = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jButton3 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        UsernameText = new javax.swing.JTextPane();
+        PlayerID = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -151,18 +211,18 @@ public class MainView extends javax.swing.JFrame {
         jButton2.setText("AVATAR");
         jButton2.setToolTipText("");
 
-        PlayerID.setBackground(new java.awt.Color(51, 51, 51));
-        PlayerID.setForeground(new java.awt.Color(204, 204, 0));
-        PlayerID.setText("#ID201605017");
+        IDLabel.setBackground(new java.awt.Color(51, 51, 51));
+        IDLabel.setForeground(new java.awt.Color(204, 204, 0));
+        IDLabel.setText("userID #");
 
         Ranking.setFont(new java.awt.Font("Charlemagne Std", 0, 12)); // NOI18N
         Ranking.setForeground(new java.awt.Color(255, 255, 255));
         Ranking.setText("RANking");
 
-        jButton14.setText("10");
-        jButton14.addActionListener(new java.awt.event.ActionListener() {
+        RankingText.setText("10");
+        RankingText.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton14ActionPerformed(evt);
+                RankingTextActionPerformed(evt);
             }
         });
 
@@ -182,20 +242,18 @@ public class MainView extends javax.swing.JFrame {
         GamesPlayed.setForeground(new java.awt.Color(255, 255, 255));
         GamesPlayed.setText("Games played");
 
-        jButton11.setText("0");
+        SurrendersText.setText("0");
 
-        jButton12.setText("2");
-        jButton12.addActionListener(new java.awt.event.ActionListener() {
+        DefeatsText.setText("2");
+        DefeatsText.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton12ActionPerformed(evt);
+                DefeatsTextActionPerformed(evt);
             }
         });
 
-        jButton1.setText("3");
+        WinsText.setText("3");
 
-        jButton5.setText("5");
-
-        jTextField1.setFont(new java.awt.Font("Charlemagne Std", 0, 12)); // NOI18N
+        GamesPlayedText.setText("5");
 
         Username.setFont(new java.awt.Font("Charlemagne Std", 0, 12)); // NOI18N
         Username.setForeground(new java.awt.Color(255, 255, 255));
@@ -210,6 +268,12 @@ public class MainView extends javax.swing.JFrame {
             }
         });
 
+        jScrollPane1.setViewportView(UsernameText);
+
+        PlayerID.setBackground(new java.awt.Color(51, 51, 51));
+        PlayerID.setForeground(new java.awt.Color(204, 204, 0));
+        PlayerID.setText("0");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -221,30 +285,32 @@ public class MainView extends javax.swing.JFrame {
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addComponent(Username))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(Wins)
                                     .addComponent(GamesPlayed)
                                     .addComponent(Defeats)
                                     .addComponent(Surrenders)
-                                    .addComponent(Ranking))))
-                        .addGap(10, 10, 10)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(Ranking))
+                                .addGap(10, 10, 10)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(RankingText, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(DefeatsText, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(SurrendersText, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(WinsText, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(GamesPlayedText, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(20, 20, 20)
+                                .addComponent(Username)
+                                .addGap(18, 18, 18)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(PlayerID, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(IDLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(PlayerID, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(24, 24, 24)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
@@ -282,35 +348,36 @@ public class MainView extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(10, 10, 10)
-                                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGap(20, 20, 20)
-                                        .addComponent(Username)))
-                                .addGap(16, 16, 16)
+                                        .addComponent(Username)
+                                        .addGap(16, 16, 16))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(GamesPlayed)
-                                    .addComponent(jButton5))
+                                    .addComponent(GamesPlayedText))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(Wins)
-                                    .addComponent(jButton1))
+                                    .addComponent(WinsText))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(Defeats)
-                                    .addComponent(jButton12))
+                                    .addComponent(DefeatsText))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(Surrenders)
-                                    .addComponent(jButton11))
+                                    .addComponent(SurrendersText))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jButton14)
+                                    .addComponent(RankingText)
                                     .addComponent(Ranking)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(PlayerID)))
+                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(IDLabel)
+                            .addComponent(PlayerID))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -418,13 +485,13 @@ public class MainView extends javax.swing.JFrame {
       
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
+    private void DefeatsTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DefeatsTextActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton12ActionPerformed
+    }//GEN-LAST:event_DefeatsTextActionPerformed
 
-    private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
+    private void RankingTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RankingTextActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton14ActionPerformed
+    }//GEN-LAST:event_RankingTextActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         // TODO add your handling code here:
@@ -451,9 +518,9 @@ public class MainView extends javax.swing.JFrame {
     
     private void QuickGameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_QuickGameButtonActionPerformed
         // TODO add your handling code here:
- 
+        
         gameid = gamehandler.quickgame(userid);
-        InGame game= new InGame(gameid);
+        InGame game= new InGame(gameid,userid);
         game.setVisible(true);
     }//GEN-LAST:event_QuickGameButtonActionPerformed
 
@@ -494,23 +561,25 @@ public class MainView extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Defeats;
+    private javax.swing.JButton DefeatsText;
     private javax.swing.JLabel GamesPlayed;
+    private javax.swing.JButton GamesPlayedText;
+    private javax.swing.JLabel IDLabel;
     private javax.swing.JButton LogoutButton;
     private javax.swing.JButton PlayWithFriendButton;
     private javax.swing.JLabel PlayerID;
     private javax.swing.JButton QuickGameButton;
     private javax.swing.JLabel Ranking;
+    private javax.swing.JButton RankingText;
     private javax.swing.JLabel Surrenders;
+    private javax.swing.JButton SurrendersText;
     private javax.swing.JLabel Username;
+    private javax.swing.JTextPane UsernameText;
     private javax.swing.JButton WatchGameButton;
     private javax.swing.JLabel Wins;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton14;
+    private javax.swing.JButton WinsText;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton5;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -523,9 +592,9 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable3;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }

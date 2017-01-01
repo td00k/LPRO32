@@ -16,29 +16,87 @@ public class Board
   
   public Board()
   {
-      
+      int i,j;
+      for(i=0;i<10;i++)
+      {
+    		for(j=0;j<10;j++)
+    		{
+    			positions[i][j] = 0;
+    		}
+      }
   }
     
   
-  public boolean shot(int xpos, int ypos)
+  public String[] shot(int xpos, int ypos)
   {
-      return true;
+  		String[] tosend = new String[2];
+  		switch(positions[xpos][ypos])
+  		{
+  			case -1:
+  						// position already hit before
+  						tosend[0] = Integer.toString(7);
+  						tosend[0] = Integer.toString(-1);
+  						break;
+  			case 0:
+  						// water hit
+  						tosend[0] = Integer.toString(7);
+  						tosend[0] = Integer.toString(0);
+  						misses++;
+  						break;
+  			case 1:
+  						// hit one of the 3 health ships
+  						tosend[0] = Integer.toString(7);
+  						tosend[0] = Integer.toString(1);
+  						hits++;
+  						if(hits == 17)
+  						{
+  							// game over
+  						}
+  						break;
+  			case 2:
+  						// hit the 2 health ship
+  						tosend[0] = Integer.toString(7);
+  						tosend[0] = Integer.toString(2);
+  						hits++;
+  						if(hits == 17)
+  						{
+  							// game over
+  						}
+  						break;
+  			case 3:
+  						// hit the other 3 health ship
+  						tosend[0] = Integer.toString(7);
+  						tosend[0] = Integer.toString(3);
+  						hits++;
+  						if(hits == 17)
+  						{
+  							// game over
+  						}
+  						break;
+  			case 4:
+  						// hit the 4 health ship
+  						tosend[0] = Integer.toString(7);
+  						tosend[0] = Integer.toString(4);
+  						hits++;
+  						if(hits == 17)
+  						{
+  							// game over
+  						}
+  						break;
+  		    case 5:
+  		    			// hit the 5 health ship
+  		    			tosend[0] = Integer.toString(7);
+  						tosend[0] = Integer.toString(5);
+  						hits++;
+  						if(hits == 17)
+  						{
+  							// game over
+  						}
+  		    			break;
+  		}
+  		return tosend;
   }
-  
-    /** 
-     * This method's aim is to place the ships on board.
-     * 
-     * @return true if everything went ok, false if there was an error
-     */  
-  
-  
-  public boolean PlaceShips()
-  {
-      return true;
-  }
-  
-  public boolean update()
-  {
-      return true;
-  }
+
+  public int
+
 }

@@ -22,10 +22,10 @@ public class UserInfo
      * @param query query to be executed
      * @param con connection to the database
      * 
-     * @return true on success, false on failure
+     * @return 1 on success, -1 on failure
      */
     
-    public boolean register(String query, Connection con)
+    public int register(String query, Connection con)
     {
         try 
         {
@@ -43,12 +43,12 @@ public class UserInfo
             // closing the statement
             stmt.close();
             
-            return true;
+            return 1;
         } 
         catch (SQLException ex) 
         {
             System.out.println(ex);
-            return false;
+            return -1;
         }
     }
     
@@ -58,53 +58,92 @@ public class UserInfo
      * @param con connection to the database
      * @param args string that contains the username and password to be compared with what is on the database
      * 
-     * @return true on success, false on failure
+     * @return userid on success, -1 on failure
      */
-    public boolean login(String query, Connection con, String args[])
+    public int login(String query, Connection con, String args[])
     {
         try 
         {
-            Statement stmt; 
+            Statement stmt;
             
             // creating a statement so we can execute a query on the DB
            
             stmt = conn.createStatement();
             System.out.println("Query statement created!");
             
-             // executing the query
-             ResultSet rs = stmt.executeQuery(query);
-             String username;
-             String password;
-             int uid;
+            // executing the query
+            ResultSet rs = stmt.executeQuery(query);
+            String username;
+            String password;
+            int uid;
                                    
-             //going through the whole table in database
-             while (rs.next()) 
-             {
-                //getting the id, username and password
-                uid = rs.getInt("id");
-                username = rs.getString("username");
-                password = rs.getString("password");
-
-                //comparing the results to see if the user is in the database
-                if( username.equals(args[0]) && password.equals(args[1]) )
-                {
-                 // We found the user in the database
-                 stmt.close();
-                 return true;
-                }
-                
+            //going through the whole table in database
+            while (rs.next()) 
+            {
+               //getting the id, username and password
+               uid = rs.getInt("id");
+               username = rs.getString("username");
+               password = rs.getString("password");
+               
+               //comparing the results to see if the user is in the database
+               if( username.equals(args[0]) && password.equals(args[1]) )
+               {
+                // We found the user in the database
+                stmt.close();
+                return uid;
                }
+                
+            }
             
             //closing the statement
             stmt.close();
             
-            return false;
+            return -1;
         } 
         catch (SQLException ex) 
         {
             System.out.println(ex);
-            return false;
+            return -1;
         }
         
     }
+    
+     public String[] get(String query, Connection con)
+    {
+        String[] toreturn = new String[3];
+        try
+        {
+            Statement stmt;
+            
+         
+            // creating a statement so we can execute a query on the DB
+            stmt = con.createStatement();
+            System.out.println("Query statement created!");
+            
+            // executing the Query
+            stmt.execute(query);                   
+            System.out.println("Valid Userinfo GETSTATS Query!");
+            
+            // executing the query
+            ResultSet rs = stmt.executeQuery(query);
+            
+            // extracting results
+            toreturn[0] =  Integer.toString(rs.getInt("id"));
+            toreturn[1] =  Integer.toString(rs.getInt("name"));
+            toreturn[2] =  Integer.toString(rs.getInt("username"));
+                    
+            // closing the statement since we don't need to use it anymore
+            stmt.close();
+            
+            // returning
+            return toreturn ;
+        }
+        catch(SQLException ex)
+        {
+            toreturn[0] = Integer.toString(-1);
+            return toreturn;
+        }
+    }
+    
+    
 }

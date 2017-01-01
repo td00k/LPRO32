@@ -11,11 +11,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.Color;
+import BusinessLogic.Board;
+import BusinessLogic.Game;
+import BusinessLogic.Ship;
 
-public class Grid extends JPanel implements ActionListener{
+public class Grid extends JPanel {
 
-  /*public static void main(String[] args) {
-        Grid g = new Grid();
+  public static void main(String[] args) {
+        Grid g = new Grid("player",1,1);
         JFrame frame = new JFrame();
         frame.add(g);
         frame.setSize(400,400);
@@ -24,80 +27,78 @@ public class Grid extends JPanel implements ActionListener{
         g.setFocusable(true);
         g.requestFocus();
         g.placePlayerShips();
-    }*/
-
-    private Cell squares[][];
-    private boolean horizontal;
+    }
+    
+    private final Cell squares[][];
+    
     private int size;
     private boolean ShipPlaced;
-    private boolean keyToggled;
+    
+    private boolean ListenerEnable;
+    static boolean playerReady;
+    private Game game;
+    private Board gameBoard;
+    private Ship gameShip;
+    
+    public boolean keyToggled;
+    public boolean vertical;
+    public int gameid, userid, shipid;
 
-    public Grid(String player){
+    public Grid(String player, int gameid, int userid){
+        
         this.setSize(300,300);
         this.setLayout(new GridLayout(10,10));
+        
         squares = new Cell[10][10];
-        buildButtons();
-        horizontal = false;
+        buildButtons(player);
+        
+        vertical = false;
         size = 5;  
         ShipPlaced = false;
+        ListenerEnable = false;
+        //gameBoard = new Board();
+        
        
     }
 
-    private void buildButtons()
+    private void buildButtons(String player)
     {
         int i=0,j=0;
         for(i=0;i<10;i++)
         {
             for(j=0;j<10;j++)
             {
-                final Cell cell = new Cell(j,i);
-                squares[j][i] = cell;
-               // squares[i][j].setSize(400,400);
-                this.add(squares[j][i]);
-                createMListener(squares[j][i]);
+                squares[i][j] = new Cell(i,j);
+                if (player.equals("enemy"))
+                {
+                    squares[i][j].setBackground(Color.GRAY);
+                }
+                this.add(squares[i][j]);
+                createMListener(squares[i][j],player);
             }
         }
-    
-        this.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                System.out.println("H Key Typed!");
-            }
-
-            @Override
-            public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_H) 
-                {
-                    horizontal = !horizontal;
-                    keyToggled = true;
-                    System.out.println("H Key pressed!");
-                }
-            }
-
-            @Override
-            public void keyReleased(KeyEvent e) {
-            }
-        });
-        
     }
 
     public void placeShip(MouseEvent e, Cell cell) {
         // handle the event, for instance
        // cell.setBackground(Color.blue);
+       
+    
+       
         int xpos = cell.getXPos();
         int ypos = cell.getYPos();
         
         Color paint = Color.GREEN;
         
-        if(!horizontal)
+        if(!vertical)
         {
-            if((xpos + size-1) > 9)
+            if((ypos + size-1) > 9)
             {
                 return;
             }
             for(int i=0;i<size;i++)
             {
-                if(squares[ypos][xpos+i].clickflag == true)
+                if(squares[xpos][ypos+i].clickflag == true)
                 {
                    paint = Color.RED;
                    break;
@@ -106,9 +107,12 @@ public class Grid extends JPanel implements ActionListener{
             for(int i=0;i<size;i++)
             {
 
-                   squares[ypos][xpos+i].setBackground(paint);
+                   squares[xpos][ypos+i].setBackground(paint);
                    if(paint == Color.GREEN)
-                   squares[ypos][xpos+i].clickflag = true;
+                   {
+                        squares[xpos][ypos+i].clickflag = true;
+                        gameBoard.positions[xpos][ypos+i] = shipid; 
+                   }
             }
             if(paint == Color.GREEN)
             {
@@ -117,15 +121,15 @@ public class Grid extends JPanel implements ActionListener{
             }
             return;
         }
-        else if(horizontal)
+        else if(vertical)
         {
-            if((ypos + size-1) > 9)
+            if((xpos + size-1) > 9)
             {
                 return;
             }
              for(int i=0;i<size;i++)
             {
-                if(squares[ypos+i][xpos].clickflag == true)
+                if(squares[xpos+i][ypos].clickflag == true)
                 {
                    paint = Color.RED;
                    break;
@@ -134,9 +138,12 @@ public class Grid extends JPanel implements ActionListener{
             }
             for(int i=0;i<size;i++)
             {
-                   squares[ypos+i][xpos].setBackground(paint);
+                   squares[xpos+i][ypos].setBackground(paint);
                    if(paint == Color.GREEN)
-                   squares[ypos+i][xpos].clickflag = true;
+                   {
+                        squares[xpos+i][ypos].clickflag = true;
+                        gameBoard.positions[xpos+i][ypos] = shipid;
+                   }
             }
             if(paint == Color.GREEN)
             {
@@ -144,10 +151,10 @@ public class Grid extends JPanel implements ActionListener{
                  System.out.println("Ship Placed!");
             }
             return;
-        }   
+        }  
     }
     
-    public void mouseExited(Cell cell) 
+    public void mouseExitedPlayerGrid(Cell cell) 
    {
 
         int xpos = cell.getXPos();
@@ -155,34 +162,34 @@ public class Grid extends JPanel implements ActionListener{
         Color paint = Color.CYAN;     
         if(keyToggled)
         {
-            horizontal = !horizontal;
+            vertical = !vertical;
         }
-        if( !horizontal && !(xpos + size-1 > 9) )
+        if( !vertical && !(ypos + size-1 > 9) )
         {
             for(int i=0;i<size;i++)
             {
-                if(squares[ypos][xpos+i].clickflag == false)
+                if(squares[xpos][ypos+i].clickflag == false)
                 {
-                    squares[ypos][xpos+i].setBackground(paint);
+                    squares[xpos][ypos+i].setBackground(paint);
                 }
                 else
                 {
-                    squares[ypos][xpos+i].setBackground(Color.GREEN);
+                    squares[xpos][ypos+i].setBackground(Color.GREEN);
                 }
             }
         }
-        else if(horizontal && !(ypos + size-1 > 9))
+        else if(vertical && !(xpos + size-1 > 9))
         {
 
             for(int i=0;i<size;i++)
             {
-                if(squares[ypos+i][xpos].clickflag == false)
+                if(squares[xpos+i][ypos].clickflag == false)
                 {
-                    squares[ypos+i][xpos].setBackground(paint);
+                    squares[xpos+i][ypos].setBackground(paint);
                 } 
                 else
                 {
-                    squares[ypos+i][xpos].setBackground(Color.GREEN);
+                    squares[xpos+i][ypos].setBackground(Color.GREEN);
                 }
             }
         }
@@ -191,49 +198,29 @@ public class Grid extends JPanel implements ActionListener{
         }    
         if(keyToggled)
         {
-            horizontal = !horizontal;
+            vertical = !vertical;
             keyToggled = false;
         }
             return; 
     }    
     
     
-    public void mouseEntered(Cell cell) {
-    	//We only handle horizontal ship placement right now!
+    public void mouseEnteredPlayerGrid(Cell cell) {
+    	//We only handle vertical ship placement right now!
         int xpos = cell.getXPos();
         int ypos = cell.getYPos();
         
         Color paint = Color.GREEN;
         
-        if(!horizontal)
-        {
-            if((xpos + size-1) > 9)
-            {
-                return;
-            }
-            for(int i=0;i<size;i++)
-            {
-                if(squares[ypos][xpos+i].clickflag == true)
-                {
-                   paint = Color.RED;
-                   break;
-                }
-            }
-            for(int i=0;i<size;i++)
-            {
-                   squares[ypos][xpos+i].setBackground(paint);
-            }
-            return;
-        }
-        if(horizontal)
+        if(!vertical)
         {
             if((ypos + size-1) > 9)
             {
                 return;
             }
-             for(int i=0;i<size;i++)
+            for(int i=0;i<size;i++)
             {
-                if(squares[ypos+i][xpos].clickflag == true)
+                if(squares[xpos][ypos+i].clickflag == true)
                 {
                    paint = Color.RED;
                    break;
@@ -241,78 +228,148 @@ public class Grid extends JPanel implements ActionListener{
             }
             for(int i=0;i<size;i++)
             {
-                   squares[ypos+i][xpos].setBackground(paint);
+                   squares[xpos][ypos+i].setBackground(paint);
+            }
+            return;
+        }
+        if(vertical)
+        {
+            if((xpos + size-1) > 9)
+            {
+                return;
+            }
+             for(int i=0;i<size;i++)
+            {
+                if(squares[xpos+i][ypos].clickflag == true)
+                {
+                   paint = Color.RED;
+                   break;
+                }
+            }
+            for(int i=0;i<size;i++)
+            {
+                   squares[xpos+i][ypos].setBackground(paint);
             }
             return;
         }   
     }
     
-    
-    public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
-    }
-
-    
-    public int[][] getPositions()
+    public void mouseEnteredEnemyGrid(Cell cell) 
     {
-        int[][] positions = new int [10][10];
+        int xpos = cell.getXPos();
+        int ypos = cell.getYPos();
+        
+        if(!squares[xpos][ypos].clickflag)
+        squares[xpos][ypos].setBackground(Color.YELLOW);
+        else
+        squares[xpos][ypos].setBackground(Color.RED);
+    }
     
-        for(int i=0;i<10;i++)
+    public void mouseExitedEnemyGrid(Cell cell) 
+    {
+        int xpos = cell.getXPos();
+        int ypos = cell.getYPos();
+
+        if(!squares[xpos][ypos].clickflag)
+        squares[xpos][ypos].setBackground(Color.GRAY);
+        else
+        squares[xpos][ypos].setBackground(Color.YELLOW);
+    }
+    
+    public void sendShot(Cell cell) 
+    {
+        int xpos = cell.getXPos();
+        int ypos = cell.getYPos();
+        
+        Color paint = Color.YELLOW;
+        String result = "hitalive";//gameBoard.shot(xpos,ypos);
+         if(!squares[xpos][ypos].clickflag)
         {
-            for(int j=0;j<10;j++)
+            if(result.equals("hitalive"))
             {
-                if(squares[j][i].clickflag == true)
-                {
-                    positions[j][i] = 1;
-                }
-                else
-                {
-                    positions[j][i] = 0;
-                }
+                squares[xpos][ypos].setBackground(Color.YELLOW);
             }
+            else if(result.equals("hitdead"))
+            {
+                squares[xpos][ypos].setBackground(paint);
+            }
+            else
+            {
+                squares[xpos][ypos].setBackground(paint);
+            }
+            
+        squares[xpos][ypos].clickflag = true;
         }
-        return positions;
-    }   
+        if(!squares[xpos][ypos].clickflag)
+        {
+        squares[xpos][ypos].setBackground(paint);
+        squares[xpos][ypos].clickflag = true;
+        }
+        /*ListenerEnable = false;
+          
+        */
+    }
+    
+    public void doShots() 
+    {
+        ListenerEnable = true;
+        /*
+        String result;
+        gameBoard.sendShot();
+        */
+        
+    }
+    
     
     public void placePlayerShips()
     {
        int i=0, j=0;
        int[] shipsizes = new int[]{5,4,3,3,2}; 
+       int[] shipids = new int[]{5,4,3,1,2};
        for(j=0;j<5;j++)
        {
             size = shipsizes[j];
+            shipid = shipids[j];
             System.out.println("Waiting Ship placement!");
-            while(!ShipPlaced)   
+            while(ShipPlaced == false)   
             {
-                System.out.println("");
+                try {
+                Thread.sleep(10); // for 100 FPS
+                } 
+                catch (InterruptedException ignore) 
+                {
+                }
             }
             System.out.println("Out of while!");
             ShipPlaced = false;
        }
        removeMListener();
+       gameBoard.Sendboard(gameid, userid);
        return;
     }  
     
-     public void getOpponentShips()
+     public void getOpponentShot()
     {
        
     } 
      
      
-    public void createMListener(Cell cell)
-     {
-       cell.Mlistener =  new MouseListener() {
+    public void createMListener(Cell cell,String player)
+    {
+       if(player.equals("player"))
+       {
+         cell.Mlistener =  new MouseListener() {
                     public void mouseClicked(MouseEvent e) {
                         
                     }
                     @Override
                     public void mouseEntered(MouseEvent arg0) {
-                            Grid.this.mouseEntered(cell);
+                            Grid.this.mouseEnteredPlayerGrid(cell);
                     }
 
                     @Override
                     public void mouseExited(MouseEvent arg0) {
-                            Grid.this.mouseExited(cell);
+                            Grid.this.mouseExitedPlayerGrid(cell);
                     }
 
                     @Override
@@ -326,7 +383,39 @@ public class Grid extends JPanel implements ActionListener{
                     }
                 };
                 cell.addMouseListener(cell.Mlistener);
-     }
+        }
+       else
+       {
+           cell.Mlistener =  new MouseListener() {
+                    public void mouseClicked(MouseEvent e) {
+                        
+                    }
+                    @Override
+                    public void mouseEntered(MouseEvent arg0) {
+                        if(ListenerEnable)   
+                        Grid.this.mouseEnteredEnemyGrid(cell);
+                    }
+
+                    @Override
+                    public void mouseExited(MouseEvent arg0) {
+                            if(ListenerEnable)
+                            Grid.this.mouseExitedEnemyGrid(cell);
+                    }
+
+                    @Override
+                    public void mousePressed(MouseEvent e) 
+                    {
+                        if(ListenerEnable)
+                        Grid.this.sendShot(cell);
+                    }
+
+                    @Override
+                    public void mouseReleased(MouseEvent arg0) {
+                    }
+                };
+                cell.addMouseListener(cell.Mlistener);
+       }
+    }
      
      private void removeMListener()
      {

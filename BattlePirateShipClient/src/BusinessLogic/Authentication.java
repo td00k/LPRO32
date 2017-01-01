@@ -112,7 +112,7 @@ public class Authentication  {
         * @see Communications.SocketClient#receive()
         */
     
-    public int login(String user, String pass) 
+    public String login(String user, String pass) 
     {
         
        // String variables
@@ -132,17 +132,17 @@ public class Authentication  {
        if (decoded[0].equals("2") && decoded[1].equals("OK"))
        {
           // User logged in successfully
-          return 1; 
+          return decoded[2]; 
        }
        else if (decoded[0].equals("2") && decoded[1].equals("ERROR"))
        {
            // Error while trying to login the user
-           return 0;
+           return decoded[1];
        }
        else 
        {
            // Unkown error occurred
-           return -1; 
+           return "ERROR";
        }
       
     }

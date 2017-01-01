@@ -35,18 +35,29 @@ public class User
       DBhandler = new JDBCHandler("org.postgresql.Driver","jdbc:postgresql://dbm.fe.up.pt/lpro1632","lpro1632","ttva32");                                   
   }
   
-  public int get(int userid)
+  public String[] get(int userid)
   {
       String query;
-      String[] toreturn;
-     
+      String[] toreturn = new String[8];
+      
       query= "SELECT * " + "FROM userstats" + "WHERE id =" + userid;
-     
-      return DBhandler.run(9,query,null);   
+      String[] received;
+      received = DBhandler.run(9,query,null);
+      toreturn[0] = ""+9;
+        if(received[0].equals("-1"))
+      {
+          toreturn[1] = "ERROR"; 
+      }
+      else
+      {
+          System.arraycopy(received, 0, toreturn, 1, 7);
+      }
+        
+      return toreturn;   
   }
   
   
-  public int updateinfo(String[] args)
+  public String[] updateinfo(String[] args)
   {
       String query;
       query = "UPDATE userstats SET ";
@@ -70,7 +81,7 @@ public class User
     }
   
   
-    public int getfriends(int userid)
+    public String[] getfriends(int userid)
      {
         String query;
         String[] toreturn;
@@ -81,7 +92,7 @@ public class User
           
      }   
     
-    public int addfriend(int userid, int userid2)
+    public String[] addfriend(int userid, int userid2)
      {
         String query;
         String[] toreturn;

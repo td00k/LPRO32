@@ -10,8 +10,6 @@ import Communications.SocketClient;
   
 public class Game
 {
-    
-   private static int GamesCount;
    private static int player1;
    private static int player2;
    private static int time;
@@ -52,10 +50,10 @@ public class Game
          received = pirate.run(3,tosend,1);
          
          // checking what was received
-         if(received[1] == "OK")
+         if(!received[1].equals("ERROR"))
          {
              // returning the gameid
-             return Integer.parseInt(received[2]);
+             return Integer.parseInt(received[1]);
          }
          else
          {
@@ -125,6 +123,10 @@ public class Game
             return -1;
         }
         
-        
     }
+    
+        public int addfriend()
+        {
+            return 1;
+        }
 }

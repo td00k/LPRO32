@@ -9,19 +9,10 @@ import Communications.PirateProtocol;
         
 public class User 
 {
-  private static int userid; 
-  private static String name;
-  private static String username; 
-  private static int rank; 
-  private static int wins; 
-  private static int defeats; 
-  private static int gamesplayed; 
-  private static int surrenders; 
-  
   PirateProtocol pirate;
+  
   public User()
   {
-      
       pirate = new PirateProtocol();
       
   }
@@ -30,8 +21,18 @@ public class User
   {
       String[] tosend = new String[1];
       tosend[0] = Integer.toString(userid);
+     
+      String[] received = new String[20];
+      received = pirate.run(9,tosend,1);
       
-      return pirate.run(9,tosend,1);
+      if(!received[1].equals("ERROR"))
+      {
+           return received;
+      }
+      else
+      {
+          return null;
+      }
   }
     
   public String[] getFriends(int userid)
@@ -39,6 +40,17 @@ public class User
     String[] tosend = new String[1];
     tosend[0] = Integer.toString(userid);
       
-    return pirate.run(10,tosend,1);
+    String[] received = new String[20];
+    received = pirate.run(10,tosend,1);
+    
+     if(!received[1].equals("ERROR"))
+      {
+           return received;
+      }
+      else
+      {
+          return null;
+      }
+    
   }    
 }

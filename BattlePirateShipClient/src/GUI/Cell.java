@@ -19,13 +19,13 @@ import javax.swing.JPanel;
 
 public class Cell extends JPanel {
     public static final int CELL_SIZE = 1;
-    private static final Color backgroundColor = Color.CYAN;//new Color(105, 120, 105);
+    private static final Color backgroundColor = Color.CYAN;
     private int xPos;
     private int yPos;
     public boolean clickflag;
     public MouseListener Mlistener;
 
-    public Cell (int y, int x) {
+    public Cell (int x, int y) {
         xPos = x;
         yPos = y;
         setOpaque(true);
@@ -34,33 +34,17 @@ public class Cell extends JPanel {
         setPreferredSize(new Dimension(CELL_SIZE, CELL_SIZE));
         clickflag = false;
     }
-    
-    public void setHovered(boolean hovered) {
-    	Color color = hovered ? Color.BLUE : backgroundColor;
-    	setBackground(color);
-    }
-    
-    public void changeBackground(Color color) 
-    {
-    	setBackground(color);
-    }
-    
-    public void select()
-    {
-        clickflag = true;
-        setBackground(Color.GREEN);
-    }
+
     
     public int getXPos() 
     {
-        return xPos;
+        return xPos; 
     }
 
     public int getYPos() 
     {
-	return yPos;
+	return yPos; 
     }
-    
-    
+ 
      
 }

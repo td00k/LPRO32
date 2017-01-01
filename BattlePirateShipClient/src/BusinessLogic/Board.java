@@ -21,7 +21,7 @@ public class Board
    /** 
      * This method creates and initializes the board where the player's ships will be placed.
      */
-  public Board()
+  public Board(/*int gameid*/)
   {
       // variables for cicle control
       int i=0,j=0;
@@ -42,12 +42,10 @@ public class Board
      * @return ship id if a ship was hit or false otherwise
      */  
   
-  public String shot(int gameid, int xpos, int ypos)
+  public String shot(int xpos, int ypos)
   {
       //variable to check the return of ship.hit
       int health;
-      
-      // listener aqui
       
       // variable that is going to be sent to the protocol
       String[] tosend = new String[12];
@@ -121,7 +119,7 @@ public class Board
       return true;
   }
 
-  public boolean Sendboard(int gameid,int userid)
+  public int Sendboard(int gameid,int userid)
   {
       // variables for cicle control
       int i=0,j=0;
@@ -150,12 +148,12 @@ public class Board
       // checking what was received
       if(received[1] == "OK")
       {
-          return true;
+          return 1;
       }
       else
       {
           // error
-          return false;
+          return -1;
       }
       
   }

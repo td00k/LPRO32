@@ -1,6 +1,5 @@
 package DataAccess;
 
-import static DataAccess.JDBCHandler.conn;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,10 +18,13 @@ public class UserStats
     
     /** This method updates the user stats on the database
      * 
-     * @return true on success, false on failure
+     * @param query
+     * @param con
+     * 
+     * @return 1 on success, -1 on failure
      */
     
-    public boolean update(String query, Connection con)
+    public int update(String query, Connection con)
     {
         
         try
@@ -37,30 +39,32 @@ public class UserStats
             stmt.execute(query);                   
             System.out.println("Valid Userstats UPDATE Query!");
             
-            // closing the statement
+            // closing the statement, since we don't need it anymore
             stmt.close();
             
-            return true;
+            return 1;
            
         }
         catch(SQLException ex)
         {
-            return false;
+            return -1;
         }
         
     }
     
-    /** This method fetches all the user stats from the database
-     * 
-     * @return true on success, false on failure
-     */
-     public String[] get(String query, Connection con)
+   /** This method fetches all the userstats from the database
+    * 
+    * @param query 
+    * @param con
+    * 
+    * @return 
+    */
+    public String[] get(String query, Connection con)
     {
-        
-       try
+        String[] toreturn = new String[7];
+        try
         {
-          Statement stmt;
-          String[] toreturn = null;
+            Statement stmt;
          
             // creating a statement so we can execute a query on the DB
             stmt = con.createStatement();
@@ -70,29 +74,29 @@ public class UserStats
             stmt.execute(query);                   
             System.out.println("Valid Userstats GETSTATS Query!");
             
-             ResultSet rs = stmt.executeQuery(query);
-                
-                     toreturn[0] =  Integer.toString( rs.getInt("id") );
-                     toreturn[1] =  Integer.toString( rs.getInt("state") );
-                     toreturn[2] =  Integer.toString( rs.getInt("gamesplayed") );
-                     toreturn[3] =  Integer.toString( rs.getInt("id") );
-                     toreturn[4] =  Integer.toString( rs.getInt("id") );
-                     toreturn[5] =  Integer.toString( rs.getInt("id") );
-                     toreturn[6] =  Integer.toString( rs.getInt("id") );
-                     toreturn[7] =  Integer.toString( rs.getInt("id") ); 
-                     
-            // closing the statement
+            // executing the query
+            ResultSet rs = stmt.executeQuery(query);
+            
+            // extracting results
+            toreturn[0] =  Integer.toString(rs.getInt("id"));
+            toreturn[1] =  Integer.toString(rs.getInt("state"));
+            toreturn[2] =  Integer.toString(rs.getInt("gamesplayed"));
+            toreturn[3] =  Integer.toString(rs.getInt("wins"));         
+            toreturn[4] =  Integer.toString(rs.getInt("defeats"));
+            toreturn[5] =  Integer.toString(rs.getInt("surrenders"));
+            toreturn[6] =  Integer.toString(rs.getInt("rank"));
+                    
+            // closing the statement since we don't need to use it anymore
             stmt.close();
             
-            
-       
-           return toreturn ;
+            // returning
+            return toreturn ;
         }
         catch(SQLException ex)
         {
-            return null;
+            toreturn[0] = Integer.toString(-1);
+            return toreturn;
         }
-        
-        
     }
 }
+        
