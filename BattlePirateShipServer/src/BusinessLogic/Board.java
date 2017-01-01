@@ -1,6 +1,7 @@
 
 package BusinessLogic;
 
+
  /** 
      * This class represents the Board where the game will be played.
      * It has methods to make a shot and to place Ships on the board.
@@ -83,7 +84,7 @@ public class Board
   							// game over
   						}
   						break;
-  		    case 5:
+                        case 5:
   		    			// hit the 5 health ship
   		    			tosend[0] = Integer.toString(7);
   						tosend[0] = Integer.toString(5);
@@ -97,6 +98,20 @@ public class Board
   		return tosend;
   }
 
-  public int
+  public int updateboard(String[] args)
+  {
+      String aux1 = args[1];
+      int i,j;
+      char[] aux;
+      for(i=0;i<10;i++)
+      {
+          aux = args[i].toCharArray();
+          for(j=0;j<10;j++)
+          {
+              positions[i][j] = aux[j];
+          }
+      }
+      return 1;
+  }
 
 }

@@ -73,52 +73,8 @@ public class Board
           return "fail";
       }
   }
-  
-  /** 
-     * This method's aim is to place the ships on board.
-     * 
-     * @return true
-     */  
-  
-  
-  public boolean PlaceShips()
-  {
-      // variables for cicle control
-      int i=0, j=0;
-      
-      // variable for the return of ship.place
-      int[] info;
-      
-      for(i = 0;i<5;i++)
-      {
-          //info[0] = xpos;
-          //info[1] = ypos;
-          //info[2] = health;
-          //info[3] = orientation ( 1 for vertical, 0 for horizontal)
-          info = ship.place();
-          switch( info[3] )
-          {
-              case 0:
-                        // horizontal
-                  
-                        // placing the ship in the correct position
-                        for(j=0;j<info[2];j++)
-                        {
-                            positions[info[0]+j][info[1]] = info[2];
-                        }
-              case 1:
-                        // vertical
-                  
-                        // placing the ship in the correct position
-                        for(j=0;j<info[2];j++)
-                        {
-                            positions[info[0]][info[1]+j] = info[2];
-                        }
-          }
-      }
-      return true;
-  }
 
+  
   public int Sendboard(int gameid,int userid)
   {
       // variables for cicle control
@@ -146,7 +102,7 @@ public class Board
       received = pirate.run(6,tosend,12);
       
       // checking what was received
-      if(received[1] == "OK")
+      if(received[1].equals("OK"))
       {
           return 1;
       }

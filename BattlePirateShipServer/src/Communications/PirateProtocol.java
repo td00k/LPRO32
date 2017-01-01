@@ -15,14 +15,14 @@ public class PirateProtocol
 
     private final Authentication auth;
     private final Game game;
-    private final Board board;
+    private final Board board[][];
     private final User userinfo;
     
     public PirateProtocol()
     {
         auth = new Authentication();
         game = new Game();
-        board = new Board();
+        board = new Board[500][2];
         userinfo = new User();
     }
     
@@ -43,7 +43,7 @@ public class PirateProtocol
         String encoded = "";
         String[] decoded;
         String[] received;
-        String[] args = new String[1];
+        String[] args = new String[20];
         int argnum = 1;
         
         decoded = decode(Input);
@@ -105,7 +105,8 @@ public class PirateProtocol
                         break;
             case "6":
                         // sendboard
-                        
+                        System.arraycopy(decoded,3,args,0,9);
+                        board[Integer.parseInt(decoded[1])][Integer.parseInt(decoded[2])].updateboard(args); 
                         break;
             case "7":
                         // send shot
