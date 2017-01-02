@@ -127,5 +127,29 @@ public class Games
         
         return gameid;
     }
-                
+    
+    public int remove(String query, Connection con)
+    {
+        try
+        {
+            Statement stmt;
+            
+            // creating a statement so we can execute a query on the DB
+            stmt = con.createStatement();
+            System.out.println("Query statement created!");
+            
+            // executing the Query
+            stmt.execute(query);                  
+
+            // closing the statement since we don't need it anymore
+            stmt.close();
+            
+            return 1;
+        }
+        catch(SQLException ex)
+        {
+            System.out.println("Error SQL Exception!");
+            return -1;
+        }
+    }
 }

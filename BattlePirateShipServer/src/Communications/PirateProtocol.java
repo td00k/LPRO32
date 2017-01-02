@@ -44,7 +44,7 @@ public class PirateProtocol
         String encoded = "";
         String[] decoded;
         String[] received;
-        String[] args = new String[20];
+        String[] args = new String[50];
         int argnum = 1;
         
         decoded = decode(Input);
@@ -106,6 +106,9 @@ public class PirateProtocol
                         break;
             case "5":
                         // removegame
+                        received = matchmaking.remove(Integer.parseInt(decoded[0]));
+                        args[0] = received[1];
+                        encoded = encode(Integer.parseInt(received[0]),args,1);
                         break;
             case "6":
                         // sendboard
@@ -118,6 +121,11 @@ public class PirateProtocol
                         break;
             case "8":
                         // update user stats
+                        String[] aux = new String[7];
+                        System.arraycopy(decoded, 1, aux, 0, 7);
+                        received = userinfo.updateinfo(aux);
+                        args[0] = received[1];
+                        encoded = encode(Integer.parseInt(received[0]),args,1);
                         break;
             case "9":
                         String[] rcv1 = new String[3]; 
@@ -149,7 +157,8 @@ public class PirateProtocol
                         break;
             case "10":
                         // get user friends
-                        
+                        received = userinfo.getfriends(Integer.parseInt(decoded[1]));
+                        System.arraycopy(received,1,args,0,);
                         break;
             case "11":
                         // add friend

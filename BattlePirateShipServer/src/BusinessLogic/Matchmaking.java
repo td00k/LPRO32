@@ -142,9 +142,16 @@ public class Matchmaking {
      * @return returns 1 if everything went okay, -1 otherwise
      */
      
-    public int remove(int gameid)
+    public String[] remove(int gameid)
     {
-        return 1;
+       String query;
+       String received[];
+       String toreturn[] = new String[2];
+       toreturn[0] = Integer.toString(5);
+       query = "DELETE FROM games where id = " + gameid;
+       received = DBhandler.run(5,query,null);
+       toreturn[1] = received[0];
+       return toreturn;
     }
   
 }

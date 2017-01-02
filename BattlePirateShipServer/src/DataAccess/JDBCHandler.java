@@ -23,6 +23,7 @@ public class JDBCHandler
    private static final int LOGIN = 2;            // code for signaling it's a login query
    private static final int SEARCH = 3;           // code for signaling it's a search query
    private static final int CREATE = 4;           // code for signaling it's a create query
+   private static final int REMOVE = 5;           // code for signaling it's a remove game query
    private static final int UPDATE = 8;           // code for signaling it's a update query
    private static final int GETSTATS = 9;              // code for signaling it's a getstats query
    private static final int GETFRIENDS = 10;      // code for signaling it's a getfriends query
@@ -88,6 +89,9 @@ public class JDBCHandler
                             break;
             case CREATE:
                             returnval[0] = Integer.toString(games.create(query,conn));
+                            break;
+            case REMOVE:
+                            returnval[0] = Integer.toString(games.remove(query,conn));
                             break;
             case UPDATE: 
                             returnval[0] = Integer.toString(Ustats.update(query,conn));
