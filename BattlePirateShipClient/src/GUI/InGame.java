@@ -53,21 +53,35 @@ public class InGame extends javax.swing.JFrame {
              OrientationButton.setVisible(false);
             // playergrid.sendPositions();
              StatusMsg.setText("Ships Placed! Waiting for other player...");
-             
-             
-             /*while(!playergrid.playerReady)
+             while(!playergrid.playerReady)
              {   
-             }*/  
+             }  
+             gametimer.start();
+             while(!playergrid.GameEnd)
+             {
+                 
+             }
+             if(playergrid.Winner)
+             {
+                 
+             }
          }
         });
         ethread = new Thread(new Runnable() {
          public void run()
          {
-            /*while(!enemygrid.playerReady)
+            while(!enemygrid.playerReady)
              {   
-             }*/
-             enemygrid.doShots();
-             gametimer.start();
+             }
+            while(!enemygrid.GameEnd)
+             {
+                enemygrid.sendShot();  
+             }
+             if(enemygrid.Winner)
+             {
+                JOptionPane.showMessageDialog("");
+             }      
+
          }
         });
         pthread.start();

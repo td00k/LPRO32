@@ -42,7 +42,7 @@ public class Board
      * @return ship id if a ship was hit or false otherwise
      */  
   
-  public String shot(int xpos, int ypos)
+  public String shot(int userid, int xpos, int ypos)
   {
       //variable to check the return of ship.hit
       int health;
@@ -55,16 +55,17 @@ public class Board
       
       // placing info on the string that is going to be sent
       tosend[0] = Integer.toString(gameid);
-      tosend[1] = Integer.toString(xpos);
-      tosend[2] = Integer.toString(ypos);
+      tosend[1] = Integer.toString(userid);
+      tosend[2] = Integer.toString(xpos);
+      tosend[3] = Integer.toString(ypos);
       
       // calling the protocol and receiving an answer
-      received = pirate.run(7,tosend,3);
+      received = pirate.run(7,tosend,4);
       
       // checking what was received
       if(received[1] == "OK")
       {
-          // received[2] is a string containing hitalive, hitdead or fail, to the interface to know what happened.
+          // received[2] contains a number identifying what happened
           return received[2];
       }
       else

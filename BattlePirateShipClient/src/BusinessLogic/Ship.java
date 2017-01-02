@@ -7,33 +7,39 @@ package BusinessLogic;
 
 public class Ship
 {
-    
-  private static int size; 
-  private static int health; 
-  private static boolean vertical; 
-  private static int xpos; 
-  private static int ypos; 
+  private  int size; 
+  private  int health;  
+  private  int[] xpos; 
+  private  int[] ypos; 
    
-   public Ship(int xpos, int ypos, int size, boolean vertical) 
+   public Ship (int size) 
      {
          this.size = size;
-         this.xpos = xpos;
-         this.ypos = ypos;
-         this.vertical = vertical;
+         this.health = size;
+         xpos = new int[size];
+         ypos = new int[size];
      }
      
-     public int[] place()
-     {
-         // listener aqui
-         
-         int[] returnval = null;
-
-         //returnval[0] = xpos;
-         //returnval[1] = ypos;
-         //returnval[2] = health;
-         //returnval[3] = orientation ( 1 for vertical, 0 for horizontal)
-         
-         // returns both positions, health and orientation
-         return returnval;
-     }
+   public int getHealth()
+   {
+       return this.health;
+   }
+   
+   public void insertPos(int xpos,int ypos)
+   {
+       this.xpos[size-health] = xpos;
+       this.ypos[size-health] = ypos;
+       this.health--;
+   }
+   
+      public int[] getPositions()
+      {
+          int[] toreturn = new int[size*2];
+          for (int i = 0;i < size*2;i=i+2) 
+          {
+              toreturn[i]=xpos[i];
+              toreturn[i+1]=ypos[i];
+          }
+          return toreturn;
+      }
 }
