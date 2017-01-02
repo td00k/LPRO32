@@ -29,11 +29,11 @@ public class Game {
     {
         if(player1 == userid)
         {
-            boards[1].update(args);
+            boards[0].update(args);
         }
         else if(player2 == userid)
         {
-            boards[2].update(args);
+            boards[1].update(args);
         }
     }
     
@@ -42,5 +42,16 @@ public class Game {
             this.player1 = userid1;
             this.player2 = userid2;
     }
-     
+    
+    public String[] Shot(int userid,int xpos,int ypos)
+    {
+        if(player1 == userid)
+        {
+            boards[1].shot(xpos,ypos);
+        }
+        else if(player2 == userid)
+        {
+            boards[0].shot(xpos,ypos);
+        }
+    }
 }

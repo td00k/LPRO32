@@ -15,6 +15,7 @@ public class Board
   private static int misses; 
   private static int gameid; 
   
+  
   public Board()
   {
       int i,j;
@@ -36,28 +37,29 @@ public class Board
   			case -1:
   						// position already hit before
   						tosend[0] = Integer.toString(7);
-  						tosend[0] = Integer.toString(-1);
+  						tosend[1] = Integer.toString(-1);
   						break;
   			case 0:
   						// water hit
   						tosend[0] = Integer.toString(7);
-  						tosend[0] = Integer.toString(0);
+  						tosend[1] = Integer.toString(0);
   						misses++;
   						break;
   			case 1:
   						// hit one of the 3 health ships
   						tosend[0] = Integer.toString(7);
-  						tosend[0] = Integer.toString(1);
+  						tosend[1] = Integer.toString(1);
   						hits++;
   						if(hits == 17)
   						{
+                                                        tosend[1] = Integer.toString()
   							// game over
   						}
   						break;
   			case 2:
   						// hit the 2 health ship
   						tosend[0] = Integer.toString(7);
-  						tosend[0] = Integer.toString(2);
+  						tosend[1] = Integer.toString(2);
   						hits++;
   						if(hits == 17)
   						{
@@ -67,7 +69,7 @@ public class Board
   			case 3:
   						// hit the other 3 health ship
   						tosend[0] = Integer.toString(7);
-  						tosend[0] = Integer.toString(3);
+  						tosend[1] = Integer.toString(3);
   						hits++;
   						if(hits == 17)
   						{
@@ -77,7 +79,7 @@ public class Board
   			case 4:
   						// hit the 4 health ship
   						tosend[0] = Integer.toString(7);
-  						tosend[0] = Integer.toString(4);
+  						tosend[1] = Integer.toString(4);
   						hits++;
   						if(hits == 17)
   						{
@@ -87,7 +89,7 @@ public class Board
                         case 5:
   		    			// hit the 5 health ship
   		    			tosend[0] = Integer.toString(7);
-  						tosend[0] = Integer.toString(5);
+  						tosend[1] = Integer.toString(5);
   						hits++;
   						if(hits == 17)
   						{

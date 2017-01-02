@@ -64,7 +64,7 @@ public class PirateProtocol
                         argnum = 1;
                         
                         // if login worked, we need to place the userid on the args string so it's sent
-                        if(received[1] == "OK")
+                        if(received[1].equals("OK"))
                         {
                             args[1] = received[2];
                             argnum = 2;
@@ -85,7 +85,7 @@ public class PirateProtocol
                         else
                         {
                             args[0] = received[2];
-                            game[received[1]].updatePlayers(Integer.parseInt(received[1]),Integer.parseInt(received[2]));
+                            game[Integer.parseInt(received[1])].updatePlayers(Integer.parseInt(received[1]),Integer.parseInt(received[2]));
                         }
                         encoded = encode(Integer.parseInt(received[0]),args,1);
                         break;
@@ -114,6 +114,7 @@ public class PirateProtocol
                         break;
             case "7":
                         // send shot
+                        received = game[Integer.parseInt(decoded[1])].Shot(Integer.parseInt(decoded[2]),Integer.parseInt(decoded[3]),Integer.parseInt(decoded[4]));
                         break;
             case "8":
                         // update user stats

@@ -26,15 +26,21 @@ public class Matchmaking {
     {
         String received[];
         String query;
-        
+        String[] toreturn = new String[3];
+         
         // query possivelmente errada ?? deve ser INSERT INTO games VALUES (DEFAULT,'userid1','userid2')
         query = "INSERT INTO games " + "VALUES (DEFAULT,'" + userid1 + "','"+ userid2 + "')";
         received = DBhandler.run(4,query,null);
-        
-        String[] toreturn = new String[3];
-        toreturn[0] = received[0];
-        toreturn[1] = Integer.toString(userid1);
-        toreturn[2] = Integer.toString(userid2);
+        if(received[0].equals("-1"))
+        {
+            toreturn[0] = Integer.toString(-1);
+        }
+        else
+        {
+            toreturn[0] = received[0];
+            toreturn[1] = Integer.toString(userid1);
+            toreturn[2] = Integer.toString(userid2);
+        }
         return toreturn;  
     }
      
@@ -81,10 +87,14 @@ public class Matchmaking {
     {
         int gameid;
         String[] tosend = new String[2];
-        if ( (gameid = create(userid1,userid2)) != -1)
+        String[] check = new String[3];
+        check = create(userid1,userid2);
+        if (!check[0].equals(-1))
         {
         	tosend[0] = Integer.toString(4);
-        	tosend[1] = Integer.toString(gameid);
+        	tosend[1] = check[0];
+                tosend[2] = check[1];
+                tosend[3] = check[2];
         }
         else
         {
@@ -108,10 +118,21 @@ public class Matchmaking {
         String query;
         String[] args = new String[1];
         String[] toreturn = new String[3];
+        
         args[0] = Integer.toString(userid);
         query = "SELECT * FROM games";
         received = DBhandler.run(3,query,args);
-        return  Integer.parseInt(received[0]);
+        if(received[0].equals("-1"))
+        {
+            toreturn[0] = Integer.toString(-1);
+        }
+        else
+        {
+            toreturn[0] = received[0];
+            toreturn[1] = Integer.toString(userid);
+            toreturn[2] = received[1];
+        }
+        return toreturn;
     }
      
     /** 

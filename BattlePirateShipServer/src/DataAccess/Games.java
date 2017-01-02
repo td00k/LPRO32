@@ -92,7 +92,7 @@ public class Games
         {
             System.out.println(ex);
             toreturn[0] = Integer.toString(-1);
-            return toreturn[0];
+            return toreturn;
         }
     }
     
