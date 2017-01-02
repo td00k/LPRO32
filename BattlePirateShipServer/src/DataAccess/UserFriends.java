@@ -69,7 +69,8 @@ public class UserFriends
     
     public String[] getfriends(String query, Connection con)
     {
-        String[] toreturn = null;
+        String[] toreturn = new String[100];
+        int i = 0;
         try
         {
             Statement stmt;
@@ -88,9 +89,10 @@ public class UserFriends
             while(rs.next())
             {
                 // fetching the results
-                toreturn[0] =  Integer.toString( rs.getInt("id") );
-                toreturn[1] =  Integer.toString( rs.getInt("state") );
-                toreturn[2] =  Integer.toString( rs.getInt("friendname") );
+                toreturn[0+3*i] =  Integer.toString( rs.getInt("id") );
+                toreturn[1+3*i] =  Integer.toString( rs.getInt("state") );
+                toreturn[2+3*i] =  Integer.toString( rs.getInt("friendname") );
+                i++;
             }
             // closing the statement since we don't need it anymore
             stmt.close();

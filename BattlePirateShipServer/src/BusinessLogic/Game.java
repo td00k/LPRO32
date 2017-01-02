@@ -45,6 +45,7 @@ public class Game {
     
     public String[] Shot(int userid,int xpos,int ypos)
     {
+        String[] toreturn = new String[2];
         if(player1 == userid)
         {
             boards[1].shot(xpos,ypos);
@@ -53,5 +54,10 @@ public class Game {
         {
             boards[0].shot(xpos,ypos);
         }
+       
+        toreturn[0]="OK";
+        toreturn[1]=null;
+        
+        return toreturn;
     }
 }

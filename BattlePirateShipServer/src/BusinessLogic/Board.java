@@ -52,7 +52,7 @@ public class Board
   						hits++;
   						if(hits == 17)
   						{
-                                                        tosend[1] = Integer.toString()
+                                                        tosend[1] = Integer.toString(6);
   							// game over
   						}
   						break;

@@ -158,7 +158,7 @@ public class PirateProtocol
             case "10":
                         // get user friends
                         received = userinfo.getfriends(Integer.parseInt(decoded[1]));
-                        System.arraycopy(received,1,args,0,);
+                        System.arraycopy(received,1,args,0,3);
                         break;
             case "11":
                         // add friend
