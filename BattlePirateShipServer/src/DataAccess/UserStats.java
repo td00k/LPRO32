@@ -6,10 +6,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 
+/** This class is a class with the purpose of dealing with the userstats table in the DB.
+ * It has all the methods necessary to extract/update required information from this table.
+ */
 public class UserStats
 {
     /**
-     * 
+     * The constructor does nothing
      */
     public UserStats()
     {
@@ -18,8 +21,8 @@ public class UserStats
     
     /** This method updates the user stats on the database
      * 
-     * @param query
-     * @param con
+     * @param query query that's going to be executed on the DB
+     * @param con connection to the DB
      * 
      * @return 1 on success, -1 on failure
      */
@@ -54,10 +57,10 @@ public class UserStats
     
    /** This method fetches all the userstats from the database
     * 
-    * @param query 
-    * @param con
+    * @param query query to be executed on the db
+    * @param con connection to the DB
     * 
-    * @return 
+    * @return a string[] containing the userstats or -1 in case of error
     */
     public String[] get(String query, Connection con)
     {

@@ -10,14 +10,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-/**
- *
+/** This class is a class with the purpose of dealing with the userfriends table in the DB.
+ * It has all the methods necessary to extract/update required information from this table.
  */
 public class UserFriends 
 {
 
     /**
-     * 
+     * The constructor does nothing
      */
     public UserFriends()
     {
@@ -69,8 +69,7 @@ public class UserFriends
     
     public String[] getfriends(String query, Connection con)
     {
-        String[] toreturn = new String[100];
-        int i = 0;
+        String[] toreturn = null;
         try
         {
             Statement stmt;
@@ -89,10 +88,9 @@ public class UserFriends
             while(rs.next())
             {
                 // fetching the results
-                toreturn[0+3*i] =  Integer.toString( rs.getInt("id") );
-                toreturn[1+3*i] =  Integer.toString( rs.getInt("state") );
-                toreturn[2+3*i] =  Integer.toString( rs.getInt("friendname") );
-                i++;
+                toreturn[0] =  Integer.toString( rs.getInt("id") );
+                toreturn[1] =  Integer.toString( rs.getInt("state") );
+                toreturn[2] =  Integer.toString( rs.getInt("friendname") );
             }
             // closing the statement since we don't need it anymore
             stmt.close();

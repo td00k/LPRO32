@@ -136,6 +136,11 @@ public class Authentication
         
     }   
     
+    /** This method creates a query to fetch the userinfo of a certain user
+     * 
+     * @param userid id of the user
+     * @return a string[] containing the response from the server
+     */
     public String[] get(int userid)
     {
       String query;

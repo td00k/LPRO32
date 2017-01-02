@@ -4,8 +4,7 @@ package BusinessLogic;
 
  /** 
      * This class represents the Board where the game will be played.
-     * It has methods to make a shot and to place Ships on the board.
-     * Last but not least, it has a method to update the board when a shot is received.
+     * It has methods to make a shot, and to update the board
      */
 
 public class Board 
@@ -15,7 +14,9 @@ public class Board
   private static int misses; 
   private static int gameid; 
   
-  
+  /**
+   * The constructor initializes the class variables
+   */
   public Board()
   {
       int i,j;
@@ -28,7 +29,12 @@ public class Board
       }
   }
     
-  
+  /** This method registers a shot on the board
+   * 
+   * @param xpos position of the shot
+   * @param ypos position of the shot
+   * @return the code for a shot defined on the protocol and the number of the position hit.
+   */
   public String[] shot(int xpos, int ypos)
   {
   		String[] tosend = new String[2];
@@ -52,7 +58,6 @@ public class Board
   						hits++;
   						if(hits == 17)
   						{
-                                                        tosend[1] = Integer.toString(6);
   							// game over
   						}
   						break;
@@ -100,6 +105,11 @@ public class Board
   		return tosend;
   }
 
+  /** This method updates the board to the board on the String[] args
+   * 
+   * @param args string[] containing the board
+   * @return 1
+   */
   public int update(String[] args)
   {
       String aux1 = args[1];

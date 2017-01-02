@@ -1,26 +1,30 @@
 
 package BusinessLogic;
 
-import Communications.PirateProtocol;
 import DataAccess.JDBCHandler;
 
-
+/** This class deals with creating the querys to add and create a game.
+ * It proceeds to send them to the DB so they are executed, and returns an answer depending on what happened
+ */
 public class Matchmaking {
     
      //class variables
    JDBCHandler DBhandler;        // variable to use the handler methods
      
+   /**
+    * The constructor simply initializes the handler variable
+    */
    public Matchmaking()
    {
         DBhandler = new JDBCHandler("org.postgresql.Driver","jdbc:postgresql://dbm.fe.up.pt/lpro1632","lpro1632","ttva32");
    }
     
-      /** 
-     * This method creates a new game and assigns it to the game's list.
-     * @param userid id of user creating the game
-     * 
-     * @return returns the created game id
-     */
+ /** This method creates a query to create a new game, and assign it to the games list
+  * 
+  * @param userid1 userid of player1
+  * @param userid2 userid of player 2
+  * @return String[] containing a response ready to be encoded, based on what happened.
+  */
     
     public String[] create(int userid1,int userid2)
     {
@@ -28,7 +32,6 @@ public class Matchmaking {
         String query;
         String[] toreturn = new String[3];
          
-        // query possivelmente errada ?? deve ser INSERT INTO games VALUES (DEFAULT,'userid1','userid2')
         query = "INSERT INTO games " + "VALUES (DEFAULT,'" + userid1 + "','"+ userid2 + "')";
         received = DBhandler.run(4,query,null);
         if(received[0].equals("-1"))
@@ -83,6 +86,13 @@ public class Matchmaking {
         return tosend;
     }
     
+    /** This method creates a query to place both users with the passed id's on a game
+     * 
+     * @param userid1 id of the first user
+     * @param userid2 id of the "friend"
+     * 
+     * @return an appropriate answer ready to be encoded and setnt to the client
+     */
     public String[] playwithfriend(int userid1, int userid2)
     {
         int gameid;
@@ -107,9 +117,9 @@ public class Matchmaking {
     /** 
      * This method searches the games list to look for a game waiting for players.
      * 
-     * @param userid userid of the person that created the game
+     * @param userid userid of the user trying to look for a game
      * 
-     * @return returns the created game id, or -1 on error
+     * @return returns a string[] containing the appropriate response from the server
      */
      
     public String[] search(int userid)
@@ -139,7 +149,7 @@ public class Matchmaking {
      * This method removes a game from the list after it is finished.
      * @param gameid id of game to remove
      * 
-     * @return returns 1 if everything went okay, -1 otherwise
+     * @return a string[] containing the server response
      */
      
     public String[] remove(int gameid)

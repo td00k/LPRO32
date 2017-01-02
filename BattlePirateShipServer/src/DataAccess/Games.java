@@ -12,18 +12,28 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-/**
- *
- * @author Afonso
+/** This class is a class with the purpose of dealing with the games table in the DB.
+ * It has all the methods necessary to extract/update required information from this table.
  */
 public class Games 
 {
-    
+    /**
+     * The constructor does nothing
+     */
     public Games()
     {
                
     }
     
+    /** This method searches for a game for the userid.
+     *  It does so by selecting the player waiting who has the closest ranking(maximum difference of 20) to the ranking of the user on userid.
+     * 
+     * @param query string to be executed on the database
+     * @param con connection to the database
+     * @param userid userid of the person trying to search for a game
+     * 
+     * @return gameid, and id of the user waiting on return, or -1 on error
+     */
     public String[] search(String query, Connection con,int userid)
     {
          String[] toreturn = new String[3];
@@ -96,6 +106,16 @@ public class Games
         }
     }
     
+    /** This method creates a new game on the games table in the database.
+     * The first player is passed with his userid and the second player is passed with zero.
+     * The second player is altered when a match is found on the "search" method
+     * 
+     * 
+     * @param query query to be executed on the DB
+     * @param con connection to the DB
+     * 
+     * @return gameid on success, -1 on error 
+     */
     public int create(String query, Connection con)
     {
         int gameid = -1;

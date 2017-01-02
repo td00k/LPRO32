@@ -50,7 +50,7 @@ public class JDBCHandler
      * 
      * @param type type of query that is going to be executed
      * @param query query that is going to be executed
-     * @param args this variable contains the user and password strings to be compared when a user is trying to login
+     * @param args this variable contains the user and password strings to be compared when a user is trying to login, for example. it contains extra information whenever it's required.
      * 
      * @return an array of strings containing the relevant information, or containing -1 if there was an error.
      */

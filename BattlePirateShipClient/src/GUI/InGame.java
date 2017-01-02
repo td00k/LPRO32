@@ -63,7 +63,7 @@ public class InGame extends javax.swing.JFrame {
              }
              if(playergrid.Winner)
              {
-                 JOptionPane.showMessageDialog(null,"You Win");
+                 
              }
          }
         });
@@ -79,7 +79,7 @@ public class InGame extends javax.swing.JFrame {
              }
              if(enemygrid.Winner)
              {
-                JOptionPane.showMessageDialog(null,"You Lose");
+                //JOptionPane.showMessageDialog("");
              }      
 
          }

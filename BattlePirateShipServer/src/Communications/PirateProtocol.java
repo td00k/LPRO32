@@ -30,11 +30,10 @@ public class PirateProtocol
      /**
       * This method is the main method of the class. 
       * <p>
-      * It decodes a string and sends it to the authentication
-      * When we get a response from the authentication, we encode it and send it to the handle client class
+      * It decodes a string and sends it to the Business Logic according to what was received.
+      * When we get a response from the Business Logic, we encode it and send it to the handle client class
       * 
       * @param Input string received from the socket
-      * @param 
       * 
       * @return the message to be sent to the client
       */
@@ -158,7 +157,6 @@ public class PirateProtocol
             case "10":
                         // get user friends
                         received = userinfo.getfriends(Integer.parseInt(decoded[1]));
-                        System.arraycopy(received,1,args,0,3);
                         break;
             case "11":
                         // add friend

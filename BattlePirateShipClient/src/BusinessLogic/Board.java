@@ -36,12 +36,15 @@ public class Board
   }
   
    /** 
-     * This method's aim is to register a shot on the board and call the ship class to verify if a ship is hit.
-     *
+     * This method's aim is to register a shot on the board
      * 
-     * @return ship id if a ship was hit or false otherwise
+     * @param userid id of the user who did the shot
+     * @param xpos position of the shot
+     * @param ypos position of the shot
+     * @return a string containing a number that identifies what happened
+     * 
      */  
-  
+
   public String shot(int userid, int xpos, int ypos)
   {
       //variable to check the return of ship.hit
@@ -75,7 +78,13 @@ public class Board
       }
   }
 
-  
+  /** This methods sends a board a player to the server.
+   * It is usually called after the ships have been placed
+   * 
+   * @param gameid id of the game
+   * @param userid userid of the player
+   * @return 1 on success, -1 on failure
+   */
   public int Sendboard(int gameid,int userid)
   {
       // variables for cicle control

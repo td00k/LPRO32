@@ -73,7 +73,7 @@ public class MainView extends javax.swing.JFrame {
          SurrendersText.setText(info[7]);
          RankingText.setText(info[8]);
          PlayerID.setText(""+userid);
-         return 1;
+       return 1;    
     }
 
     @SuppressWarnings("unchecked")

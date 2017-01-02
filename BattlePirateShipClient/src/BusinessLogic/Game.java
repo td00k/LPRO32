@@ -97,6 +97,12 @@ public class Game
          }
      }
     
+     /** This method attempts to remove a game from the games table on the DB.
+      * It sends the gameid to the server and waits for an answer.
+      * 
+      * @param gameid id of the game that is going to be removed
+      * @return 1 on success, -1 on failure 
+      */
     public int removegame(int gameid)
     {
         // variable that is going to be sent to the protocol
@@ -125,8 +131,4 @@ public class Game
         
     }
     
-        public int addfriend()
-        {
-            return 1;
-        }
 }

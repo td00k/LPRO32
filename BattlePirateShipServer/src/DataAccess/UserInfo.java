@@ -6,6 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+
+/** This class is a class with the purpose of dealing with the userinfo table in the DB.
+ * It has all the methods necessary to extract/update required information from this table.
+ */
 public class UserInfo 
 {
     /**
@@ -13,7 +17,7 @@ public class UserInfo
      */
     public UserInfo()
     {
-                
+         
     }
     
     /** This method attempts to register a user on the database, by executing the query passed on string
@@ -108,6 +112,13 @@ public class UserInfo
         
     }
     
+    /** This method attemps to fetch the name and username, for a given id. It also returns said id.
+     * 
+     * @param query query to be executed on the DB
+     * @param con connectino to the DB
+     * 
+     * @return a string[] containing the required information on success, or  a string containing s-1 on error
+     */
      public String[] get(String query, Connection con)
     {
         String[] toreturn = new String[3];
