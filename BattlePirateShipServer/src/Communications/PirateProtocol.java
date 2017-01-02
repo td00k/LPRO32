@@ -68,6 +68,7 @@ public class PirateProtocol
                             args[1] = received[2];
                             argnum = 2;
                         }
+                        System.out.println(received[1]);
                         encoded = encode(Integer.parseInt(received[0]),args,argnum);
                         break;
                      

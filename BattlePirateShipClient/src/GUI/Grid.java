@@ -61,7 +61,7 @@ public class Grid extends JPanel {
         size = 5;  
         ShipPlaced = false;
         ListenerEnable = false;
-        //gameBoard = new Board();
+        gameBoard = new Board();
         Ships = new Ship[5];
         shipsizes = new int[]{5,4,3,3,2}; 
         shipids = new int[]{5,4,3,1,2};

@@ -11,12 +11,12 @@ import Communications.PirateProtocol;
 
 public class Board 
 {
-  public static int[][] positions;
-  private static int hits;
-  private static int misses; 
-  private static int gameid;
-  private static Ship ship;
-  private static PirateProtocol pirate;
+  public  int[][] positions;
+  private  int hits;
+  private  int misses; 
+  private  int gameid;
+  private  Ship ship;
+  private  PirateProtocol pirate;
   
    /** 
      * This method creates and initializes the board where the player's ships will be placed.
@@ -25,7 +25,8 @@ public class Board
   {
       // variables for cicle control
       int i=0,j=0;
-      
+      pirate = new PirateProtocol();
+      positions = new int[10][10];
       for(i=0;i<10;i++)
       {
           for(j=0;j<10;j++)
@@ -99,13 +100,18 @@ public class Board
       // placing info on the string that is going to be sent
       tosend[0] = Integer.toString(gameid);
       tosend[1] = Integer.toString(userid);
+      System.out.printf("\n");
       for(i=2;i<12;i++)
       {
+          tosend[i] = "";
+          System.out.printf("[");
           for(j=0;j<10;j++)
           {
               // each position of tosend is going to have a line of the board.
-              tosend[i] = tosend[i] + positions[i][j];
+              tosend[i] = tosend[i] + positions[i-2][j];
+              System.out.printf("%d", positions[i-2][j]);
           }
+          System.out.printf("]\n");
       }
       
       // calling the protocol and receiving an answer

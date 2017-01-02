@@ -68,7 +68,7 @@ public class Authentication
            case LOGIN:
                           check = login(Input[1],Input[2]);
                           toreturn[0] = LOGIN + "";
-                          if(check == 1)
+                          if(check != -1)
                           {
                               toreturn[1] = "OK";
                               toreturn[2] = Integer.toString(check);
