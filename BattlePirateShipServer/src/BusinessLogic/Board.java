@@ -38,72 +38,77 @@ public class Board
    */
   public String[] shot(int xpos, int ypos)
   {
-  		String[] tosend = new String[2];
-  		switch(positions[xpos][ypos])
-  		{
-  			case -1:
-  						// position already hit before
-  						tosend[0] = Integer.toString(7);
-  						tosend[1] = Integer.toString(-1);
-  						break;
-  			case 0:
-  						// water hit
-  						tosend[0] = Integer.toString(7);
-  						tosend[1] = Integer.toString(0);
-  						misses++;
-  						break;
-  			case 1:
-  						// hit one of the 3 health ships
-  						tosend[0] = Integer.toString(7);
-  						tosend[1] = Integer.toString(1);
-  						hits++;
-  						if(hits == 17)
-  						{
-  							// game over
-  						}
-  						break;
-  			case 2:
-  						// hit the 2 health ship
-  						tosend[0] = Integer.toString(7);
-  						tosend[1] = Integer.toString(2);
-  						hits++;
-  						if(hits == 17)
-  						{
-  							// game over
-  						}
-  						break;
-  			case 3:
-  						// hit the other 3 health ship
-  						tosend[0] = Integer.toString(7);
-  						tosend[1] = Integer.toString(3);
-  						hits++;
-  						if(hits == 17)
-  						{
-  							// game over
-  						}
-  						break;
-  			case 4:
-  						// hit the 4 health ship
-  						tosend[0] = Integer.toString(7);
-  						tosend[1] = Integer.toString(4);
-  						hits++;
-  						if(hits == 17)
-  						{
-  							// game over
-  						}
-  						break;
-                        case 5:
-  		    			// hit the 5 health ship
-  		    			tosend[0] = Integer.toString(7);
-  						tosend[1] = Integer.toString(5);
-  						hits++;
-  						if(hits == 17)
-  						{
-  							// game over
-  						}
-  		    			break;
-  		}
-  		return tosend;
+    String[] toreturn = new String[3];
+    switch(positions[xpos][ypos])
+    {
+            case -1:
+                    // position already hit before
+                    toreturn[0] = Integer.toString(7);
+                    toreturn[1] = Integer.toString(-1);
+                    break;
+            case 0:
+                    // water hit
+                    toreturn[0] = Integer.toString(7);
+                    toreturn[1] = Integer.toString(0);
+                    misses++;
+                    break;
+            case 1:
+                    // hit one of the 3 health ships
+                    toreturn[0] = Integer.toString(7);
+                    toreturn[1] = Integer.toString(1);
+                    hits++;
+                    if(hits == 17)
+                    {
+                        // game over
+                        toreturn[2] = "END";
+                    }
+                    break;
+            case 2:
+                    // hit the 2 health ship
+                    toreturn[0] = Integer.toString(7);
+                    toreturn[1] = Integer.toString(2);
+                    hits++;
+                    if(hits == 17)
+                    {
+                        // game over
+                        toreturn[2] = "END";
+                    }
+                    break;
+            case 3:
+                    // hit the other 3 health ship
+                    toreturn[0] = Integer.toString(7);
+                    toreturn[1] = Integer.toString(3);
+                    hits++;
+                    if(hits == 17)
+                    {   
+                       //game over
+                       toreturn[2] = "END";
+                    }
+                    break;
+            case 4:
+                    // hit the 4 health ship
+                    toreturn[0] = Integer.toString(7);
+                    toreturn[1] = Integer.toString(4);
+                    hits++;
+                    if(hits == 17)
+                    {
+                        // game over
+                        toreturn[2] = "END";
+                    }
+                    break;
+            case 5:
+                    // hit the 5 health ship
+                    toreturn[0] = Integer.toString(7);
+                    toreturn[1] = Integer.toString(5);
+                    hits++;
+                    if(hits == 17)
+                    {
+                        // game over
+                        toreturn[2] = "END";
+                    }
+                    break;
+    }
+    return toreturn;
   }
 
   /** This method updates the board to the board on the String[] args

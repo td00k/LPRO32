@@ -49,7 +49,7 @@ public class Board
      * 
      */  
 
-  public String shot(int userid, int xpos, int ypos)
+  public String[] shot(int userid, int xpos, int ypos)
   {
       //variable to check the return of ship.hit
       int health;
@@ -59,6 +59,8 @@ public class Board
       
       // variable to receive from the protocol
       String[] received;
+      
+      String[] toreturn = new String[3];
       
       // placing info on the string that is going to be sent
       tosend[0] = Integer.toString(gameid);
@@ -70,16 +72,25 @@ public class Board
       received = pirate.run(7,tosend,4);
       
       // checking what was received
-      if(received[1] == "OK")
+       if(received[1] == "END")
+      {
+          toreturn[0] = received[2]; //shipid that was hit
+          toreturn[1] = received[3]; //winner id
+
+          return toreturn;
+      }
+       else if(received[1] != "ERROR")
       {
           // received[2] contains a number identifying what happened
-          return received[2];
+          toreturn[0] = received[1]; //shipid that was hit
       }
       else
       {
           // error
-          return "fail";
+          toreturn[0] = "ERROR";
+          toreturn[1] = null;
       }
+       return toreturn;
   }
   
   public String[] receiveShot(int userid)
@@ -105,19 +116,21 @@ public class Board
           toreturn[0] = received[2]; //xpos
           toreturn[1] = received[3]; //ypos
           toreturn[2] = received[4]; //winnerid
-          return toreturn;
+          toreturn[3] = null;
       }
       else if(received[1] != "ERROR")
       {
           toreturn[0] = received[2]; //xpos
           toreturn[1] = received[3]; //ypos
-          return toreturn;
+          toreturn[2] = null;  
       }
       else
       {
           // error
-          return "fail";
+          toreturn[0] = "ERROR";
+          toreturn[1] = null;
       }
+      return toreturn;
   }
 
   /** This methods sends a board a player to the server.

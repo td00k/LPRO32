@@ -92,6 +92,20 @@ public class Game {
         return toreturn;
     }
     
+    public String[] receiveShot(int userid)
+    {
+        String[] toreturn = new String[2];
+        if(player1 == userid)
+        {
+           
+        }
+        else if(player2 == userid)
+        {
+            
+        }
+        return toreturn;
+    }
+    
     public void readyToStart()
     {
         while(playersready != 2)

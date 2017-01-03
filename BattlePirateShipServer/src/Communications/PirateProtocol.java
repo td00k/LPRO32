@@ -129,12 +129,13 @@ public class PirateProtocol
                         game[Integer.parseInt(decoded[1])].updateBoard(Integer.parseInt(decoded[2]),args); 
                         args[0] = "OK";
                         game[Integer.parseInt(decoded[1])].readyToStart();
-                        encoded = encode(6,args,1);
+                        encoded = encode(6,args,2);
                         break;
             case "7":
                         // send shot
                         received = game[Integer.parseInt(decoded[1])].Shot(Integer.parseInt(decoded[2]),Integer.parseInt(decoded[3]),Integer.parseInt(decoded[4]));
-                        
+                        args[0] = received[1]; //ship or water hit id
+                        encoded = encode(7,args,2);
                         break;
             case "8":
                         // update user stats
@@ -181,6 +182,7 @@ public class PirateProtocol
                         break;
             case "12":
                         // receive shot
+                        received = game[Integer.parseInt(decoded[1])].receiveShot(Integer.parseInt(decoded[2]));
                         
                         break;
         }
