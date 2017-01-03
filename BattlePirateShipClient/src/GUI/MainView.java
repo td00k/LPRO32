@@ -526,7 +526,7 @@ public class MainView extends javax.swing.JFrame {
         
         int[] args = new int[2];
         args = gamehandler.quickgame(userid);
-        InGame game= new InGame(args[0],userid,this.client,args[1]);
+        InGame game= new InGame(this,args[0],userid,this.client,args[1]);
         game.setVisible(true);
     }//GEN-LAST:event_QuickGameButtonActionPerformed
 

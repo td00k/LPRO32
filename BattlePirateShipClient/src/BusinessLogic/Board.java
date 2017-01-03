@@ -72,7 +72,7 @@ public class Board
       received = pirate.run(7,tosend,4);
       
       // checking what was received
-       if(received[1] == "END")
+      if(received[1] == "6")                 // #7#5   #7#6#1#user                                                    
       {
           toreturn[0] = received[2]; //shipid that was hit
           toreturn[1] = received[3]; //winner id
@@ -83,6 +83,7 @@ public class Board
       {
           // received[2] contains a number identifying what happened
           toreturn[0] = received[1]; //shipid that was hit
+          toreturn[1] = "0";
       }
       else
       {
@@ -110,19 +111,13 @@ public class Board
       received = pirate.run(12,tosend,2);
       
       // checking what was received
-      if(received[1] == "END")
+      if(received[1] != "ERROR")
       {
           // received[2] contains a number identifying what happened
-          toreturn[0] = received[2]; //xpos
-          toreturn[1] = received[3]; //ypos
-          toreturn[2] = received[4]; //winnerid
-          toreturn[3] = null;
-      }
-      else if(received[1] != "ERROR")
-      {
-          toreturn[0] = received[2]; //xpos
-          toreturn[1] = received[3]; //ypos
-          toreturn[2] = null;  
+          toreturn[0] = received[1]; //xpos
+          toreturn[1] = received[2]; //ypos
+          toreturn[2] = received[3]; // cell content
+          toreturn[3] = received[4]; //game end flag
       }
       else
       {

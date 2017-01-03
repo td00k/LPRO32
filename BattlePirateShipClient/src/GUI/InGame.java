@@ -12,6 +12,7 @@ import javax.swing.*;
  */
 public class InGame extends javax.swing.JFrame {
 
+    private final MainView main;
     private final SocketClient client;
     private final int gameid;
     private Grid playergrid;
@@ -22,7 +23,7 @@ public class InGame extends javax.swing.JFrame {
     private ActionListener timerlistener;
     private int gametime;
     
-    public InGame(int gameid, int userid, SocketClient client, int startplayer) 
+    public InGame(MainView main, int gameid, int userid, SocketClient client, int startplayer) 
     {
      /**
      * Creates new form InGame
@@ -35,6 +36,8 @@ public class InGame extends javax.swing.JFrame {
         jPanel7.add(enemygrid);
         gametime = 0;
         this.client = client;
+        this.main = main;
+        this.gameid = gameid;
         
         timerlistener = new ActionListener(){
             @Override
@@ -47,47 +50,73 @@ public class InGame extends javax.swing.JFrame {
         };
         
         gametimer = new Timer(1000,timerlistener);
-        pthread = new Thread(new Runnable() {
-         public void run()
-         {
-             StatusMsg.setText("Please place your ships...");
-             playergrid.placePlayerShips();
-             OrientationButton.setVisible(false);
-            // playergrid.sendPositions();
-             StatusMsg.setText("Ships Placed! Waiting for other player...");
-             playergrid.sendBoard();
-             gametimer.start();
-             playergrid.receiveShots();
-             if(playergrid.Winner)
-             {
-                 
-             }
-         }
-        });
-        ethread = new Thread(new Runnable() {
-         public void run()
-         {  
-             enemygrid.doShots();
-             if(enemygrid.Winner)
-             {
-                //JOptionPane.showMessageDialog("");
-             }      
+        pthread = new Thread(new Runnable() 
+        {
+            private MainView main;
+            private InGame gui;
+                   
+            public Runnable init(MainView main, InGame gui) 
+            {
+                this.main = main;
+                this.gui = gui;
+                return this;
+            }
+            
+            public void run()
+            {
+                StatusMsg.setText("Please place your ships...");
+                playergrid.placePlayerShips();
+                OrientationButton.setVisible(false);
+               // playergrid.sendPositions();
+                StatusMsg.setText("Ships Placed! Waiting for other player...");
+                playergrid.sendBoard();
+                StatusMsg.setText("Players Ready!...");
+                gametimer.start();
+                playergrid.receiveShots(StatusMsg);
+                StatusMsg.setText("Game finished...");
 
-         }
-        });
+                if(playergrid.Winner)
+                {   
+                    JOptionPane.showMessageDialog(null,"You Win!");
+                }
+            }
+         });
+        
+        ethread = new Thread(new Runnable() 
+        {
+           private MainView main;
+           private InGame gui;
+                   
+            public Runnable init(MainView main, InGame gui) 
+            {
+                this.main = main;
+                this.gui = gui;
+                return this;
+            }
+            
+            public void run()
+            {  
+               while(!enemygrid.playersReady)
+                {
+                }
+               enemygrid.doShots(StatusMsg);
+               gametimer.stop();
+               if(enemygrid.Winner)
+               {
+                   JOptionPane.showMessageDialog(null,"You Lose!");
+               }
+               this.main.setVisible(true);
+               this.gui.setVisible(false);
+               this.gui.dispose();
+           }
+        }.init(this.main,this));
         pthread.start();
         ethread.start();
-        
-        this.gameid = gameid;
-        
+       
     }
 
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+  /** public static void main(String args[]) {
+  
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -104,16 +133,13 @@ public class InGame extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(First.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
+     
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new InGame(1,1,null,1).setVisible(true);
+                new InGame(new MainView(),1,1,null,1).setVisible(true);
             }
         });
-    }
+    }*/
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

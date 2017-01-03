@@ -40,10 +40,8 @@ public class Ship
     */
    public void insertPos(int xpos,int ypos)
    {
-       
        this.xpos[size-health] = xpos;
        this.ypos[size-health] = ypos;
-       this.health--;
    }
    
    /** This method returns all the positions where a ship was hit.
@@ -60,5 +58,15 @@ public class Ship
               toreturn[i+1]=ypos[i];
           }
           return toreturn;
+      }
+      
+      public void hit()
+      {
+          health--;           
+      }
+      
+      public int getSize()
+      {
+          return this.size;
       }
 }

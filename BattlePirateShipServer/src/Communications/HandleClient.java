@@ -1,6 +1,7 @@
 package Communications;
 
 import BusinessLogic.Authentication;
+import BusinessLogic.Game;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -20,6 +21,7 @@ public class HandleClient implements Runnable
      // Socket variables to create the write and read variables to it
      private Socket PirateSocket;
      ServerSocket serverSocket = null;
+     Game[] games;
 
     
      // writer, read and protocol variables
@@ -35,7 +37,7 @@ public class HandleClient implements Runnable
          * @param PSocket Socket connection to use on communications
          */
      
-    public HandleClient(Socket PSocket) 
+    public HandleClient(Socket PSocket, Game[] games) 
     {
       this.PirateSocket = PSocket;
       try 
@@ -43,7 +45,8 @@ public class HandleClient implements Runnable
              // initializing variables
              writer = new BufferedWriter(new OutputStreamWriter(PirateSocket.getOutputStream()));
              reader = new BufferedReader(new InputStreamReader(PirateSocket.getInputStream()));
-             pirate = new PirateProtocol();
+             pirate = new PirateProtocol(games);
+             this.games = games;
 
              System.out.println("Created HandleClient!");
          } 
@@ -77,10 +80,10 @@ public class HandleClient implements Runnable
 
         try 
         {
+            System.out.println("Thread started with name:" + Thread.currentThread().getName());
             while(true)
             {
                 // reading the string from the socket
-                System.out.println("Thread started with name:" + Thread.currentThread().getName());
                 received = receive();
 
                 // calling the protocol

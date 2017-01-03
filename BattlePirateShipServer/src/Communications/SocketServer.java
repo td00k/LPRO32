@@ -1,6 +1,7 @@
 
 package Communications;
 
+import BusinessLogic.Game;
 import java.net.*;
 import java.io.*;
 import java.util.concurrent.ExecutorService;
@@ -16,6 +17,7 @@ import java.util.concurrent.Executors;
 
 public class SocketServer {
     
+    
    public static void main(String[] args) 
    {
       // creates an executor variable so we can handle clients
@@ -30,6 +32,14 @@ public class SocketServer {
       //variable to deal with a new client
       Runnable worker;
       
+      Game[] games;
+      games = new Game[500];
+      for (int i = 0; i < 500; i++) 
+      {
+        games[i] = new Game();
+      }
+
+  
       try 
       {
         //listening to port number 3217
@@ -47,7 +57,7 @@ public class SocketServer {
             System.out.println("Accepting connection! Creating new thread!");
             
             //calling Handle client to deal with the new client
-            worker = new HandleClient(clientSocket);
+            worker = new HandleClient(clientSocket,games);
             
             //dealing with the new client
             executor.execute(worker);
@@ -61,4 +71,6 @@ public class SocketServer {
       }
 
    }
+   
+
 }

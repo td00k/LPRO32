@@ -14,23 +14,14 @@ public class PirateProtocol
 {
 
     private  Authentication auth;
-    private  static Game[] game;
-    private  static boolean gamescreated;
+    private  Game[] game;
     private  Matchmaking matchmaking;
     private  User userinfo;
     
-    public PirateProtocol()
+    public PirateProtocol(Game[] games)
     {
         auth = new Authentication();
-        if(!gamescreated)
-        {
-           game = new Game[500];
-            for (int i = 0; i < 500; i++) 
-            {
-                game[i] = new Game();
-            }
-            gamescreated = true;
-        }
+        this.game = games;
         
         matchmaking = new Matchmaking();
         userinfo = new User();
@@ -94,7 +85,9 @@ public class PirateProtocol
                         else
                         {
                             args[0] = received[1];
+                            System.out.println("Accessing game id " + received[1] + " player1 " + game[Integer.parseInt(received[1])].player1 + " player2 " + game[Integer.parseInt(received[1])].player2);
                             game[Integer.parseInt(received[1])].updatePlayers(Integer.parseInt(received[2]),Integer.parseInt(received[3]));
+                            System.out.println("Accessing game id " + received[1] + " player1 " + game[Integer.parseInt(received[1])].player1 + " player2 " + game[Integer.parseInt(received[1])].player2);
                             args[1] = Integer.toString(game[Integer.parseInt(received[1])].readyToBegin());
                         }
                             
@@ -134,8 +127,15 @@ public class PirateProtocol
             case "7":
                         // send shot
                         received = game[Integer.parseInt(decoded[1])].Shot(Integer.parseInt(decoded[2]),Integer.parseInt(decoded[3]),Integer.parseInt(decoded[4]));
-                        args[0] = received[1]; //ship or water hit id
-                        encoded = encode(7,args,2);
+                        args[0] = received[0]; //ship or water hit id or game end
+                        
+                        if(Integer.parseInt(received[0]) == 6) // game end
+                        {
+                            args[1] = received[1]; // ship id that was hit 
+                            args[2] = received[2]; // id of winner
+                            argnum = 3;
+                        }
+                        encoded = encode(7,args,argnum);
                         break;
             case "8":
                         // update user stats
@@ -183,7 +183,12 @@ public class PirateProtocol
             case "12":
                         // receive shot
                         received = game[Integer.parseInt(decoded[1])].receiveShot(Integer.parseInt(decoded[2]));
-                        
+                        args[0] = received[0]; // shot xpos
+                        args[1] = received[1]; // shot ypos
+                        args[2] = received[2]; // content of cell
+                        args[3] = received[3]; // endgame flag
+                        argnum = 4;
+                        encoded = encode(7,args,argnum);
                         break;
         }
     
@@ -247,7 +252,6 @@ public class PirateProtocol
         // splitting the string
         for (String retval: Input.split("#")) 
         {
-                      System.out.println(retval);
                       decoded[i] = retval;
                       i++;
         }

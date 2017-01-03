@@ -13,11 +13,11 @@ import java.util.Random;
 
 public class Game {
    
-   private int player1;
-   private int player2;
+   public int player1;
+   public int player2;
    //private int[] viewers;
    private Board[] boards;
-   private int playersready;
+   private static int playersready;
      
    /**
     * The constructor initializes player1,player2 and the 2 boards
@@ -45,6 +45,7 @@ public class Game {
         if(player1 == userid)
         {
             playersready++;
+            
             boards[0].update(args);
         }
         else if(player2 == userid)
@@ -52,6 +53,7 @@ public class Game {
             playersready++;
             boards[1].update(args);
         }
+        System.out.println("Board received! Flag is now " + playersready);
     }
     
     /** This method is used to update the players on a game
@@ -80,28 +82,56 @@ public class Game {
      */
     public String[] Shot(int userid,int xpos,int ypos)
     {
-        String[] toreturn = new String[2];
+        String[] toreturn = new String[3];
         if(player1 == userid)
         {
             toreturn = boards[1].shot(xpos,ypos);
+            boards[1].updateShotFlag();
+            if(toreturn[0].equals("6"))
+            {
+                toreturn[2] = Integer.toString(player1); // player 1 wins
+            }
         }
         else if(player2 == userid)
         {
             toreturn = boards[0].shot(xpos,ypos);
+            boards[0].updateShotFlag();
+            if(toreturn[0].equals("6"))
+            {
+                toreturn[2] = Integer.toString(player2); //player 2 wins
+            }
         }
         return toreturn;
     }
     
     public String[] receiveShot(int userid)
     {
-        String[] toreturn = new String[2];
+        String[] toreturn = new String[3];
+        int[] lastshot;
         if(player1 == userid)
         {
-           
+           while(!boards[0].getShotFlag())
+           {   
+           }
+           boards[0].updateShotFlag();
+           lastshot = boards[0].getLastShot();
+            for (int i = 0; i < 4; i++) 
+            {
+                toreturn[i] = Integer.toString(lastshot[i]);
+            }
         }
         else if(player2 == userid)
         {
-            
+           while(!boards[1].getShotFlag())
+           {
+               
+           }
+           boards[1].updateShotFlag();
+           lastshot = boards[0].getLastShot();
+             for (int i = 0; i < 4; i++) 
+             {
+                toreturn[i] = Integer.toString(lastshot[i]);
+             }     
         }
         return toreturn;
     }
@@ -109,14 +139,26 @@ public class Game {
     public void readyToStart()
     {
         while(playersready != 2)
-        {            
+        {    
+            try {
+                Thread.sleep(10); // for 100 FPS
+                } 
+                catch (InterruptedException ignore) 
+                {
+                }
         }
     }
     
     public int readyToBegin()
     {
-        while((this.player1 == 0) && (this.player2 == 0))
-        {
+        while((this.player1 == 0) || (this.player2 == 0))
+        {   
+            try {
+                Thread.sleep(10); // for 100 FPS
+                } 
+                catch (InterruptedException ignore) 
+                {
+                }
         }
         
         int max = 2;
@@ -132,7 +174,7 @@ public class Game {
         }
         else
         {
-             return this.player2;
+            return this.player2;
         }
     }
 }

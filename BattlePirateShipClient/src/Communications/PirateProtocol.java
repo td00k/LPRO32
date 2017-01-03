@@ -102,7 +102,6 @@ public class PirateProtocol {
         // splitting the string
         for (String retval: Input.split("#")) 
         {
-                      System.out.println(retval);
                       decoded[i] = retval;
                       i++;
         }

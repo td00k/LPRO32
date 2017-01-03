@@ -1,7 +1,6 @@
 
 package BusinessLogic;
 
-
  /** 
      * This class represents the Board where the game will be played.
      * It has methods to make a shot, and to update the board
@@ -13,6 +12,8 @@ public class Board
   private static int hits;
   private static int misses; 
   private static int gameid; 
+  private boolean shotflag; 
+  private int[] lastshot;
   
   /**
    * The constructor initializes the class variables
@@ -20,6 +21,7 @@ public class Board
   public Board()
   {
       positions = new int[10][10];
+      lastshot = new int[4];
       int i,j;
       for(i=0;i<10;i++)
       {
@@ -38,73 +40,74 @@ public class Board
    */
   public String[] shot(int xpos, int ypos)
   {
-    String[] toreturn = new String[3];
+    String[] toreturn = new String[4];
+    
+    lastshot[0] = xpos;
+    lastshot[1] = ypos;
+    lastshot[2] = positions[xpos][ypos]; // content of cell
+    lastshot[3] = 0; // flag for game end
+    
+    
     switch(positions[xpos][ypos])
     {
-            case -1:
-                    // position already hit before
-                    toreturn[0] = Integer.toString(7);
-                    toreturn[1] = Integer.toString(-1);
-                    break;
             case 0:
                     // water hit
-                    toreturn[0] = Integer.toString(7);
-                    toreturn[1] = Integer.toString(0);
+                    toreturn[0] = Integer.toString(0);
                     misses++;
                     break;
             case 1:
                     // hit one of the 3 health ships
-                    toreturn[0] = Integer.toString(7);
-                    toreturn[1] = Integer.toString(1);
+                    toreturn[0] = Integer.toString(1);
                     hits++;
                     if(hits == 17)
                     {
                         // game over
-                        toreturn[2] = "END";
+                        toreturn[0] = "6";
+                        toreturn[1] = Integer.toString(1);
                     }
                     break;
             case 2:
                     // hit the 2 health ship
-                    toreturn[0] = Integer.toString(7);
-                    toreturn[1] = Integer.toString(2);
+                    toreturn[0] = Integer.toString(2);
                     hits++;
                     if(hits == 17)
                     {
                         // game over
-                        toreturn[2] = "END";
+                        toreturn[0] = "6";
+                        toreturn[1] = Integer.toString(2);
                     }
                     break;
             case 3:
                     // hit the other 3 health ship
-                    toreturn[0] = Integer.toString(7);
-                    toreturn[1] = Integer.toString(3);
+                    toreturn[0] = Integer.toString(3);
                     hits++;
                     if(hits == 17)
                     {   
                        //game over
-                       toreturn[2] = "END";
+                        toreturn[0] = "6";
+                        toreturn[1] = Integer.toString(3);
                     }
                     break;
             case 4:
                     // hit the 4 health ship
-                    toreturn[0] = Integer.toString(7);
-                    toreturn[1] = Integer.toString(4);
+                    toreturn[0] = Integer.toString(4);
                     hits++;
                     if(hits == 17)
                     {
                         // game over
-                        toreturn[2] = "END";
+                        toreturn[0] = "6";
+                        toreturn[1] = Integer.toString(4);
                     }
                     break;
             case 5:
                     // hit the 5 health ship
-                    toreturn[0] = Integer.toString(7);
-                    toreturn[1] = Integer.toString(5);
+                    toreturn[0] = Integer.toString(5);
                     hits++;
                     if(hits == 17)
                     {
                         // game over
-                        toreturn[2] = "END";
+                        toreturn[0] = "6";
+                        toreturn[1] = Integer.toString(5);
                     }
                     break;
     }
@@ -133,5 +136,20 @@ public class Board
     
       return 1;
   }
+  
+  public boolean getShotFlag()
+  {
+      return shotflag;
+  }
+  
+   public void updateShotFlag()
+  {
+      shotflag = !shotflag;
+  }
+   
+   public int[] getLastShot()
+   {
+       return lastshot;
+   }
 
 }

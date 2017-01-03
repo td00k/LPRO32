@@ -36,7 +36,7 @@ public class Grid extends JPanel {
     private boolean ShipPlaced;
     
     private boolean ListenerEnable;
-    static boolean playerReady;
+    public static boolean playersReady;
     public boolean vertical;
     static boolean GameEnd;
     public boolean Winner;
@@ -46,7 +46,8 @@ public class Grid extends JPanel {
     private final SocketClient client;
     private Game game;
     private Board gameBoard;
-    private Ship[] Ships;
+    private Ship[] enemyShips;
+    private Ship[] myShips;
     
     public int gameid, userid, shipid;
     public int[] shipsizes;
@@ -58,7 +59,7 @@ public class Grid extends JPanel {
         this.setSize(300,300);
         this.setLayout(new GridLayout(10,10));
         this.client = client;
-        
+        playersReady = false;
         if(startingPlayer == userid)
         {
             myturn = true;
@@ -78,15 +79,18 @@ public class Grid extends JPanel {
         ShipPlaced = false;
         ListenerEnable = false;
         gameBoard = new Board(client);
-        Ships = new Ship[5];
+        myShips = new Ship[5];
+        enemyShips = new Ship[5];
+
         shipsizes = new int[]{5,4,3,3,2}; 
-        shipids = new int[]{5,4,3,1,2};
+        shipids = new int[]{4,3,2,1,0};
         
         for(int i=4;i>-1;i--)
         {
-            Ships[i] = new Ship(shipsizes[i]);
+            myShips[i] = new Ship(shipsizes[i]);
+            enemyShips[i] = new Ship(shipsizes[i]);
         }
-
+        
     }
 
     private void buildButtons(String player)
@@ -110,9 +114,6 @@ public class Grid extends JPanel {
     public void placeShip(MouseEvent e, Cell cell) {
         // handle the event, for instance
        // cell.setBackground(Color.blue);
-       
-    
-       
         int xpos = cell.getXPos();
         int ypos = cell.getYPos();
         
@@ -140,6 +141,7 @@ public class Grid extends JPanel {
                    {
                         squares[xpos][ypos+i].clickflag = true;
                         gameBoard.positions[xpos][ypos+i] = shipid; 
+                        myShips[shipid].insertPos(xpos,ypos+i);
                    }
             }
             if(paint == Color.GREEN)
@@ -171,6 +173,7 @@ public class Grid extends JPanel {
                    {
                         squares[xpos+i][ypos].clickflag = true;
                         gameBoard.positions[xpos+i][ypos] = shipid;
+                        myShips[shipid].insertPos(xpos+i,ypos);
                    }
             }
             if(paint == Color.GREEN)
@@ -300,116 +303,83 @@ public class Grid extends JPanel {
         int xpos = cell.getXPos();
         int ypos = cell.getYPos();
         int[] retpos = new int[10];
+        int shipindex = -1;
         
         Color paint = Color.YELLOW;
         
         if(!squares[xpos][ypos].clickflag)
         {
             String[] result = gameBoard.shot(userid,xpos,ypos);
-            switch(Integer.parseInt(result[0]))
+            if(!result[0].equals("ERROR"))
             {
-                case 0:
-                        // water hit
-                        squares[xpos][ypos].setBackground(Color.CYAN);
-                        break;
-                case 1:
-                        // hit one of the 3 health ships
-                        Ships[1].insertPos(xpos, ypos);
-                        if(Ships[1].getHealth() == 0)
-                        {
-                           retpos = Ships[1].getPositions();
-                           for(int i=0;i<6;i=i+2)
-                           {
-                               squares[retpos[i]][retpos[i+1]].setBackground(Color.RED);
-                           }
-
-                        }
-                        else
-                        {
-                           squares[xpos][ypos].setBackground(Color.YELLOW); 
-                        }
-                        break;
-                case 2:
-                        // hit the 2 health ship
-                          Ships[0].insertPos(xpos, ypos);
-                        if(Ships[0].getHealth() == 0)
-                        {
-                           retpos = Ships[0].getPositions();
-                           for(int i=0;i<4;i=i+2)
-                           {
-                               squares[retpos[i]][retpos[i+1]].setBackground(Color.RED);
-                           }
-
-                        }
-                        else
-                        {
-                           squares[xpos][ypos].setBackground(Color.YELLOW); 
-                        }
-                        break;
-                case 3:
-                        // hit the other 3 health ship
-                          Ships[2].insertPos(xpos, ypos);
-                        if(Ships[2].getHealth() == 0)
-                        {
-                           retpos = Ships[2].getPositions();
-                           for(int i=0;i<6;i=i+2)
-                           {
-                               squares[retpos[i]][retpos[i+1]].setBackground(Color.RED);
-                           }
-
-                        }
-                        else
-                        {
-                           squares[xpos][ypos].setBackground(Color.YELLOW); 
-                        }
-                        break;
-                case 4:
-                        // hit the 4 health ship
-                          Ships[3].insertPos(xpos, ypos);
-                        if(Ships[3].getHealth() == 0)
-                        {
-                           retpos = Ships[3].getPositions();
-                           for(int i=0;i<8;i=i+2)
-                           {
-                               squares[retpos[i]][retpos[i+1]].setBackground(Color.RED);
-                           }
-                        }
-                        else
-                        {
-                           squares[xpos][ypos].setBackground(Color.YELLOW); 
-                        }
-                        break;
-                case 5:
-                        // hit the 5 health ship
-                        Ships[4].insertPos(xpos, ypos);
-                        if(Ships[4].getHealth() == 0)
-                        {
-                           retpos = Ships[4].getPositions();
-                           for(int i=0;i<10;i=i+2)
-                           {
-                               squares[retpos[i]][retpos[i+1]].setBackground(Color.RED);
-                           }
-
-                        }
-                        else
-                        {
-                           squares[xpos][ypos].setBackground(Color.YELLOW); 
-                        }
-                        break;
-                 case 6:
-                        ListenerEnable = false;
-                        GameEnd = true;
-                        Winner = true;
-                        break;               
+                switch(Integer.parseInt(result[0]))
+                {
+                    case 0:
+                            // water hit
+                            squares[xpos][ypos].setBackground(Color.CYAN);
+                            break;
+                    case 1:
+                            // hit one of the 3 health ships
+                            shipindex = 1;
+                            break;  
+                    case 2:
+                            // hit the 2 health ship
+                            shipindex = 0;
+                            break;
+                    case 3:
+                            //hit the 3 health ship
+                            shipindex = 2;
+                            break;
+                    case 4:
+                            //hit the 4 health ship
+                            shipindex = 3;
+                            break;
+                    case 5:
+                            //hit the 5 health ship
+                            shipindex = 4;
+                            break;             
+                }
+                if(shipindex != -1)
+                {
+                    enemyShips[shipindex].insertPos(xpos, ypos);
+                    enemyShips[shipindex].hit();
+                    if(enemyShips[shipindex].getHealth() == 0)
+                    {
+                       retpos = enemyShips[shipindex].getPositions();
+                       for(int i=0;i< 2*enemyShips[shipindex].getSize();i=i+2)
+                       {
+                           squares[retpos[i]][retpos[i+1]].setBackground(Color.RED);
+                       }
+                    }
+                    else
+                    {
+                       squares[xpos][ypos].setBackground(Color.YELLOW); 
+                    }
+                }
+                if(Integer.parseInt(result[1]) != 0)
+                {
+                    ListenerEnable = false;
+                    GameEnd = true;
+                    Winner = true;
+                }
+                else
+                {
+                    myturn = false;
+                }
+                clicked = true;
             }
-        clicked = true;
         }
     }  
         // wait for other player ListenerEnable = true;
           
         
-    public void receiveShots() 
+    public void receiveShots(JLabel Status) 
     {
+        String[] received = new String[4];
+        int[] retpos = new int[10];
+        int xpos, ypos;
+        int shipindex = -1;
+        
         while(true)
         {
             if(GameEnd == true)
@@ -418,16 +388,77 @@ public class Grid extends JPanel {
             }
             if(myturn == false)
             { 
-                gameBoard.receiveShot(userid);
-                myturn = true;
-                clicked = false;   
+                Status.setText("Waiting for opponent shot...");
+                received = gameBoard.receiveShot(userid);
+                if(!received[0].equals("ERROR"))
+                {
+                    xpos = Integer.parseInt(received[0]);
+                    ypos = Integer.parseInt(received[1]);
+                    
+                    switch(Integer.parseInt(received[2]))
+                    {
+                         case 0:
+                                // water hit
+                                squares[xpos][ypos].setBackground(Color.CYAN);
+                                break;
+                        case 1:
+                                // hit one of the 3 health ships
+                                shipindex = 1;
+                                break;  
+                        case 2:
+                                // hit the 2 health ship
+                                shipindex = 0;
+                                break;
+                        case 3:
+                                //hit the 3 health ship
+                                shipindex = 2;
+                                break;
+                        case 4:
+                                //hit the 4 health ship
+                                shipindex = 3;
+                                break;
+                        case 5:
+                                //hit the 5 health ship
+                                shipindex = 4;
+                                break;
+                    }
+                    
+                    if(shipindex != -1)
+                    {
+                        myShips[shipindex].hit();
+                        if(myShips[shipindex].getHealth() == 0)
+                        {
+                           retpos = myShips[shipindex].getPositions();
+                           for(int i=0;i < 2*myShips[i].getSize();i=i+2)
+                           {
+                               squares[retpos[i]][retpos[i+1]].setBackground(Color.RED);
+                           }
+                        }
+                        else
+                        {
+                           squares[xpos][ypos].setBackground(Color.YELLOW); 
+                        }
+                    }
+                   
+                    if(received[3].equals("1"))
+                    {
+                        ListenerEnable = false;
+                        GameEnd = true;
+                        Winner = false;
+                    }
+                    else
+                    {
+                        ListenerEnable = true;
+                        myturn = true; 
+                    }
+                }    
             }
         }
             
     }
     
     
-    public void doShots() 
+    public void doShots(JLabel Status) 
     {
         while(true)
         {
@@ -435,12 +466,14 @@ public class Grid extends JPanel {
             {
                 return;
             }
-            if(myturn == true)
+            if(myturn == true && playersReady == true)
             { 
+                Status.setText("It's your turn...");
                 ListenerEnable = true;
                 while(!clicked)
                 {      
                 }
+                ListenerEnable = false;
                 myturn = false;
                 clicked = false;   
             }
@@ -476,6 +509,7 @@ public class Grid extends JPanel {
     public void sendBoard()
     {
          gameBoard.Sendboard(gameid, userid);
+         playersReady = true;
          return;
     }
     

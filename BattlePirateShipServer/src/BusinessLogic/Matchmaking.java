@@ -126,24 +126,30 @@ public class Matchmaking {
      
     public String[] search(int userid)
     {
-        String received[];
+        String[] received;
         String query;
         String[] args = new String[1];
         String[] toreturn = new String[3];
         
         args[0] = Integer.toString(userid);
         query = "SELECT * FROM games";
+        System.out.println("Antes dbhanlder");
         received = DBhandler.run(3,query,args);
+        System.out.println("depois" + received[0]);
         if(received[0].equals("-1"))
         {
-            toreturn[0] = Integer.toString(-1);
+            System.out.println("nao é aqui");
+            toreturn[0] = "-1";
+            
         }
         else
         {
+            System.out.println("nope");
             toreturn[0] = received[0];
             toreturn[2] = Integer.toString(userid);
             toreturn[1] = received[1];
         }
+        
         return toreturn;
     }
      

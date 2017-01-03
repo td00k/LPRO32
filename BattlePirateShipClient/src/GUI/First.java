@@ -177,6 +177,7 @@ public class First extends javax.swing.JFrame {
         //First f = new First();
        //jPanel1.add(log);
         log.setVisible(true);
+        setVisible(false);
         //this.dispose();
         
 

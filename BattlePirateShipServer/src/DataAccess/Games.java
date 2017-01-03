@@ -37,6 +37,7 @@ public class Games
     public String[] search(String query, Connection con,int userid)
     {
          String[] toreturn = new String[3];
+         toreturn[0] = "-1";
         try 
         {
             Statement stmt, stmt2;
@@ -64,13 +65,17 @@ public class Games
             
             // extracting the rating from the userstats table
             ResultSet rs = stmt.executeQuery("SELECT rank FROM userstats WHERE id = " + userid);
-            if(rs.next())
+            if((rs != null) && (rs.next()))
             {
                 rank = rs.getInt("rank");
 
                  // executing the query
                 rs = stmt.executeQuery(query);
-
+                if(rs == null)
+                {
+                    toreturn[0] = "-1";
+                    return toreturn;
+                }
                  //going through the whole games table in database
                 while (rs.next()) 
                 {   
@@ -82,12 +87,12 @@ public class Games
                     if(rs.getInt("player2") == 0)
                     {   
                         // getting the rank of the player waiting
-                        aux = stmt2.executeQuery("SELECT rank FROM userstats WHERE id = " + tempuid);
-                        if(aux.next())
+                        aux = stmt2.executeQuery("SELECT rank FROM userstats WHERE id = " + tempuid); 
+                        if((aux != null) && aux.next())
                             temprank = aux.getInt("rank");
                         else
                         {
-                            toreturn[0] = Integer.toString(-1);
+                            toreturn[0] = "-1";
                             return toreturn;
                         }
                         // if the rank of the next player is closer to the rank of the player searching for a game
@@ -96,15 +101,18 @@ public class Games
                             bestrank = Math.abs(rank - temprank);
                             toreturn[0] = Integer.toString(tempgameid);
                             toreturn[1] = Integer.toString(tempuid);
-
                         }
                     }
                 }
             }
+            else
+            {
+                System.out.println("NO games on table"); 
+                toreturn[0] = "-1";
+                return toreturn;
+            }
             //closing the statement
             stmt.close();
-            System.out.println(toreturn[0]);
-            System.out.println(toreturn[1]);
             // if there were no games waiting for players, or if we got an SQLexception, we return -1, otherwise, we return the assigned gameid
             return toreturn;
         } 

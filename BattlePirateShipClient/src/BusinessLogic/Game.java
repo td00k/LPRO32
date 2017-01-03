@@ -55,7 +55,6 @@ public class Game
          // checking what was received
          if(!received[1].equals("ERROR"))
          {
-             // returning the gameid
              toreturn[0] = Integer.parseInt(received[1]);
              toreturn[1] = Integer.parseInt(received[2]);
     
