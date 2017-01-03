@@ -20,9 +20,7 @@ public class HandleClient implements Runnable
      // Socket variables to create the write and read variables to it
      private Socket PirateSocket;
      ServerSocket serverSocket = null;
-    
-     // handler variable for the DB methods
-     Authentication handler;
+
     
      // writer, read and protocol variables
      private  BufferedWriter writer;
@@ -46,7 +44,7 @@ public class HandleClient implements Runnable
              writer = new BufferedWriter(new OutputStreamWriter(PirateSocket.getOutputStream()));
              reader = new BufferedReader(new InputStreamReader(PirateSocket.getInputStream()));
              pirate = new PirateProtocol();
-             handler = new Authentication();
+
              System.out.println("Created HandleClient!");
          } 
          catch (UnknownHostException e) 
@@ -79,17 +77,20 @@ public class HandleClient implements Runnable
 
         try 
         {
-            // reading the string from the socket
-            System.out.println("Thread started with name:" + Thread.currentThread().getName());
-            received = receive();
-            
-            // calling the protocol
-            System.out.println("Server Received encoded string!");
-            toSend = pirate.run(received);
-            
-            // sending the reply to the client
-            send(toSend);
-            System.out.println("Sent Reply to Client!");
+            while(true)
+            {
+                // reading the string from the socket
+                System.out.println("Thread started with name:" + Thread.currentThread().getName());
+                received = receive();
+
+                // calling the protocol
+                System.out.println("Server Received encoded string!");
+                toSend = pirate.run(received);
+
+                // sending the reply to the client
+                send(toSend);
+                System.out.println("Sent Reply to Client!");
+            }
             
         } 
 	catch (IOException e) 
@@ -132,7 +133,6 @@ public class HandleClient implements Runnable
       toReturn = "1";
       toReturn = reader.readLine();
       System.out.println("Received: " + toReturn);
-      System.out.println("Out of cycle");
       return toReturn;
    }
   

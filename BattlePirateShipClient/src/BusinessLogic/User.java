@@ -4,6 +4,7 @@ package BusinessLogic;
 
 
 import Communications.PirateProtocol;
+import Communications.SocketClient;
         
 /**
  *  This class deals with the requests from the interface to get user information.
@@ -11,14 +12,17 @@ import Communications.PirateProtocol;
  */
 public class User 
 {
-  PirateProtocol pirate;
+  private final SocketClient client;
+  private PirateProtocol pirate;
   
   /**
   * The constructor does nothing
   */
-  public User()
+  public User(SocketClient client)
   {
-      pirate = new PirateProtocol();
+      
+      this.client = client;
+      pirate = new PirateProtocol(client);
       
   }
   

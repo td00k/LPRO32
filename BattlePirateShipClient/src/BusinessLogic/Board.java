@@ -2,6 +2,7 @@
 package BusinessLogic;
 
 import Communications.PirateProtocol;
+import Communications.SocketClient;
 
  /** 
      * This class represents the Board where the game will be played.
@@ -11,6 +12,7 @@ import Communications.PirateProtocol;
 
 public class Board 
 {
+  private final SocketClient client;
   public  int[][] positions;
   private  int hits;
   private  int misses; 
@@ -21,11 +23,12 @@ public class Board
    /** 
      * This method creates and initializes the board where the player's ships will be placed.
      */
-  public Board(/*int gameid*/)
+  public Board(/*int gameid*/SocketClient client)
   {
+      this.client = client;
       // variables for cicle control
       int i=0,j=0;
-      pirate = new PirateProtocol();
+      pirate = new PirateProtocol(client);
       positions = new int[10][10];
       for(i=0;i<10;i++)
       {
@@ -71,6 +74,44 @@ public class Board
       {
           // received[2] contains a number identifying what happened
           return received[2];
+      }
+      else
+      {
+          // error
+          return "fail";
+      }
+  }
+  
+  public String[] receiveShot(int userid)
+  {
+      String[] tosend = new String[12];
+      
+      // variable to receive from the protocol
+      String[] received;
+      
+      // placing info on the string that is going to be sent
+      tosend[0] = Integer.toString(gameid);
+      tosend[1] = Integer.toString(userid);
+      
+      String[] toreturn = new String[3];
+      
+      // calling the protocol and receiving an answer
+      received = pirate.run(12,tosend,2);
+      
+      // checking what was received
+      if(received[1] == "END")
+      {
+          // received[2] contains a number identifying what happened
+          toreturn[0] = received[2]; //xpos
+          toreturn[1] = received[3]; //ypos
+          toreturn[2] = received[4]; //winnerid
+          return toreturn;
+      }
+      else if(received[1] != "ERROR")
+      {
+          toreturn[0] = received[2]; //xpos
+          toreturn[1] = received[3]; //ypos
+          return toreturn;
       }
       else
       {

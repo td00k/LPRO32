@@ -39,7 +39,7 @@ public class Games
          String[] toreturn = new String[3];
         try 
         {
-            Statement stmt;
+            Statement stmt, stmt2;
             
             // variable that will be returned
             int gameid = -1;
@@ -59,42 +59,52 @@ public class Games
             // creating a statement so we can execute queries on the DB
            
             stmt = conn.createStatement();
-            System.out.println("Query statement created!");
+            stmt2 = conn.createStatement();
+            System.out.println(" search Query  statement created!");
             
             // extracting the rating from the userstats table
             ResultSet rs = stmt.executeQuery("SELECT rank FROM userstats WHERE id = " + userid);
-            rank = rs.getInt("rank");
-            
-             // executing the query
-            rs = stmt.executeQuery(query);
-                                   
-             //going through the whole games table in database
-            while (rs.next()) 
-            {   
-                //getting the gameid and playerid of the player waiting.
-                tempgameid = rs.getInt("id");
-                tempuid = rs.getInt("player1id");
-                
-                // if the game does not have a second player
-                if(rs.getInt("player2id") == 0)
+            if(rs.next())
+            {
+                rank = rs.getInt("rank");
+
+                 // executing the query
+                rs = stmt.executeQuery(query);
+
+                 //going through the whole games table in database
+                while (rs.next()) 
                 {   
-                    // getting the rank of the player waiting
-                    aux = stmt.executeQuery("SELECT rank FROM userstats WHERE id = " + tempuid);
-                    temprank = aux.getInt("rank");
-                
-                    // if the rank of the next player is closer to the rank of the player searching for a game
-                    if( Math.abs(rank - temprank) < bestrank)
+                    //getting the gameid and playerid of the player waiting.
+                    tempgameid = rs.getInt("id");
+                    tempuid = rs.getInt("player1");
+
+                    // if the game does not have a second player
+                    if(rs.getInt("player2") == 0)
                     {   
-                        bestrank = Math.abs(rank - temprank);
-                        toreturn[0] = Integer.toString(tempgameid);
-                        toreturn[1] = Integer.toString(tempuid);
-                        
+                        // getting the rank of the player waiting
+                        aux = stmt2.executeQuery("SELECT rank FROM userstats WHERE id = " + tempuid);
+                        if(aux.next())
+                            temprank = aux.getInt("rank");
+                        else
+                        {
+                            toreturn[0] = Integer.toString(-1);
+                            return toreturn;
+                        }
+                        // if the rank of the next player is closer to the rank of the player searching for a game
+                        if(Math.abs(rank - temprank) < bestrank)
+                        {   
+                            bestrank = Math.abs(rank - temprank);
+                            toreturn[0] = Integer.toString(tempgameid);
+                            toreturn[1] = Integer.toString(tempuid);
+
+                        }
                     }
                 }
             }
             //closing the statement
             stmt.close();
-          
+            System.out.println(toreturn[0]);
+            System.out.println(toreturn[1]);
             // if there were no games waiting for players, or if we got an SQLexception, we return -1, otherwise, we return the assigned gameid
             return toreturn;
         } 
@@ -125,10 +135,10 @@ public class Games
             
             // creating a statement so we can execute a query on the DB
             stmt = con.createStatement();
-            System.out.println("Query statement created!");
+            System.out.println("Create Query statement created!");
             
             // executing the Query
-            stmt.execute(query);                   
+            stmt.execute(query,Statement.RETURN_GENERATED_KEYS);                   
             
             // asking rs to get the generated key
             ResultSet rs = stmt.getGeneratedKeys();

@@ -31,6 +31,7 @@ public class UserInfo
     
     public int register(String query, Connection con)
     {
+        int id;
         try 
         {
             Statement stmt;
@@ -40,14 +41,26 @@ public class UserInfo
             stmt = conn.createStatement();
             System.out.println("Query statement created!");
             
+           
             // executing the Query
-            stmt.execute(query);                   
+            stmt.execute(query,Statement.RETURN_GENERATED_KEYS);                   
             System.out.println("Valid Register Query!");
+            
+            ResultSet rs = stmt.getGeneratedKeys();
+            
+            if(rs.next())
+            {
+               id = rs.getInt(1);
+            }
+            else
+            {
+                id = -1;
+            }
             
             // closing the statement
             stmt.close();
             
-            return 1;
+            return id;
         } 
         catch (SQLException ex) 
         {
@@ -126,12 +139,12 @@ public class UserInfo
         {
             Statement stmt;
             
-         
             // creating a statement so we can execute a query on the DB
             stmt = con.createStatement();
             System.out.println("Query statement created!");
             
             // executing the Query
+            System.out.println("Userinfo" + query);
             stmt.execute(query);                   
             System.out.println("Valid Userinfo GETSTATS Query!");
             
@@ -139,9 +152,12 @@ public class UserInfo
             ResultSet rs = stmt.executeQuery(query);
             
             // extracting results
+            if(rs.next())
+            {
             toreturn[0] =  Integer.toString(rs.getInt("id"));
-            toreturn[1] =  Integer.toString(rs.getInt("name"));
-            toreturn[2] =  Integer.toString(rs.getInt("username"));
+            toreturn[1] =  rs.getString("name");
+            toreturn[2] =  rs.getString("username");
+            }
                     
             // closing the statement since we don't need to use it anymore
             stmt.close();
@@ -152,6 +168,7 @@ public class UserInfo
         catch(SQLException ex)
         {
             toreturn[0] = Integer.toString(-1);
+            System.out.println(ex);
             return toreturn;
         }
     }

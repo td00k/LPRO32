@@ -13,9 +13,9 @@ public class PirateProtocol {
     /**
      *  The constructor method initializes the class variables
      */
-    public PirateProtocol()
+    public PirateProtocol(SocketClient client)
     {
-        client = new SocketClient();
+        this.client = client;
     }
     
    /**

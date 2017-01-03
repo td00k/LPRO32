@@ -1,6 +1,7 @@
 
 package GUI;
 
+import Communications.SocketClient;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,7 +12,7 @@ import javax.swing.*;
  */
 public class InGame extends javax.swing.JFrame {
 
-    
+    private final SocketClient client;
     private final int gameid;
     private Grid playergrid;
     private Grid enemygrid;
@@ -21,18 +22,19 @@ public class InGame extends javax.swing.JFrame {
     private ActionListener timerlistener;
     private int gametime;
     
-    public InGame(int gameid, int userid) 
+    public InGame(int gameid, int userid, SocketClient client, int startplayer) 
     {
      /**
      * Creates new form InGame
      * @param gameid receives the gameid that was given when creating or joining a game
      */
         initComponents();
-        playergrid = new Grid("player",gameid,userid);
-        enemygrid = new Grid("enemy",gameid,userid);
+        playergrid = new Grid("player",gameid,userid,client,startplayer);
+        enemygrid = new Grid("enemy",gameid,userid,client,startplayer);
         jPanel11.add(playergrid);
         jPanel7.add(enemygrid);
         gametime = 0;
+        this.client = client;
         
         timerlistener = new ActionListener(){
             @Override
@@ -53,14 +55,9 @@ public class InGame extends javax.swing.JFrame {
              OrientationButton.setVisible(false);
             // playergrid.sendPositions();
              StatusMsg.setText("Ships Placed! Waiting for other player...");
-             while(!playergrid.playerReady)
-             {   
-             }  
+             playergrid.sendBoard();
              gametimer.start();
-             while(!playergrid.GameEnd)
-             {
-                 
-             }
+             playergrid.receiveShots();
              if(playergrid.Winner)
              {
                  
@@ -69,14 +66,8 @@ public class InGame extends javax.swing.JFrame {
         });
         ethread = new Thread(new Runnable() {
          public void run()
-         {
-            while(!enemygrid.playerReady)
-             {   
-             }
-            while(!enemygrid.GameEnd)
-             {
-                //enemygrid.sendShot();  
-             }
+         {  
+             enemygrid.doShots();
              if(enemygrid.Winner)
              {
                 //JOptionPane.showMessageDialog("");
@@ -119,7 +110,7 @@ public class InGame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new InGame(1,1).setVisible(true);
+                new InGame(1,1,null,1).setVisible(true);
             }
         });
     }
@@ -207,6 +198,7 @@ public class InGame extends javax.swing.JFrame {
         OrientationButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(51, 51, 51));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 5));

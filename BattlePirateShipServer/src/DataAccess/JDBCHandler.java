@@ -29,7 +29,7 @@ public class JDBCHandler
    private static final int GETFRIENDS = 10;      // code for signaling it's a getfriends query
    private static final int ADDFRIEND = 11;       // code for signaling it's a addfriend query
    private static final int GETINFO = 12;       // code for signaling it's a addfriend query
-  
+   private static final int NEWUSERSTATS = 13;  // code for signaling it's a create userstats query
    
    // Connection to DB
    static Connection conn;
@@ -108,6 +108,9 @@ public class JDBCHandler
             case GETINFO:
                             returnval = Uinfo.get(query,conn);
                             break;
+            case NEWUSERSTATS:
+                            returnval[0] = Integer.toString(Ustats.create(query,conn));
+                            break;
         }
         
         // trying to close the connection to the DB
@@ -171,7 +174,7 @@ public class JDBCHandler
         }
         catch(SQLException se)
         {
-            System.out.println("Closing DB and returning!");
+            System.out.println(se);
             return -1;
         }
         System.out.println("Closing DB and returning!");

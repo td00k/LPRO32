@@ -3,22 +3,24 @@ package GUI;
 
 import BusinessLogic.Game;
 import BusinessLogic.User;
+import Communications.SocketClient;
   /** 
      *  This class contains the interface for the Main Menu where the player can see his stats and decide to start or watch a game.
      */
 
 public class MainView extends javax.swing.JFrame {
-
+    private final SocketClient client;
     private final Game gamehandler;
     private final User userinfo;
     private int gameid;
     private int userid;
     
-    public MainView(int userid) {
+    public MainView(int userid, SocketClient client) {
         initComponents();
         this.userid = userid;
-        gamehandler = new Game();
-        userinfo = new User();
+        this.client = client;
+        gamehandler = new Game(client);
+        userinfo = new User(client);
         fillPlayerInfo();
         
         
@@ -52,7 +54,7 @@ public class MainView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainView(1).setVisible(true);
+                new MainView(1,null).setVisible(true);
             }
         });
     }
@@ -67,11 +69,12 @@ public class MainView extends javax.swing.JFrame {
          //userinfo.getFriends(userid);
          
          UsernameText.setText(info[2]);
-         GamesPlayedText.setText(info[4]);
-         WinsText.setText(info[5]);
-         DefeatsText.setText(info[6]);
-         SurrendersText.setText(info[7]);
-         RankingText.setText(info[8]);
+         UsernameText.setEditable(false);
+         GamesPlayedText.setText(info[5]);
+         WinsText.setText(info[6]);
+         DefeatsText.setText(info[7]);
+         SurrendersText.setText(info[8]);
+         RankingText.setText(info[9]);
          PlayerID.setText(""+userid);
        return 1;    
     }
@@ -118,6 +121,7 @@ public class MainView extends javax.swing.JFrame {
         jMenuItem5 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(51, 51, 51));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 6));
@@ -283,7 +287,7 @@ public class MainView extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(4, 4, 4)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -292,14 +296,15 @@ public class MainView extends javax.swing.JFrame {
                                     .addComponent(Defeats)
                                     .addComponent(Surrenders)
                                     .addComponent(Ranking))
-                                .addGap(10, 10, 10)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(RankingText, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(DefeatsText, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(SurrendersText, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(WinsText, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(GamesPlayedText, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                        .addGap(0, 0, Short.MAX_VALUE)
+                                        .addComponent(GamesPlayedText, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(RankingText, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(SurrendersText, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(WinsText, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(DefeatsText, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(20, 20, 20)
                                 .addComponent(Username)
@@ -519,8 +524,9 @@ public class MainView extends javax.swing.JFrame {
     private void QuickGameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_QuickGameButtonActionPerformed
         // TODO add your handling code here:
         
-        gameid = gamehandler.quickgame(userid);
-        InGame game= new InGame(gameid,userid);
+        int[] args = new int[2];
+        args = gamehandler.quickgame(userid);
+        InGame game= new InGame(args[0],userid,this.client,args[1]);
         game.setVisible(true);
     }//GEN-LAST:event_QuickGameButtonActionPerformed
 

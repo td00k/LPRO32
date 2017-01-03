@@ -1,6 +1,7 @@
 package BusinessLogic;
 
 import Communications.PirateProtocol; 
+import Communications.SocketClient;
 
     /** 
      * This class represents the Authentication of the client.
@@ -10,8 +11,8 @@ import Communications.PirateProtocol;
 
 public class Authentication  {
     
-     
-    
+     private final SocketClient client;
+        
      //codes to signal what we will be passing to other layers
      private static final int REGISTER = 1;  
      private static final int LOGIN = 2;
@@ -24,9 +25,10 @@ public class Authentication  {
         * the constructor initializes the class variables
         */
    
-     public Authentication() 
+     public Authentication(SocketClient client) 
      {
-        pirate = new PirateProtocol();
+        this.client = client;
+        pirate = new PirateProtocol(client);
      }
      
      

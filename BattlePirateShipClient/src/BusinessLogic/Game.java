@@ -10,6 +10,7 @@ import Communications.SocketClient;
   
 public class Game
 {
+   private final SocketClient client;
    private static int player1;
    private static int player2;
    private static int time;
@@ -23,9 +24,10 @@ public class Game
      /** 
      * This method creates and initializes the game's class components.
      */
-     public Game()
+     public Game(SocketClient client)
      {
-        pirate = new PirateProtocol();
+        this.client = client;
+        pirate = new PirateProtocol(client);
      }
    
    /**
@@ -35,7 +37,7 @@ public class Game
      * @return returns the assigned game id
      */
    
-     public int quickgame(int userid)
+     public int[] quickgame(int userid)
      {
          // variable that is going to be sent to the protocol
          String[] tosend = new String[12];
@@ -45,6 +47,7 @@ public class Game
          
          // placing info on the string that is going to be sent
          tosend[0] = Integer.toString(userid);
+         int[] toreturn = new int[2];
          
          // calling the protocol and receiving an answer
          received = pirate.run(3,tosend,1);
@@ -53,13 +56,17 @@ public class Game
          if(!received[1].equals("ERROR"))
          {
              // returning the gameid
-             return Integer.parseInt(received[1]);
+             toreturn[0] = Integer.parseInt(received[1]);
+             toreturn[1] = Integer.parseInt(received[2]);
+    
          }
          else
          {
              // error
-             return -1;
+              toreturn[0] = -1;
+         
          }
+         return toreturn;
      }
     
     /** 

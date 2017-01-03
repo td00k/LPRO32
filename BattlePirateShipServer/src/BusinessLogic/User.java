@@ -10,16 +10,16 @@ import DataAccess.JDBCHandler;
 
 public class User 
 {
-  private static int userid; 
-  private static String name;
-  private static String username; 
-  private static int rank; 
-  private static int wins; 
-  private static int defeats; 
-  private static int gamesplayed; 
-  private static int surrenders; 
+  private  int userid; 
+  private  String name;
+  private  String username; 
+  private  int rank; 
+  private  int wins; 
+  private  int defeats; 
+  private  int gamesplayed; 
+  private  int surrenders; 
   
-  private static String infoargs[];
+  private String infoargs[];
   
   private JDBCHandler DBhandler;
   
@@ -50,11 +50,12 @@ public class User
       String query;
       String[] toreturn = new String[8];
       
-      query= "SELECT * " + "FROM userstats" + "WHERE id =" + userid;
-      String[] received;
+      query= "SELECT * FROM userstats WHERE id = " + userid + "";
+      String[] received = new String[8];
       received = DBhandler.run(9,query,null);
-      toreturn[0] = ""+9;
-        if(received[0].equals("-1"))
+      toreturn[0] = "9";
+      System.out.println("received[0] = " + received[0]);
+      if(Integer.parseInt(received[0]) == -1)
       {
           toreturn[1] = "ERROR"; 
       }

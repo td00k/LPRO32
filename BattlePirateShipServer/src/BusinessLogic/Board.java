@@ -19,6 +19,7 @@ public class Board
    */
   public Board()
   {
+      positions = new int[10][10];
       int i,j;
       for(i=0;i<10;i++)
       {
@@ -112,9 +113,10 @@ public class Board
    */
   public int update(String[] args)
   {
-      String aux1 = args[1];
       int i,j;
-      char[] aux;
+      char[] aux = new char[10];
+
+
       for(i=0;i<10;i++)
       {
           aux = args[i].toCharArray();
@@ -122,7 +124,8 @@ public class Board
           {
               positions[i][j] = aux[j];
           }
-      }
+      } 
+    
       return 1;
   }
 

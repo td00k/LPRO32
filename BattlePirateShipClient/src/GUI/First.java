@@ -1,15 +1,21 @@
 
 package GUI;
+
+import Communications.SocketClient;
+
 /**
  * This class contains the First window what is prompted to the user, with login and register options.
  */
 public class First extends javax.swing.JFrame {
 
+    SocketClient client;
+    
     /**
      * Creates new Login form
      */
     public First() {
         initComponents();
+        client = new SocketClient();
     }
 
     @SuppressWarnings("unchecked")
@@ -36,6 +42,7 @@ public class First extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(102, 102, 102));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 10));
@@ -147,7 +154,7 @@ public class First extends javax.swing.JFrame {
     private void RegisterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RegisterButtonActionPerformed
         // TODO add your handling code here:
      
-        Registration r= new Registration(this);
+        Registration r= new Registration(this,client);
         
         r.setVisible(true);
         setVisible(false);
@@ -165,8 +172,8 @@ public class First extends javax.swing.JFrame {
          */
     private void LoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginButtonActionPerformed
         //close();
-   
-        Login log = new Login();
+        
+        Login log = new Login(client);
         //First f = new First();
        //jPanel1.add(log);
         log.setVisible(true);

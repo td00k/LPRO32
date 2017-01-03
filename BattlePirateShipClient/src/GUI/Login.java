@@ -3,6 +3,7 @@ package GUI;
 
 import javax.swing.JOptionPane;
 import BusinessLogic.Authentication;
+import Communications.SocketClient;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -13,7 +14,8 @@ import java.awt.event.ActionListener;
 
 public class Login extends javax.swing.JFrame {
 
-   private final Authentication handler = new Authentication();
+   private final Authentication handler;
+   private final SocketClient client;
    private String handler_return;
    private String user;
    private String pass;
@@ -22,8 +24,10 @@ public class Login extends javax.swing.JFrame {
  /** Creates new form Login, initializing components and action listener for Buttons and Text Box
      * 
      */
-    public Login() {
+    public Login(SocketClient client) {
         initComponents();
+        this.client = client;
+        handler = new Authentication(client);
         
         UserField.addActionListener(new ActionListener(){   // listener to click login button on ENTER key press
 
@@ -54,6 +58,7 @@ public class Login extends javax.swing.JFrame {
         ForgotPasswordButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(51, 51, 51));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -144,7 +149,7 @@ public class Login extends javax.swing.JFrame {
                         {
                             userid = Integer.parseInt(handler_return);
                             JOptionPane.showMessageDialog(null,"Welcome " + user + "!");
-                            MainView on = new MainView(userid);
+                            MainView on = new MainView(userid,this.client);
                             on.setVisible(true);
                             this.dispose();
                         }

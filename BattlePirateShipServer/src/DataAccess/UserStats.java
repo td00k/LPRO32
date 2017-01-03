@@ -19,6 +19,44 @@ public class UserStats
                 
     }
     
+    
+    
+    /** This method creates the user stats on the database
+     * 
+     * @param query query that's going to be executed on the DB
+     * @param con connection to the DB
+     * 
+     * @return 1 on success, -1 on failure
+     */
+    
+    public int create(String query, Connection con)
+    {
+        
+        try
+        {
+          Statement stmt;
+            
+            // creating a statement so we can execute a query on the DB
+            stmt = con.createStatement();
+            System.out.println("Query statement created!");
+            
+            // executing the Query
+            stmt.execute(query);                   
+            System.out.println("Valid Userstats CREATE Query!");
+            
+            // closing the statement, since we don't need it anymore
+            stmt.close();
+            
+            return 1;
+           
+        }
+        catch(SQLException ex)
+        {
+            return -1;
+        }
+        
+    }
+    
     /** This method updates the user stats on the database
      * 
      * @param query query that's going to be executed on the DB
@@ -71,16 +109,19 @@ public class UserStats
          
             // creating a statement so we can execute a query on the DB
             stmt = con.createStatement();
-            System.out.println("Query statement created!");
+            System.out.println("Query  USERSTATS statement created!");
             
             // executing the Query
+            System.out.println("Userstats " + query);
             stmt.execute(query);                   
             System.out.println("Valid Userstats GETSTATS Query!");
             
             // executing the query
             ResultSet rs = stmt.executeQuery(query);
-            
+
             // extracting results
+            if(rs.next())
+            {
             toreturn[0] =  Integer.toString(rs.getInt("id"));
             toreturn[1] =  Integer.toString(rs.getInt("state"));
             toreturn[2] =  Integer.toString(rs.getInt("gamesplayed"));
@@ -88,7 +129,8 @@ public class UserStats
             toreturn[4] =  Integer.toString(rs.getInt("defeats"));
             toreturn[5] =  Integer.toString(rs.getInt("surrenders"));
             toreturn[6] =  Integer.toString(rs.getInt("rank"));
-                    
+            } 
+
             // closing the statement since we don't need to use it anymore
             stmt.close();
             
@@ -97,6 +139,7 @@ public class UserStats
         }
         catch(SQLException ex)
         {
+            System.out.println(ex);
             toreturn[0] = Integer.toString(-1);
             return toreturn;
         }

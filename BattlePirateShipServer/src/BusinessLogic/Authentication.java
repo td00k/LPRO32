@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.lang.String;
 import DataAccess.JDBCHandler;
+import java.sql.ResultSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,6 +20,7 @@ public class Authentication
    //  Query operation defines
    private static final int REGISTER = 1;
    private static final int LOGIN = 2;
+   private static final int NEWUSERSTATS = 13;
     
     
    // Handler variable for the DB
@@ -97,7 +99,6 @@ public class Authentication
     
     public int register(String name, String user, String pass, String email, String question, String answer)
     {
-        
         query = "INSERT INTO userinfo " + "VALUES (DEFAULT,'"+ name +"','"+ user +"','"+ email +"','"+ pass +"','"+ question +"','"+ answer +"')";
         System.out.println("Executing" + query + "On the database");
         
@@ -105,6 +106,11 @@ public class Authentication
         
         // variable to check the return of the handler function
         received = DBhandler.run(REGISTER,query,null);
+        if(Integer.parseInt(received[0]) != -1)
+        {
+        query = "INSERT INTO userstats " + "VALUES ("+Integer.parseInt(received[0])+",'"+ 0 +"','"+ 0 +"','"+ 0 +"','"+ 0 +"','"+ 0 +"','"+ 0 +"')";
+        received = DBhandler.run(NEWUSERSTATS,query,null);
+        }
         return Integer.parseInt(received[0]);
     }   
     
@@ -121,7 +127,7 @@ public class Authentication
     {
 
         // query we are executing on the database. This selects all the users registered on the login table.
-        query = "select * " + "from userinfo";
+        query = "select * from userinfo";
         
         // variable we use to pass to the handler function
         String[] args = new String[20];
@@ -146,9 +152,9 @@ public class Authentication
       String query;
       String[] toreturn = new String[4];
      
-      query= "SELECT * " + "FROM userinfo" + "WHERE id =" + userid;
+      query= "SELECT * " + "FROM userinfo" + " WHERE id = " + userid +"";
       String[] received;
-      received = DBhandler.run(9,query,null);
+      received = DBhandler.run(12,query,null);
       
       toreturn[0] = ""+9;
       if(received[0].equals("-1"))

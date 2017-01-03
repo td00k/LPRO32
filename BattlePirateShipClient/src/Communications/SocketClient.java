@@ -42,10 +42,10 @@ public class SocketClient
              
              // connecting the read variable with the socket
              reader = new BufferedReader(new InputStreamReader(PirateSocket.getInputStream()));
+             
          } 
          catch (UnknownHostException e) 
          {
-             
          // Can't find host
          System.err.println("Host gnomo not found!");
          JOptionPane.showMessageDialog(null, "Unable to connect to server! Check if server is running");
@@ -60,6 +60,7 @@ public class SocketClient
          } 
 
     }
+    
     
    /**
     * This is the main method of the class. it sends a string and waits for a response from the server
@@ -77,8 +78,9 @@ public class SocketClient
              String received;
              send(encoded);
              received = receive();
-             close();
+
              return received;
+             
          } 
          catch (IOException ex) 
          {
@@ -99,9 +101,9 @@ public class SocketClient
    
    public int send(String message) throws IOException 
    {
-      
       //sending message to socket
       writer.println(message);
+      writer.flush();
 
       return 1;
    }

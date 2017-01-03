@@ -32,7 +32,7 @@ public class Matchmaking {
         String query;
         String[] toreturn = new String[3];
          
-        query = "INSERT INTO games " + "VALUES (DEFAULT,'" + userid1 + "','"+ userid2 + "')";
+        query = "INSERT INTO games VALUES (DEFAULT,'" + userid1 + "','"+ userid2 + "')";
         received = DBhandler.run(4,query,null);
         if(received[0].equals("-1"))
         {
@@ -57,9 +57,10 @@ public class Matchmaking {
     public String[] quickgame(int userid)
     {
         int gameid;
-        String[] tosend = new String[3];
+        String[] tosend = new String[4];
         String[] check = new String[3];
         check = search(userid);
+        System.out.println("Chegou!");
         if(!check[0].equals("-1"))
         {
             tosend[0] = Integer.toString(3);
@@ -83,6 +84,7 @@ public class Matchmaking {
             	tosend[1] = "ERROR";
             }
         }
+        System.out.println("Chegou!");
         return tosend;
     }
     
@@ -139,8 +141,8 @@ public class Matchmaking {
         else
         {
             toreturn[0] = received[0];
-            toreturn[1] = Integer.toString(userid);
-            toreturn[2] = received[1];
+            toreturn[2] = Integer.toString(userid);
+            toreturn[1] = received[1];
         }
         return toreturn;
     }

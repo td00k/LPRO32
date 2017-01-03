@@ -2,6 +2,7 @@
 package GUI;
 
 import BusinessLogic.Authentication;
+import Communications.SocketClient;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
@@ -14,7 +15,8 @@ public class Registration extends javax.swing.JFrame {
 
    
    private static First mainFirst;
-   private final Authentication handler = new Authentication();
+   private final Authentication handler;
+   private final SocketClient client;
    private int handler_return;
    private String name;
    private String user;
@@ -29,9 +31,11 @@ public class Registration extends javax.swing.JFrame {
      *
      */
    
-    public Registration(First main) {
+    public Registration(First main, SocketClient client) {
         initComponents();
         this.mainFirst = main;
+        this.client = client;
+        handler = new Authentication(client);
         NameField.addActionListener(new ActionListener(){   // listener to click login button on ENTER key press
 
                 public void actionPerformed(ActionEvent e){

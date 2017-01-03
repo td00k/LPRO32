@@ -14,14 +14,24 @@ public class PirateProtocol
 {
 
     private  Authentication auth;
-    private  Game[] game;
+    private  static Game[] game;
+    private  static boolean gamescreated;
     private  Matchmaking matchmaking;
     private  User userinfo;
     
     public PirateProtocol()
     {
         auth = new Authentication();
-        game = new Game[500];
+        if(!gamescreated)
+        {
+           game = new Game[500];
+            for (int i = 0; i < 500; i++) 
+            {
+                game[i] = new Game();
+            }
+            gamescreated = true;
+        }
+        
         matchmaking = new Matchmaking();
         userinfo = new User();
         
@@ -52,7 +62,7 @@ public class PirateProtocol
             case "1":
                         //register
                         received = auth.run(decoded);
-                        args[0] = received[0];
+                        args[0] = received[1];
         
                         encoded = encode(Integer.parseInt(received[0]),args,1);
                         break;
@@ -76,18 +86,20 @@ public class PirateProtocol
                         
                         // quickgame
                         received = matchmaking.quickgame(Integer.parseInt(decoded[1]));
-                        
+
                         if(received[1].equals("ERROR"))
                         {
-                            args[0] = "ERROR";
-                            
+                            args[0] = "ERROR"; 
                         }
                         else
                         {
-                            args[0] = received[2];
-                            game[Integer.parseInt(received[1])].updatePlayers(Integer.parseInt(received[1]),Integer.parseInt(received[2]));
+                            args[0] = received[1];
+                            game[Integer.parseInt(received[1])].updatePlayers(Integer.parseInt(received[2]),Integer.parseInt(received[3]));
+                            args[1] = Integer.toString(game[Integer.parseInt(received[1])].readyToBegin());
                         }
-                        encoded = encode(Integer.parseInt(received[0]),args,1);
+                            
+                        encoded = encode(Integer.parseInt(received[0]),args,2);
+
                         break;
             case "4":
                         // play with a friend
@@ -100,9 +112,10 @@ public class PirateProtocol
                         else
                         {
                             args[0] = received[2];
+                            args[1] = Integer.toString(game[Integer.parseInt(received[1])].readyToBegin());
                         }
                         
-                        encoded = encode(Integer.parseInt(received[0]),args,1);
+                        encoded = encode(Integer.parseInt(received[0]),args,2);
                         break;
             case "5":
                         // removegame
@@ -114,10 +127,14 @@ public class PirateProtocol
                         // sendboard
                         System.arraycopy(decoded,3,args,0,10);
                         game[Integer.parseInt(decoded[1])].updateBoard(Integer.parseInt(decoded[2]),args); 
+                        args[0] = "OK";
+                        game[Integer.parseInt(decoded[1])].readyToStart();
+                        encoded = encode(6,args,1);
                         break;
             case "7":
                         // send shot
                         received = game[Integer.parseInt(decoded[1])].Shot(Integer.parseInt(decoded[2]),Integer.parseInt(decoded[3]),Integer.parseInt(decoded[4]));
+                        
                         break;
             case "8":
                         // update user stats
@@ -162,7 +179,10 @@ public class PirateProtocol
             case "11":
                         // add friend
                         break;
-            
+            case "12":
+                        // receive shot
+                        
+                        break;
         }
     
         return encoded;
