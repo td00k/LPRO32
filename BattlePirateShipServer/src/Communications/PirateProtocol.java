@@ -122,7 +122,7 @@ public class PirateProtocol
                         game[Integer.parseInt(decoded[1])].updateBoard(Integer.parseInt(decoded[2]),args); 
                         args[0] = "OK";
                         game[Integer.parseInt(decoded[1])].readyToStart();
-                        encoded = encode(6,args,2);
+                        encoded = encode(6,args,1);
                         break;
             case "7":
                         // send shot
@@ -182,13 +182,13 @@ public class PirateProtocol
                         break;
             case "12":
                         // receive shot
-                        received = game[Integer.parseInt(decoded[1])].receiveShot(Integer.parseInt(decoded[2]));
+                        received = game[Integer.parseInt(decoded[1])].receiveShot(Integer.parseInt(decoded[2]));  
                         args[0] = received[0]; // shot xpos
                         args[1] = received[1]; // shot ypos
                         args[2] = received[2]; // content of cell
                         args[3] = received[3]; // endgame flag
                         argnum = 4;
-                        encoded = encode(7,args,argnum);
+                        encoded = encode(12,args,argnum);
                         break;
         }
     

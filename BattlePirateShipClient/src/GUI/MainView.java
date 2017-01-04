@@ -12,15 +12,19 @@ public class MainView extends javax.swing.JFrame {
     private final SocketClient client;
     private final Game gamehandler;
     private final User userinfo;
+    private Loading loadscreen;
     private int gameid;
     private int userid;
+    private boolean playerfound;
     
     public MainView(int userid, SocketClient client) {
         initComponents();
         this.userid = userid;
         this.client = client;
         gamehandler = new Game(client);
+        playerfound = false;
         userinfo = new User(client);
+        loadscreen = new Loading();
         fillPlayerInfo();
         
         
@@ -525,9 +529,41 @@ public class MainView extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         int[] args = new int[2];
+        Thread t = new Thread(new Runnable() 
+        {
+            private MainView main;
+            private InGame gui;
+                   
+            public Runnable init(MainView main, InGame gui) 
+            {
+                this.main = main;
+                this.gui = gui;
+                return this;
+            }
+            
+            public void run()
+            {
+                loadscreen.setVisible(true);
+                while(!playerfound)
+                {
+                     try 
+                    {
+                    Thread.sleep(50); // for 100 FPS
+                    } 
+                    catch (InterruptedException ignore) 
+                    {
+                    }
+                }
+                loadscreen.setVisible(false);
+            }
+         });
+        t.start();
         args = gamehandler.quickgame(userid);
+        playerfound = true;
         InGame game= new InGame(this,args[0],userid,this.client,args[1]);
         game.setVisible(true);
+        setVisible(false);
+        //fazer mudanca para botao
     }//GEN-LAST:event_QuickGameButtonActionPerformed
 
     /** 
@@ -560,7 +596,10 @@ public class MainView extends javax.swing.JFrame {
     
     private void LogoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogoutButtonActionPerformed
         // TODO add your handling code here:
+        First f = new First();
+        f.setVisible(true);
         this.dispose();
+       
     }//GEN-LAST:event_LogoutButtonActionPerformed
 
    

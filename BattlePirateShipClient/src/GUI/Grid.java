@@ -40,7 +40,7 @@ public class Grid extends JPanel {
     public boolean vertical;
     static boolean GameEnd;
     public boolean Winner;
-    private boolean myturn;
+    private static boolean myturn;
     private boolean clicked = false;
     
     private final SocketClient client;
@@ -49,9 +49,10 @@ public class Grid extends JPanel {
     private Ship[] enemyShips;
     private Ship[] myShips;
     
-    public int gameid, userid, shipid;
+    public int gameid, userid, shipid, shipnum;
     public int[] shipsizes;
     public int[] shipids;
+    public int[] shipnums;
     
 
     public Grid(String player, int gameid, int userid, SocketClient client, int startingPlayer){
@@ -60,6 +61,9 @@ public class Grid extends JPanel {
         this.setLayout(new GridLayout(10,10));
         this.client = client;
         playersReady = false;
+        System.out.println("Starting player is" + startingPlayer);
+        System.out.println("out of while flag is " + userid );
+        
         if(startingPlayer == userid)
         {
             myturn = true;
@@ -78,12 +82,14 @@ public class Grid extends JPanel {
         size = 5;  
         ShipPlaced = false;
         ListenerEnable = false;
-        gameBoard = new Board(client);
+        gameBoard = new Board(gameid,client);
         myShips = new Ship[5];
         enemyShips = new Ship[5];
 
         shipsizes = new int[]{5,4,3,3,2}; 
         shipids = new int[]{4,3,2,1,0};
+        shipnums = new int[]{5,4,3,2,1};
+
         
         for(int i=4;i>-1;i--)
         {
@@ -100,10 +106,13 @@ public class Grid extends JPanel {
         {
             for(j=0;j<10;j++)
             {
-                squares[i][j] = new Cell(i,j);
                 if (player.equals("enemy"))
                 {
-                    squares[i][j].setBackground(Color.GRAY);
+                    squares[i][j] = new Cell(i,j,Color.GRAY);
+                }
+                else
+                {
+                    squares[i][j] = new Cell(i,j,Color.CYAN);
                 }
                 this.add(squares[i][j]);
                 createMListener(squares[i][j],player);
@@ -140,7 +149,7 @@ public class Grid extends JPanel {
                    if(paint == Color.GREEN)
                    {
                         squares[xpos][ypos+i].clickflag = true;
-                        gameBoard.positions[xpos][ypos+i] = shipid; 
+                        gameBoard.positions[xpos][ypos+i] = shipnum; 
                         myShips[shipid].insertPos(xpos,ypos+i);
                    }
             }
@@ -172,7 +181,7 @@ public class Grid extends JPanel {
                    if(paint == Color.GREEN)
                    {
                         squares[xpos+i][ypos].clickflag = true;
-                        gameBoard.positions[xpos+i][ypos] = shipid;
+                        gameBoard.positions[xpos+i][ypos] = shipnum;
                         myShips[shipid].insertPos(xpos+i,ypos);
                    }
             }
@@ -295,7 +304,7 @@ public class Grid extends JPanel {
         if(!squares[xpos][ypos].clickflag)
         squares[xpos][ypos].setBackground(Color.GRAY);
         else
-        squares[xpos][ypos].setBackground(Color.YELLOW);
+        squares[xpos][ypos].setColor();
     }
     
     public void sendShot(Cell cell) 
@@ -304,27 +313,28 @@ public class Grid extends JPanel {
         int ypos = cell.getYPos();
         int[] retpos = new int[10];
         int shipindex = -1;
-        
-        Color paint = Color.YELLOW;
+       
         
         if(!squares[xpos][ypos].clickflag)
         {
             String[] result = gameBoard.shot(userid,xpos,ypos);
+            squares[xpos][ypos].clickflag = true;
+            System.out.println("xpos sent " + xpos + "ypos sent" + ypos);
             if(!result[0].equals("ERROR"))
             {
                 switch(Integer.parseInt(result[0]))
                 {
                     case 0:
                             // water hit
-                            squares[xpos][ypos].setBackground(Color.CYAN);
+                            squares[xpos][ypos].setContent(0,false);
                             break;
                     case 1:
-                            // hit one of the 3 health ships
-                            shipindex = 1;
+                            // hit 2health ships
+                            shipindex = 0;
                             break;  
                     case 2:
-                            // hit the 2 health ship
-                            shipindex = 0;
+                            // hit the 3 health ship
+                            shipindex = 1;
                             break;
                     case 3:
                             //hit the 3 health ship
@@ -348,12 +358,12 @@ public class Grid extends JPanel {
                        retpos = enemyShips[shipindex].getPositions();
                        for(int i=0;i< 2*enemyShips[shipindex].getSize();i=i+2)
                        {
-                           squares[retpos[i]][retpos[i+1]].setBackground(Color.RED);
+                           squares[retpos[i]][retpos[i+1]].setContent(1,true);
                        }
                     }
                     else
                     {
-                       squares[xpos][ypos].setBackground(Color.YELLOW); 
+                       squares[xpos][ypos].setContent(Integer.parseInt(result[0]),false);
                     }
                 }
                 if(Integer.parseInt(result[1]) != 0)
@@ -379,7 +389,6 @@ public class Grid extends JPanel {
         int[] retpos = new int[10];
         int xpos, ypos;
         int shipindex = -1;
-        
         while(true)
         {
             if(GameEnd == true)
@@ -394,20 +403,21 @@ public class Grid extends JPanel {
                 {
                     xpos = Integer.parseInt(received[0]);
                     ypos = Integer.parseInt(received[1]);
+                    System.out.println("xpos received " + xpos + "ypos received" + ypos);
                     
                     switch(Integer.parseInt(received[2]))
                     {
-                         case 0:
+                        case 0:
                                 // water hit
                                 squares[xpos][ypos].setBackground(Color.CYAN);
                                 break;
                         case 1:
-                                // hit one of the 3 health ships
-                                shipindex = 1;
+                                // hit 2 health ships
+                                shipindex = 0;
                                 break;  
                         case 2:
-                                // hit the 2 health ship
-                                shipindex = 0;
+                                // hit the 3 health ship
+                                shipindex = 1;
                                 break;
                         case 3:
                                 //hit the 3 health ship
@@ -453,6 +463,13 @@ public class Grid extends JPanel {
                     }
                 }    
             }
+            try 
+            {
+            Thread.sleep(50); // for 100 FPS
+            } 
+            catch (InterruptedException ignore) 
+            {
+            }
         }
             
     }
@@ -472,10 +489,24 @@ public class Grid extends JPanel {
                 ListenerEnable = true;
                 while(!clicked)
                 {      
+                    try 
+                    {
+                       Thread.sleep(50); // for 100 FPS
+                    } 
+                    catch (InterruptedException ignore) 
+                    {
+                    }
                 }
                 ListenerEnable = false;
                 myturn = false;
                 clicked = false;   
+            }
+            try 
+            {
+            Thread.sleep(50); // for 100 FPS
+            } 
+            catch (InterruptedException ignore) 
+            {
             }
         }
     }
@@ -489,11 +520,12 @@ public class Grid extends JPanel {
        {
             size = shipsizes[j];
             shipid = shipids[j];
+            shipnum = shipnums[j];
             System.out.println("Waiting Ship placement!");
             while(ShipPlaced == false)   
             {
                 try {
-                Thread.sleep(10); // for 100 FPS
+                Thread.sleep(50); // for 100 FPS
                 } 
                 catch (InterruptedException ignore) 
                 {
@@ -508,7 +540,7 @@ public class Grid extends JPanel {
     
     public void sendBoard()
     {
-         gameBoard.Sendboard(gameid, userid);
+         gameBoard.Sendboard(userid);
          playersReady = true;
          return;
     }

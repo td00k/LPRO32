@@ -155,7 +155,6 @@ public class First extends javax.swing.JFrame {
         // TODO add your handling code here:
      
         Registration r= new Registration(this,client);
-        
         r.setVisible(true);
         setVisible(false);
     }//GEN-LAST:event_RegisterButtonActionPerformed
@@ -171,11 +170,8 @@ public class First extends javax.swing.JFrame {
          *  Creates a new login window.
          */
     private void LoginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginButtonActionPerformed
-        //close();
-        
-        Login log = new Login(client);
-        //First f = new First();
-       //jPanel1.add(log);
+    
+        Login log = new Login(this,client);
         log.setVisible(true);
         setVisible(false);
         //this.dispose();

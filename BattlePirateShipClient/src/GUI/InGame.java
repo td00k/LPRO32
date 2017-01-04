@@ -5,6 +5,9 @@ import Communications.SocketClient;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import javax.swing.*;
 
 /**
@@ -21,6 +24,7 @@ public class InGame extends javax.swing.JFrame {
     private Thread ethread;
     private Timer gametimer;
     private ActionListener timerlistener;
+    private WindowListener exitListener;
     private int gametime;
     
     public InGame(MainView main, int gameid, int userid, SocketClient client, int startplayer) 
@@ -38,6 +42,16 @@ public class InGame extends javax.swing.JFrame {
         this.client = client;
         this.main = main;
         this.gameid = gameid;
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        exitListener = new WindowAdapter() {
+
+        @Override
+        public void windowClosing(WindowEvent e) 
+        {
+            leavegame();
+        }
+        };
+        this.addWindowListener(exitListener);
         
         timerlistener = new ActionListener(){
             @Override
@@ -67,11 +81,12 @@ public class InGame extends javax.swing.JFrame {
                 StatusMsg.setText("Please place your ships...");
                 playergrid.placePlayerShips();
                 OrientationButton.setVisible(false);
-               // playergrid.sendPositions();
+                // playergrid.sendPositions();
                 StatusMsg.setText("Ships Placed! Waiting for other player...");
                 playergrid.sendBoard();
                 StatusMsg.setText("Players Ready!...");
                 gametimer.start();
+                
                 playergrid.receiveShots(StatusMsg);
                 StatusMsg.setText("Game finished...");
 
@@ -98,6 +113,13 @@ public class InGame extends javax.swing.JFrame {
             {  
                while(!enemygrid.playersReady)
                 {
+                    try 
+                    {
+                        Thread.sleep(50); // for 100 FPS
+                    } 
+                    catch (InterruptedException ignore) 
+                    {
+                    }
                 }
                enemygrid.doShots(StatusMsg);
                gametimer.stop();
@@ -141,6 +163,23 @@ public class InGame extends javax.swing.JFrame {
         });
     }*/
 
+    private void leavegame()
+    {
+        Object[] options = {"Yes, please","No, thanks"};
+            
+        int n = JOptionPane.showOptionDialog(this,"Are you sure you want to surrender?", "Leaving game..",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null,options,options[1]);
+        if(n == JOptionPane.CLOSED_OPTION || n == 1)
+        { 
+        }
+        else
+        {
+             //game.surrender();
+             this.main.setVisible(true);
+             this.dispose();
+    
+        }
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -172,7 +211,7 @@ public class InGame extends javax.swing.JFrame {
         jLabel49 = new javax.swing.JLabel();
         jButton271 = new javax.swing.JButton();
         jLabel50 = new javax.swing.JLabel();
-        jButton278 = new javax.swing.JButton();
+        SurrenderButton = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
@@ -485,12 +524,17 @@ public class InGame extends javax.swing.JFrame {
 
         jPanel1.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 5, -1, 310));
 
-        jButton278.setBackground(new java.awt.Color(51, 51, 51));
-        jButton278.setFont(new java.awt.Font("Charlemagne Std", 0, 12)); // NOI18N
-        jButton278.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/folder/gallows-2.png"))); // NOI18N
-        jButton278.setText("Surrender");
-        jButton278.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel1.add(jButton278, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 500, 160, 30));
+        SurrenderButton.setBackground(new java.awt.Color(51, 51, 51));
+        SurrenderButton.setFont(new java.awt.Font("Charlemagne Std", 0, 12)); // NOI18N
+        SurrenderButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/folder/gallows-2.png"))); // NOI18N
+        SurrenderButton.setText("Surrender");
+        SurrenderButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        SurrenderButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SurrenderButtonActionPerformed(evt);
+            }
+        });
+        jPanel1.add(SurrenderButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 500, 160, 30));
 
         jPanel3.setBackground(new java.awt.Color(51, 51, 51));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Who's Seeing", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Charlemagne Std", 0, 10))); // NOI18N
@@ -837,6 +881,11 @@ public class InGame extends javax.swing.JFrame {
         playergrid.vertical = !playergrid.vertical;
     }//GEN-LAST:event_OrientationButtonActionPerformed
 
+    private void SurrenderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SurrenderButtonActionPerformed
+        // TODO add your handling code here:
+        leavegame();
+    }//GEN-LAST:event_SurrenderButtonActionPerformed
+
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel MinutesLabel;
@@ -844,6 +893,7 @@ public class InGame extends javax.swing.JFrame {
     private javax.swing.JButton OrientationButton;
     private javax.swing.JLabel SecondsLabel;
     private javax.swing.JLabel StatusMsg;
+    private javax.swing.JButton SurrenderButton;
     private javax.swing.JPanel TimerPanel;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton137;
@@ -856,7 +906,6 @@ public class InGame extends javax.swing.JFrame {
     private javax.swing.JButton jButton269;
     private javax.swing.JButton jButton270;
     private javax.swing.JButton jButton271;
-    private javax.swing.JButton jButton278;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

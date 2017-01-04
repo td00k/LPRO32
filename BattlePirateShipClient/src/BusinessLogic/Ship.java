@@ -11,6 +11,7 @@ public class Ship
   private  int health;  
   private  int[] xpos; 
   private  int[] ypos; 
+  private  int poscounter;
    
   /** The constructor initializes the class variables
    * 
@@ -22,6 +23,7 @@ public class Ship
          this.health = size;
          xpos = new int[size];
          ypos = new int[size];
+         poscounter = size;
      }
      
    /** This method returns the health of a ship
@@ -40,8 +42,12 @@ public class Ship
     */
    public void insertPos(int xpos,int ypos)
    {
-       this.xpos[size-health] = xpos;
-       this.ypos[size-health] = ypos;
+       if(poscounter > 0)
+       {
+       this.xpos[size-poscounter] = xpos;
+       this.ypos[size-poscounter] = ypos;
+       poscounter--;
+       }
    }
    
    /** This method returns all the positions where a ship was hit.
@@ -52,13 +58,16 @@ public class Ship
       public int[] getPositions()
       {
           int[] toreturn = new int[size*2];
+          int j = 0;
           for (int i = 0;i < size*2;i=i+2) 
           {
-              toreturn[i]=xpos[i];
-              toreturn[i+1]=ypos[i];
+              toreturn[i]= xpos[j];
+              toreturn[i+1]= ypos[j];
+              j++;
           }
           return toreturn;
       }
+      
       
       public void hit()
       {

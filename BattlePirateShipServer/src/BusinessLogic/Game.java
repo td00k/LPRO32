@@ -17,7 +17,8 @@ public class Game {
    public int player2;
    //private int[] viewers;
    private Board[] boards;
-   private static int playersready;
+   private int playersready;
+   private int randomNum;
      
    /**
     * The constructor initializes player1,player2 and the 2 boards
@@ -25,12 +26,19 @@ public class Game {
    
    public Game() 
      {
-            this.player1 = 0;
-            this.player2 = 0;
-            this.boards = new Board[2];
-            boards[0] = new Board();
-            boards[1] = new Board(); 
-            playersready = 0;
+        this.player1 = 0;
+        this.player2 = 0;
+        this.boards = new Board[2];
+        boards[0] = new Board();
+        boards[1] = new Board(); 
+        playersready = 0;
+
+        int max = 2;
+        int min = 0;
+        
+        Random rand = new Random();
+
+        randomNum = rand.nextInt((max - min) + 1) + min;
             
      }
    
@@ -106,27 +114,42 @@ public class Game {
     
     public String[] receiveShot(int userid)
     {
-        String[] toreturn = new String[3];
+        String[] toreturn = new String[4];
         int[] lastshot;
         if(player1 == userid)
         {
+            System.out.println("shot flag p1 is " + boards[0].getShotFlag() );
            while(!boards[0].getShotFlag())
-           {   
+           {
+                try {
+                Thread.sleep(50); // for 100 FPS
+                } 
+                catch (InterruptedException ignore) 
+                {
+                }
            }
            boards[0].updateShotFlag();
+           System.out.println("out of while flag p1 is " + boards[0].getShotFlag() );
            lastshot = boards[0].getLastShot();
             for (int i = 0; i < 4; i++) 
             {
                 toreturn[i] = Integer.toString(lastshot[i]);
             }
         }
-        else if(player2 == userid)
+        else if(player2 == userid)   
         {
+           System.out.println("shot flag p2 is " + boards[1].getShotFlag() );
            while(!boards[1].getShotFlag())
            {
-               
+                try {
+                Thread.sleep(50); // for 100 FPS
+                } 
+                catch (InterruptedException ignore) 
+                {
+                }
            }
            boards[1].updateShotFlag();
+           System.out.println("out of while p2 flag is " + boards[1].getShotFlag() );
            lastshot = boards[0].getLastShot();
              for (int i = 0; i < 4; i++) 
              {
@@ -141,7 +164,7 @@ public class Game {
         while(playersready != 2)
         {    
             try {
-                Thread.sleep(10); // for 100 FPS
+                Thread.sleep(50); // for 100 FPS
                 } 
                 catch (InterruptedException ignore) 
                 {
@@ -160,14 +183,7 @@ public class Game {
                 {
                 }
         }
-        
-        int max = 2;
-        int min = 0;
-        
-        Random rand = new Random();
-
-        int randomNum = rand.nextInt((max - min) + 1) + min;
-        
+  
         if(randomNum > 1)
         {
             return this.player1;

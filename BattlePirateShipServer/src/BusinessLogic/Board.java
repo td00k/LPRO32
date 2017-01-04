@@ -6,12 +6,14 @@ package BusinessLogic;
      * It has methods to make a shot, and to update the board
      */
 
+import java.lang.Character;
+
 public class Board 
 {
-  private static int[][] positions; 
-  private static int hits;
-  private static int misses; 
-  private static int gameid; 
+  private int[][] positions; 
+  private int hits;
+  private int misses; 
+  private int gameid; 
   private boolean shotflag; 
   private int[] lastshot;
   
@@ -20,15 +22,16 @@ public class Board
    */
   public Board()
   {
+      shotflag = false;
       positions = new int[10][10];
       lastshot = new int[4];
       int i,j;
       for(i=0;i<10;i++)
       {
-    		for(j=0;j<10;j++)
-    		{
-    			positions[i][j] = 0;
-    		}
+        for(j=0;j<10;j++)
+        {
+                positions[i][j] = 0;
+        }
       }
   }
     
@@ -46,10 +49,10 @@ public class Board
     lastshot[1] = ypos;
     lastshot[2] = positions[xpos][ypos]; // content of cell
     lastshot[3] = 0; // flag for game end
-    
-    
+      
+    System.out.println("Xpos shot " + xpos + "ypos shot " + ypos + " hits " + hits + " content " + positions[xpos][ypos]); 
     switch(positions[xpos][ypos])
-    {
+    {    
             case 0:
                     // water hit
                     toreturn[0] = Integer.toString(0);
@@ -128,9 +131,10 @@ public class Board
       for(i=0;i<10;i++)
       {
           aux = args[i].toCharArray();
+          
           for(j=0;j<10;j++)
           {
-              positions[i][j] = aux[j];
+              positions[i][j] = Character.getNumericValue(aux[j]);
           }
       } 
     

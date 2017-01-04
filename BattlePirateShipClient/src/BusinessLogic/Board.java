@@ -12,8 +12,8 @@ import Communications.SocketClient;
 
 public class Board 
 {
-  private final SocketClient client;
-  public  int[][] positions;
+  private  final SocketClient client;
+  public   int[][] positions;
   private  int hits;
   private  int misses; 
   private  int gameid;
@@ -23,9 +23,10 @@ public class Board
    /** 
      * This method creates and initializes the board where the player's ships will be placed.
      */
-  public Board(/*int gameid*/SocketClient client)
+  public Board(int gameid, SocketClient client)
   {
       this.client = client;
+      this.gameid = gameid;
       // variables for cicle control
       int i=0,j=0;
       pirate = new PirateProtocol(client);
@@ -105,7 +106,7 @@ public class Board
       tosend[0] = Integer.toString(gameid);
       tosend[1] = Integer.toString(userid);
       
-      String[] toreturn = new String[3];
+      String[] toreturn = new String[4];
       
       // calling the protocol and receiving an answer
       received = pirate.run(12,tosend,2);
@@ -116,7 +117,7 @@ public class Board
           // received[2] contains a number identifying what happened
           toreturn[0] = received[1]; //xpos
           toreturn[1] = received[2]; //ypos
-          toreturn[2] = received[3]; // cell content
+          toreturn[2] = received[3]; //cell content
           toreturn[3] = received[4]; //game end flag
       }
       else
@@ -135,7 +136,7 @@ public class Board
    * @param userid userid of the player
    * @return 1 on success, -1 on failure
    */
-  public int Sendboard(int gameid,int userid)
+  public int Sendboard(int userid)
   {
       // variables for cicle control
       int i=0,j=0;

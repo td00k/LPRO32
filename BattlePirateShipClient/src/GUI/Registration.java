@@ -5,6 +5,9 @@ import BusinessLogic.Authentication;
 import Communications.SocketClient;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import javax.swing.JOptionPane;
 
   /** 
@@ -24,6 +27,7 @@ public class Registration extends javax.swing.JFrame {
    private String email;
    private String question;
    private String answer;
+   private WindowListener exitListener;
    
     /**
      * Creates new form Registration, including listener for buttons and text boxes.
@@ -31,9 +35,9 @@ public class Registration extends javax.swing.JFrame {
      *
      */
    
-    public Registration(First main, SocketClient client) {
+    public Registration(First first, SocketClient client) {
         initComponents();
-        this.mainFirst = main;
+        this.mainFirst = first;
         this.client = client;
         handler = new Authentication(client);
         NameField.addActionListener(new ActionListener(){   // listener to click login button on ENTER key press
@@ -78,9 +82,24 @@ public class Registration extends javax.swing.JFrame {
                         SignUpButton.doClick();
 
                 }});
+        exitListener = new WindowAdapter() {
+
+        @Override
+        public void windowClosing(WindowEvent e) 
+        {
+            leave();
+        }
+        };
+        this.addWindowListener(exitListener);
     }
 
 
+     private void leave()
+    {
+        mainFirst.setVisible(true);
+        this.dispose();
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

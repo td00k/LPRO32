@@ -6,6 +6,9 @@ import BusinessLogic.Authentication;
 import Communications.SocketClient;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
    
     /** This class contains the login form that allows the user to join the system and be able to play. 
@@ -20,13 +23,16 @@ public class Login extends javax.swing.JFrame {
    private String user;
    private String pass;
    private int userid;
+   private First first;
+   private WindowListener exitListener;
 
  /** Creates new form Login, initializing components and action listener for Buttons and Text Box
      * 
      */
-    public Login(SocketClient client) {
+    public Login(First first,SocketClient client) {
         initComponents();
         this.client = client;
+        this.first = first;
         handler = new Authentication(client);
         
         UserField.addActionListener(new ActionListener(){   // listener to click login button on ENTER key press
@@ -41,8 +47,22 @@ public class Login extends javax.swing.JFrame {
                         LoginButton.doClick();
 
                 }});
+        exitListener = new WindowAdapter() {
 
-
+        @Override
+        public void windowClosing(WindowEvent e) 
+        {
+            leave();
+        }
+        };
+        this.addWindowListener(exitListener);
+    }
+    
+    
+    private void leave()
+    {
+        first.setVisible(true);
+        this.dispose();
     }
 
     @SuppressWarnings("unchecked")
@@ -57,7 +77,7 @@ public class Login extends javax.swing.JFrame {
         LoginButton = new javax.swing.JButton();
         ForgotPasswordButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(51, 51, 51));
@@ -156,14 +176,13 @@ public class Login extends javax.swing.JFrame {
                         else
                         {
                             JOptionPane.showMessageDialog(null,"User and Password combination not found in database!");
-                            dispose();
+                            leave();
                         }         
             }
             else
             {
                     JOptionPane.showMessageDialog(null,"Invalid Username/Password");
-                    UserField.requestFocus();
-                    
+                    UserField.requestFocus();  
             }
 
     }//GEN-LAST:event_LoginButtonActionPerformed

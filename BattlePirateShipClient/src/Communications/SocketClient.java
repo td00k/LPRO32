@@ -48,14 +48,14 @@ public class SocketClient
          {
          // Can't find host
          System.err.println("Host gnomo not found!");
-         JOptionPane.showMessageDialog(null, "Unable to connect to server! Check if server is running");
+         JOptionPane.showMessageDialog(null, "Gnomo server not found! Please make sure you are connected on FEUP Network","Host connection failed",JOptionPane.ERROR_MESSAGE);
          System.exit(-1);
          } 
          catch (IOException ex) 
          {
              // Can't create socket
              System.out.println("Error creating socket.");
-             JOptionPane.showMessageDialog(null, "Unable to connect to server! Check if server is running");
+             JOptionPane.showMessageDialog(null, "Unable to connect to server! Check if server is running","Host connection failed",JOptionPane.ERROR_MESSAGE);
              System.exit(-1);
          } 
 

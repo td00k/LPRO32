@@ -99,11 +99,13 @@ public class HandleClient implements Runnable
 	catch (IOException e) 
         {
            System.out.println("I/O exception: " + e);
+           e.printStackTrace();
         } 
 		
 	catch (Exception ex) 
         {
 	   System.out.println("Exception in Thread Run. Exception : " + ex);
+           ex.printStackTrace();
 	}
 
     }
