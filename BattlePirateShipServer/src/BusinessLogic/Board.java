@@ -14,17 +14,13 @@ public class Board
   private int hits;
   private int misses; 
   private int gameid; 
-  private boolean shotflag; 
-  private int[] lastshot;
   
   /**
    * The constructor initializes the class variables
    */
   public Board()
   {
-      shotflag = false;
       positions = new int[10][10];
-      lastshot = new int[4];
       int i,j;
       for(i=0;i<10;i++)
       {
@@ -43,12 +39,8 @@ public class Board
    */
   public String[] shot(int xpos, int ypos)
   {
-    String[] toreturn = new String[4];
+    String[] toreturn = new String[2];
     
-    lastshot[0] = xpos;
-    lastshot[1] = ypos;
-    lastshot[2] = positions[xpos][ypos]; // content of cell
-    lastshot[3] = 0; // flag for game end
       
     System.out.println("Xpos shot " + xpos + "ypos shot " + ypos + " hits " + hits + " content " + positions[xpos][ypos]); 
     switch(positions[xpos][ypos])
@@ -56,61 +48,66 @@ public class Board
             case 0:
                     // water hit
                     toreturn[0] = Integer.toString(0);
+                    toreturn[1] = "0";
                     misses++;
                     break;
             case 1:
                     // hit one of the 3 health ships
                     toreturn[0] = Integer.toString(1);
+                    toreturn[1] = "0";
                     hits++;
                     if(hits == 17)
                     {
                         // game over
-                        toreturn[0] = "6";
-                        toreturn[1] = Integer.toString(1);
+                        toreturn[1] = "1";
+                        
                     }
                     break;
             case 2:
                     // hit the 2 health ship
                     toreturn[0] = Integer.toString(2);
+                    toreturn[1] = "0";
                     hits++;
                     if(hits == 17)
                     {
                         // game over
-                        toreturn[0] = "6";
-                        toreturn[1] = Integer.toString(2);
+                        toreturn[1] = "1";
+  
                     }
                     break;
             case 3:
                     // hit the other 3 health ship
                     toreturn[0] = Integer.toString(3);
+                    toreturn[1] = "0";
                     hits++;
                     if(hits == 17)
                     {   
                        //game over
-                        toreturn[0] = "6";
-                        toreturn[1] = Integer.toString(3);
+                        toreturn[1] = "1";
+                       
                     }
                     break;
             case 4:
                     // hit the 4 health ship
                     toreturn[0] = Integer.toString(4);
+                    toreturn[1] = "0";
                     hits++;
                     if(hits == 17)
                     {
                         // game over
-                        toreturn[0] = "6";
-                        toreturn[1] = Integer.toString(4);
+                        toreturn[1] = "1";
+                        
                     }
                     break;
             case 5:
                     // hit the 5 health ship
                     toreturn[0] = Integer.toString(5);
+                    toreturn[1] = "0";
                     hits++;
                     if(hits == 17)
                     {
                         // game over
-                        toreturn[0] = "6";
-                        toreturn[1] = Integer.toString(5);
+                        toreturn[1] = "1";
                     }
                     break;
     }
@@ -140,20 +137,8 @@ public class Board
     
       return 1;
   }
-  
-  public boolean getShotFlag()
-  {
-      return shotflag;
-  }
-  
-   public void updateShotFlag()
-  {
-      shotflag = !shotflag;
-  }
+
    
-   public int[] getLastShot()
-   {
-       return lastshot;
-   }
+
 
 }

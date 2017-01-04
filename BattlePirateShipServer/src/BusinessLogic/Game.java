@@ -19,20 +19,22 @@ public class Game {
    private Board[] boards;
    private int playersready;
    private int randomNum;
-     
+   private int[] lastshot;
+   private boolean shotflag;
    /**
     * The constructor initializes player1,player2 and the 2 boards
     */
    
    public Game() 
      {
+        shotflag = false;
         this.player1 = 0;
         this.player2 = 0;
         this.boards = new Board[2];
         boards[0] = new Board();
         boards[1] = new Board(); 
         playersready = 0;
-
+        lastshot = new int[4];
         int max = 2;
         int min = 0;
         
@@ -94,67 +96,84 @@ public class Game {
         if(player1 == userid)
         {
             toreturn = boards[1].shot(xpos,ypos);
-            boards[1].updateShotFlag();
-            if(toreturn[0].equals("6"))
+            lastshot[0] = xpos;
+            lastshot[1] = ypos;
+            lastshot[2] = Integer.parseInt(toreturn[0]);
+            lastshot[3] = 0;
+            if(toreturn[1].equals("1"))
             {
-                toreturn[2] = Integer.toString(player1); // player 1 wins
+                // player 1 wins
+                // é este o numero?
+                lastshot[3] = 1;
             }
+            shotflag = true;
         }
         else if(player2 == userid)
         {
             toreturn = boards[0].shot(xpos,ypos);
-            boards[0].updateShotFlag();
-            if(toreturn[0].equals("6"))
+            lastshot[0] = xpos;
+            lastshot[1] = ypos;
+            lastshot[2] = Integer.parseInt(toreturn[0]);
+            lastshot[3] = 0;
+            
+            if(toreturn[1].equals("1"))
             {
-                toreturn[2] = Integer.toString(player2); //player 2 wins
+                //player 2 wins
+                // é este o numero?
+                lastshot[3] = 1;
             }
+             shotflag = true;
         }
+         System.out.println("send shot on position:" + xpos + ypos + "content is " + toreturn[0]);
         return toreturn;
     }
     
     public String[] receiveShot(int userid)
     {
         String[] toreturn = new String[4];
-        int[] lastshot;
+      
         if(player1 == userid)
         {
-            System.out.println("shot flag p1 is " + boards[0].getShotFlag() );
-           while(!boards[0].getShotFlag())
-           {
-                try {
-                Thread.sleep(50); // for 100 FPS
+            while(!shotflag)
+            {
+                try 
+                {
+                    Thread.sleep(50); // for 100 FPS
                 } 
                 catch (InterruptedException ignore) 
                 {
+                    
                 }
-           }
-           boards[0].updateShotFlag();
-           System.out.println("out of while flag p1 is " + boards[0].getShotFlag() );
-           lastshot = boards[0].getLastShot();
+            }
             for (int i = 0; i < 4; i++) 
             {
                 toreturn[i] = Integer.toString(lastshot[i]);
             }
+            shotflag = false;
         }
         else if(player2 == userid)   
         {
-           System.out.println("shot flag p2 is " + boards[1].getShotFlag() );
-           while(!boards[1].getShotFlag())
-           {
-                try {
-                Thread.sleep(50); // for 100 FPS
+            while(!shotflag)
+            {
+                try 
+                {
+                    Thread.sleep(50); // for 100 FPS
                 } 
                 catch (InterruptedException ignore) 
                 {
+                    
                 }
-           }
-           boards[1].updateShotFlag();
-           System.out.println("out of while p2 flag is " + boards[1].getShotFlag() );
-           lastshot = boards[0].getLastShot();
-             for (int i = 0; i < 4; i++) 
-             {
-                toreturn[i] = Integer.toString(lastshot[i]);
-             }     
+            }
+            for (int i = 0; i < 4; i++) 
+            {
+                    toreturn[i] = Integer.toString(lastshot[i]);
+            }  
+            shotflag = false;
+        }
+        
+        for (int i = 0; i < 4; i++) 
+        {
+            System.out.println(" receive shot toreturn" + i + toreturn[i]);
         }
         return toreturn;
     }
