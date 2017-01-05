@@ -71,27 +71,15 @@ public class User
   * @param args information placed on the query to update the table
   * @return a string[] containing information depending on what the server answer is.
   */
-  public String[] updateinfo(String[] args)
+  public updateinfo(int userid, String[] args)
   {
       String query;
-      query = "UPDATE userstats SET ";
-      
-      int i;
-              
-     for(i=1;i<6;i++)
-     {
-         query= query + infoargs[i] +"="+ Integer.parseInt(args[i]) + "," ;
-     }
-     
-     query = query + infoargs[i] +"="+ Integer.parseInt(args[i]);
-     
-     query = query + "WHERE id=" + args[0];
-      
-     
-     //E POSSIVEL A ULTIMA VIRGULA DO CICLO ESTAR A DAR ERRO MAS PARECE ME QUE ESTA A DAR
-     
-     return DBhandler.run(8,query,null);
-     
+	  String received;
+      query = "UPDATE userstats SET " + args[0] + " = " + args[1]+ "WHERE id = " + userid;
+	  
+	  received = DBhandler.run(8,query,null)
+      return Integer.parseInt(received[0]);
+	
     }
   
   /** This method creates a query to get the all the rows of the userfriends table that match a given userid
