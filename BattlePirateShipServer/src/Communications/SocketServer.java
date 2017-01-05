@@ -27,6 +27,8 @@ public class SocketServer {
       // socket variable so we can listen to the client
       private ServerSocket serverSocket;
       
+      private ServerSocket chatSocket;
+      
       // variable to accept a new client
       private Socket clientSocket;
       
@@ -34,6 +36,7 @@ public class SocketServer {
       private Runnable worker;
       
       private Game[] games;
+      private ChatServer[] chatserver;
       
       private boolean online = false;
       
@@ -43,12 +46,15 @@ public class SocketServer {
       
     public SocketServer()
     {
-
       games = new Game[500];
+      chatserver = new ChatServer[500];
       for (int i = 0; i < 500; i++) 
       {
+        chatserver[i] = new ChatServer(i);
         games[i] = new Game();
       }
+      
+      
 
      DBhandler = new JDBCHandler();
  
@@ -142,6 +148,7 @@ public class SocketServer {
               
               DBhandler.open();
               serverSocket = new ServerSocket(3216);
+              chatSocket = new ServerSocket(3217);
               
               // maximum number of clients that can be handled at the same time
               executor = Executors.newFixedThreadPool(20);
@@ -176,7 +183,11 @@ public class SocketServer {
        {   
            return 1;
        }
-        if(input.equals("exit"))
+       if(input.equals("exit"))
+       {   
+           return 2;
+       }
+       if(input.equals("ban"))
        {   
            return 2;
        }
