@@ -178,5 +178,38 @@ public class UserInfo
         }
     }
     
-    
+    public int getidbyusername(String query, Connection con)
+    {
+        int userid = -1;
+        try
+        {
+            
+            Statement stmt;
+            
+            // creating a statement so we can execute a query on the DB
+            stmt = con.createStatement();
+            System.out.println("Create Query statement created!");
+            
+            // executing the Query
+            stmt.execute(query,Statement.RETURN_GENERATED_KEYS);                   
+            
+            // asking rs to get the generated key
+            ResultSet rs = stmt.getGeneratedKeys();
+            
+            // fetching the userid if it worked!
+            if(rs.next())
+                userid = rs.getInt("id");
+            
+            // closing the statement since we don't need it anymore
+            stmt.close();
+            
+            return userid;
+        }
+        catch(SQLException ex)
+        {
+            System.out.println("Error SQL Exception!");
+             
+            return userid;
+        }
+    }
 }

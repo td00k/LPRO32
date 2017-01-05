@@ -40,7 +40,7 @@ public class Games
          toreturn[0] = "-1";
         try 
         {
-            Statement stmt, stmt2;
+            Statement stmt, stmt2,stmt3;
             
             // variable that will be returned
             int gameid = -1;
@@ -61,6 +61,7 @@ public class Games
            
             stmt = conn.createStatement();
             stmt2 = conn.createStatement();
+            stmt3 = conn.createStatement();
             System.out.println(" search Query  statement created!");
             
             // extracting the rating from the userstats table
@@ -101,6 +102,7 @@ public class Games
                             bestrank = Math.abs(rank - temprank);
                             toreturn[0] = Integer.toString(tempgameid);
                             toreturn[1] = Integer.toString(tempuid);
+                            stmt3.executeQuery("UPDATE games SET player2 = " + tempuid + "WHERE id = " + tempgameid + ";");
                         }
                     }
                 }

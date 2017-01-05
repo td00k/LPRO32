@@ -123,12 +123,11 @@ public class UserStats
             if(rs.next())
             {
             toreturn[0] =  Integer.toString(rs.getInt("id"));
-            toreturn[1] =  Integer.toString(rs.getInt("state"));
-            toreturn[2] =  Integer.toString(rs.getInt("gamesplayed"));
-            toreturn[3] =  Integer.toString(rs.getInt("wins"));         
-            toreturn[4] =  Integer.toString(rs.getInt("defeats"));
-            toreturn[5] =  Integer.toString(rs.getInt("surrenders"));
-            toreturn[6] =  Integer.toString(rs.getInt("rank"));
+            toreturn[1] =  Integer.toString(rs.getInt("gamesplayed"));
+            toreturn[2] =  Integer.toString(rs.getInt("wins"));
+            toreturn[3] =  Integer.toString(rs.getInt("defeats"));         
+            toreturn[4] =  Integer.toString(rs.getInt("surrenders"));
+            toreturn[5] =  Integer.toString(rs.getInt("rank"));
             } 
 
             // closing the statement since we don't need to use it anymore

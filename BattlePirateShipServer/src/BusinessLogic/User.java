@@ -113,16 +113,21 @@ public class User
      * 
      * @param userid userid of the user adding a friend
      * @param userid2 userid of the friend beeing added
+     * 
      * @return a string[] containing the server response
      */
-    public String[] addfriend(int userid, int userid2)
+    public String[] addfriend(int userid, String username)
      {
         String query;
-        String[] toreturn;
+        int id;
+        String[] received;
+        query = "SELECT id FROM userinfo WHERE username LIKE '" + username + "'";
+        
+        received = DBhandler.run(14,query,null);
+        
+        query = "INSERT INTO userfriends VALUES('" + userid + "','" + received[0] +"')";
      
-      query = "INSERT INTO userfriends VALUES('" + userid + "','" + userid2 +"')";
-     
-      return DBhandler.run(11,query,null);
+        return DBhandler.run(11,query,null);
           
      }      
   

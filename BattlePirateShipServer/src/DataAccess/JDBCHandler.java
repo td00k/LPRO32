@@ -30,6 +30,7 @@ public class JDBCHandler
    private static final int ADDFRIEND = 11;       // code for signaling it's a addfriend query
    private static final int GETINFO = 12;       // code for signaling it's a addfriend query
    private static final int NEWUSERSTATS = 13;  // code for signaling it's a create userstats query
+   private static final int IDBYUSERNAME = 14;    // code for signaling it's a idbyusername query
    
    // Connection to DB
    static Connection conn;
@@ -112,6 +113,9 @@ public class JDBCHandler
                             break;
             case NEWUSERSTATS:
                             returnval[0] = Integer.toString(Ustats.create(query,conn));
+                            break;
+            case IDBYUSERNAME:
+                            returnval[0] = Integer.toString(Uinfo.getidbyusername(query, conn));
                             break;
         }
         
