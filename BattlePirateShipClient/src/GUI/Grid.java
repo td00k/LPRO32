@@ -12,7 +12,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.Color;
 import BusinessLogic.Board;
-import BusinessLogic.Game;
+import BusinessLogic.Matchmaking;
 import BusinessLogic.Ship;
 import Communications.SocketClient;
 
@@ -39,15 +39,14 @@ public class Grid extends JPanel {
     public static boolean playersReady;
     public boolean vertical;
     static boolean GameEnd;
-    public boolean Winner;
+    public static boolean Winner;
     private static boolean myturn;
     private boolean clicked = false;
     
     private final SocketClient client;
-    private Game game;
     private Board gameBoard;
-    private Ship[] enemyShips;
-    private Ship[] myShips;
+    private static Ship[] enemyShips;
+    private static Ship[] myShips;
     
     public int gameid, userid, shipid, shipnum;
     public int[] shipsizes;
@@ -62,7 +61,6 @@ public class Grid extends JPanel {
         this.client = client;
         playersReady = false;
         System.out.println("Starting player is" + startingPlayer);
-        System.out.println("out of while flag is " + userid );
         
         if(startingPlayer == userid)
         {
@@ -72,8 +70,10 @@ public class Grid extends JPanel {
         {
             myturn = false;
         }
-        
+        Winner = false;
+        GameEnd = false;
         squares = new Cell[10][10];
+       
         buildButtons(player);
         
         this.userid = userid;
@@ -82,18 +82,20 @@ public class Grid extends JPanel {
         size = 5;  
         ShipPlaced = false;
         ListenerEnable = false;
+       
         gameBoard = new Board(gameid,client);
+        
         myShips = new Ship[5];
         enemyShips = new Ship[5];
 
         shipsizes = new int[]{5,4,3,3,2}; 
-        shipids = new int[]{4,3,2,1,0};
+        shipids = new int[]{0,1,2,3,4};
         shipnums = new int[]{5,4,3,2,1};
 
         
-        for(int i=4;i>-1;i--)
+        for(int i=4;i>-1;i--)  //ordering ships from highest health to lowest
         {
-            myShips[i] = new Ship(shipsizes[i]);
+            myShips[i] = new Ship(shipsizes[i]); 
             enemyShips[i] = new Ship(shipsizes[i]);
         }
         
@@ -291,7 +293,7 @@ public class Grid extends JPanel {
         int ypos = cell.getYPos();
         
         if(!squares[xpos][ypos].clickflag)
-        squares[xpos][ypos].setBackground(Color.YELLOW);
+        squares[xpos][ypos].setBackground(Color.GREEN);
         else
         squares[xpos][ypos].setBackground(Color.RED);
     }
@@ -327,14 +329,15 @@ public class Grid extends JPanel {
                     case 0:
                             // water hit
                             squares[xpos][ypos].setContent(0,false);
+                            shipindex = -1;
                             break;
                     case 1:
                             // hit 2health ships
-                            shipindex = 0;
+                            shipindex = 4;
                             break;  
                     case 2:
                             // hit the 3 health ship
-                            shipindex = 1;
+                            shipindex = 3;
                             break;
                     case 3:
                             //hit the 3 health ship
@@ -342,17 +345,18 @@ public class Grid extends JPanel {
                             break;
                     case 4:
                             //hit the 4 health ship
-                            shipindex = 3;
+                            shipindex = 1;
                             break;
                     case 5:
                             //hit the 5 health ship
-                            shipindex = 4;
+                            shipindex = 0;
                             break;             
                 }
                 if(shipindex != -1)
                 {
                     enemyShips[shipindex].insertPos(xpos, ypos);
                     enemyShips[shipindex].hit();
+                    System.out.println("send shot hit ship index " + shipindex + " current health is " + enemyShips[shipindex].getHealth() );
                     if(enemyShips[shipindex].getHealth() == 0)
                     {
                        retpos = enemyShips[shipindex].getPositions();
@@ -368,6 +372,7 @@ public class Grid extends JPanel {
                 }
                 if(Integer.parseInt(result[1]) != 0)
                 {
+                    System.out.println("Game Won!");
                     ListenerEnable = false;
                     GameEnd = true;
                     Winner = true;
@@ -410,14 +415,15 @@ public class Grid extends JPanel {
                         case 0:
                                 // water hit
                                 squares[xpos][ypos].setBackground(Color.CYAN);
+                                shipindex = -1;
                                 break;
                         case 1:
                                 // hit 2 health ships
-                                shipindex = 0;
+                                shipindex = 4;
                                 break;  
                         case 2:
                                 // hit the 3 health ship
-                                shipindex = 1;
+                                shipindex = 3;
                                 break;
                         case 3:
                                 //hit the 3 health ship
@@ -425,21 +431,22 @@ public class Grid extends JPanel {
                                 break;
                         case 4:
                                 //hit the 4 health ship
-                                shipindex = 3;
+                                shipindex = 1;
                                 break;
                         case 5:
                                 //hit the 5 health ship
-                                shipindex = 4;
+                                shipindex = 0;
                                 break;
                     }
                     
                     if(shipindex != -1)
                     {
                         myShips[shipindex].hit();
+                        System.out.println("receive shot hit ship index " + shipindex + " current health is " + myShips[shipindex].getHealth() );
                         if(myShips[shipindex].getHealth() == 0)
                         {
                            retpos = myShips[shipindex].getPositions();
-                           for(int i=0;i < 2*myShips[i].getSize();i=i+2)
+                           for(int i=0;i < 2*myShips[shipindex].getSize();i=i+2)
                            {
                                squares[retpos[i]][retpos[i+1]].setBackground(Color.RED);
                            }
@@ -452,6 +459,7 @@ public class Grid extends JPanel {
                    
                     if(received[3].equals("1"))
                     {
+                        System.out.println("Game Lost!");
                         ListenerEnable = false;
                         GameEnd = true;
                         Winner = false;
@@ -465,7 +473,7 @@ public class Grid extends JPanel {
             }
             try 
             {
-            Thread.sleep(50); // for 100 FPS
+            Thread.sleep(250); // for 100 FPS
             } 
             catch (InterruptedException ignore) 
             {
@@ -498,12 +506,19 @@ public class Grid extends JPanel {
                     }
                 }
                 ListenerEnable = false;
+                try 
+                {
+                   Thread.sleep(250); // for 100 FPS
+                } 
+                catch (InterruptedException ignore) 
+                {
+                }
                 myturn = false;
                 clicked = false;   
             }
             try 
             {
-            Thread.sleep(50); // for 100 FPS
+            Thread.sleep(250); // for 100 FPS
             } 
             catch (InterruptedException ignore) 
             {
@@ -525,7 +540,7 @@ public class Grid extends JPanel {
             while(ShipPlaced == false)   
             {
                 try {
-                Thread.sleep(50); // for 100 FPS
+                Thread.sleep(10); // for 100 FPS
                 } 
                 catch (InterruptedException ignore) 
                 {

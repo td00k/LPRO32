@@ -127,15 +127,7 @@ public class PirateProtocol
             case "7":
                         // send shot
                         received = game[Integer.parseInt(decoded[1])].Shot(Integer.parseInt(decoded[2]),Integer.parseInt(decoded[3]),Integer.parseInt(decoded[4]));
-                        args[0] = received[0]; //ship or water hit id or game end
-                        
-                        if(Integer.parseInt(received[0]) == 6) // game end
-                        {
-                            args[1] = received[1]; // ship id that was hit 
-                            args[2] = received[2]; // id of winner
-                            argnum = 3;
-                        }
-                        encoded = encode(7,args,argnum);
+                        encoded = encode(7,received,2);
                         break;
             case "8":
                         // update user stats

@@ -8,7 +8,7 @@ import Communications.SocketClient;
      * This class serves the purpose of creating games and assigning boards, players and ships into them.
      */  
   
-public class Game
+public class Matchmaking
 {
    private final SocketClient client;
    private static int player1;
@@ -24,7 +24,7 @@ public class Game
      /** 
      * This method creates and initializes the game's class components.
      */
-     public Game(SocketClient client)
+     public Matchmaking(SocketClient client)
      {
         this.client = client;
         pirate = new PirateProtocol(client);

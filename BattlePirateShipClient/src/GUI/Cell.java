@@ -71,6 +71,7 @@ public class Cell extends JPanel {
                         //hit on a ship
                         contentcolor = Color.YELLOW;
                         setBackground(contentcolor);
+                        break;
                 default:
                         setBackground(defaultColor);
                         break;        

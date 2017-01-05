@@ -55,7 +55,6 @@ public class Game {
         if(player1 == userid)
         {
             playersready++;
-            
             boards[0].update(args);
         }
         else if(player2 == userid)
@@ -138,7 +137,7 @@ public class Game {
             {
                 try 
                 {
-                    Thread.sleep(50); // for 100 FPS
+                    Thread.sleep(5); // for 100 FPS
                 } 
                 catch (InterruptedException ignore) 
                 {
@@ -157,7 +156,7 @@ public class Game {
             {
                 try 
                 {
-                    Thread.sleep(50); // for 100 FPS
+                    Thread.sleep(5); // for 100 FPS
                 } 
                 catch (InterruptedException ignore) 
                 {
@@ -183,7 +182,7 @@ public class Game {
         while(playersready != 2)
         {    
             try {
-                Thread.sleep(50); // for 100 FPS
+                Thread.sleep(5); // for 100 FPS
                 } 
                 catch (InterruptedException ignore) 
                 {
@@ -196,7 +195,7 @@ public class Game {
         while((this.player1 == 0) || (this.player2 == 0))
         {   
             try {
-                Thread.sleep(10); // for 100 FPS
+                Thread.sleep(1); // for 100 FPS
                 } 
                 catch (InterruptedException ignore) 
                 {

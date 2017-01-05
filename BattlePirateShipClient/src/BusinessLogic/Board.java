@@ -71,28 +71,12 @@ public class Board
       
       // calling the protocol and receiving an answer
       received = pirate.run(7,tosend,4);
+      toreturn[0] = received[1]; 
+      toreturn[1] = received[2];
       
-      // checking what was received
-      if(received[1] == "6")                 // #7#5   #7#6#1#user                                                    
-      {
-          toreturn[0] = received[2]; //shipid that was hit
-          toreturn[1] = received[3]; //winner id
-
-          return toreturn;
-      }
-       else if(received[1] != "ERROR")
-      {
-          // received[2] contains a number identifying what happened
-          toreturn[0] = received[1]; //shipid that was hit
-          toreturn[1] = "0";
-      }
-      else
-      {
-          // error
-          toreturn[0] = "ERROR";
-          toreturn[1] = null;
-      }
-       return toreturn;
+      
+      
+      return toreturn;
   }
   
   public String[] receiveShot(int userid)

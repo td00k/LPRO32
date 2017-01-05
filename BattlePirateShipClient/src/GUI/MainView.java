@@ -1,32 +1,45 @@
 
 package GUI;
 
-import BusinessLogic.Game;
+import BusinessLogic.Matchmaking;
 import BusinessLogic.User;
 import Communications.SocketClient;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import javax.swing.JOptionPane;
   /** 
      *  This class contains the interface for the Main Menu where the player can see his stats and decide to start or watch a game.
      */
 
 public class MainView extends javax.swing.JFrame {
     private final SocketClient client;
-    private final Game gamehandler;
+    private final Matchmaking gamehandler;
     private final User userinfo;
     private Loading loadscreen;
     private int gameid;
     private int userid;
     private boolean playerfound;
+    private WindowListener exitListener;
     
     public MainView(int userid, SocketClient client) {
         initComponents();
         this.userid = userid;
         this.client = client;
-        gamehandler = new Game(client);
+        gamehandler = new Matchmaking(client);
         playerfound = false;
         userinfo = new User(client);
         loadscreen = new Loading();
         fillPlayerInfo();
         
+        exitListener = new WindowAdapter() {
+        @Override
+        public void windowClosing(WindowEvent e) 
+        {
+            leave();
+        }
+        };
+        this.addWindowListener(exitListener);
         
     }
     
@@ -61,6 +74,24 @@ public class MainView extends javax.swing.JFrame {
                 new MainView(1,null).setVisible(true);
             }
         });
+    }
+    
+    private void leave()
+    {
+        Object[] options = {"Yes","No"};
+            
+        int n = JOptionPane.showOptionDialog(this,"Are you sure you want to surrender?", "Leaving game..",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null,options,options[1]);
+        if(n == JOptionPane.CLOSED_OPTION || n == 1)
+        { 
+        }
+        else
+        {
+             First f = new First();
+             f.setVisible(true);
+             this.setVisible(false);
+             this.dispose();
+    
+        }
     }
 
     private int fillPlayerInfo()
@@ -124,7 +155,7 @@ public class MainView extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(51, 51, 51));
@@ -522,7 +553,7 @@ public class MainView extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu3ActionPerformed
 
     /** 
-     *  This method will request for a quickgame, using Game class on Business Logic.
+     *  This method will request for a quickgame, using Matchmaking class on Business Logic.
      */
     
     private void QuickGameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_QuickGameButtonActionPerformed
@@ -567,7 +598,7 @@ public class MainView extends javax.swing.JFrame {
     }//GEN-LAST:event_QuickGameButtonActionPerformed
 
     /** 
-     *  This method will request to play with a friend, using Game class on Business Logic
+     *  This method will request to play with a friend, using Matchmaking class on Business Logic
      */
     
     private void PlayWithFriendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PlayWithFriendButtonActionPerformed
@@ -575,16 +606,6 @@ public class MainView extends javax.swing.JFrame {
         PlayWithFriend play = new PlayWithFriend();
         play.setVisible(true);
     }//GEN-LAST:event_PlayWithFriendButtonActionPerformed
-
-      /** 
-     *  This method will request to watch a game, using Game class on Business Logic
-     */
-    
-    private void WatchGameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WatchGameButtonActionPerformed
-        // TODO add your handling code here:
-        WatchGame play = new WatchGame();
-        play.setVisible(true);
-    }//GEN-LAST:event_WatchGameButtonActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
@@ -596,11 +617,19 @@ public class MainView extends javax.swing.JFrame {
     
     private void LogoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogoutButtonActionPerformed
         // TODO add your handling code here:
-        First f = new First();
-        f.setVisible(true);
-        this.dispose();
        
+        leave();
     }//GEN-LAST:event_LogoutButtonActionPerformed
+
+      /** 
+     *  This method will request to watch a game, using Matchmaking class on Business Logic
+     */
+    
+    private void WatchGameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_WatchGameButtonActionPerformed
+        // TODO add your handling code here:
+        WatchGame play = new WatchGame();
+        play.setVisible(true);
+    }//GEN-LAST:event_WatchGameButtonActionPerformed
 
    
 

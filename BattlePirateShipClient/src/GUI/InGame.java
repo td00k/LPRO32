@@ -58,8 +58,8 @@ public class InGame extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) 
             {
                 gametime += 1;
-                MinutesLabel.setText("" + gametime/60);  
-                SecondsLabel.setText("" + gametime%60);
+                MinutesLabel.setText(((gametime/60) < 10 ? "0" : "") + gametime/60);  
+                SecondsLabel.setText(((gametime%60) < 10 ? "0" : "") + gametime%60);
             }
         };
         
@@ -86,7 +86,6 @@ public class InGame extends javax.swing.JFrame {
                 playergrid.sendBoard();
                 StatusMsg.setText("Players Ready!...");
                 gametimer.start();
-                
                 playergrid.receiveShots(StatusMsg);
                 StatusMsg.setText("Game finished...");
 
@@ -94,8 +93,15 @@ public class InGame extends javax.swing.JFrame {
                 {   
                     JOptionPane.showMessageDialog(null,"You Win!");
                 }
+                else
+                {   
+                    JOptionPane.showMessageDialog(null,"You Lose!");
+                }
+                this.main.setVisible(true);
+                this.gui.setVisible(false);
+                this.gui.dispose();
             }
-         });
+         }.init(this.main,this));
         
         ethread = new Thread(new Runnable() 
         {
@@ -122,14 +128,7 @@ public class InGame extends javax.swing.JFrame {
                     }
                 }
                enemygrid.doShots(StatusMsg);
-               gametimer.stop();
-               if(enemygrid.Winner)
-               {
-                   JOptionPane.showMessageDialog(null,"You Lose!");
-               }
-               this.main.setVisible(true);
-               this.gui.setVisible(false);
-               this.gui.dispose();
+               gametimer.stop();             
            }
         }.init(this.main,this));
         pthread.start();
@@ -379,7 +378,7 @@ public class InGame extends javax.swing.JFrame {
                 jTextField1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 546, 530, 30));
+        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 546, 530, 20));
 
         TimerPanel.setBackground(new java.awt.Color(102, 102, 102));
         TimerPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Play time", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Charlemagne Std", 0, 10))); // NOI18N

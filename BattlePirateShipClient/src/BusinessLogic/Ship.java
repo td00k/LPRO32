@@ -44,9 +44,9 @@ public class Ship
    {
        if(poscounter > 0)
        {
-       this.xpos[size-poscounter] = xpos;
-       this.ypos[size-poscounter] = ypos;
-       poscounter--;
+            this.xpos[size-poscounter] = xpos;
+            this.ypos[size-poscounter] = ypos;
+            poscounter--;
        }
    }
    
