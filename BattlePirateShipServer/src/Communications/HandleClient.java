@@ -2,6 +2,7 @@ package Communications;
 
 import BusinessLogic.Authentication;
 import BusinessLogic.Game;
+import DataAccess.JDBCHandler;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -37,7 +38,7 @@ public class HandleClient implements Runnable
          * @param PSocket Socket connection to use on communications
          */
      
-    public HandleClient(Socket PSocket, Game[] games) 
+    public HandleClient(Socket PSocket, Game[] games,JDBCHandler DBhandler) 
     {
       this.PirateSocket = PSocket;
       try 
@@ -45,7 +46,7 @@ public class HandleClient implements Runnable
              // initializing variables
              writer = new BufferedWriter(new OutputStreamWriter(PirateSocket.getOutputStream()));
              reader = new BufferedReader(new InputStreamReader(PirateSocket.getInputStream()));
-             pirate = new PirateProtocol(games);
+             pirate = new PirateProtocol(games,DBhandler);
              this.games = games;
 
              System.out.println("Created HandleClient!");

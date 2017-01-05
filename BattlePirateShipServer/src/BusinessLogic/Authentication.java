@@ -32,10 +32,10 @@ public class Authentication
    /** This method initializes the Handler Variable so we can execute a query on the DB
              */
    
-        public Authentication() 
+        public Authentication(JDBCHandler DBhandler) 
         {
             // handler variable for database access
-            DBhandler = new JDBCHandler("org.postgresql.Driver","jdbc:postgresql://dbm.fe.up.pt/lpro1632","lpro1632","ttva32");
+            this.DBhandler = DBhandler;
         }
 
      
@@ -70,7 +70,12 @@ public class Authentication
            case LOGIN:
                           check = login(Input[1],Input[2]);
                           toreturn[0] = LOGIN + "";
-                          if(check != -1)
+                          if(check == -2)
+                          {
+                              toreturn[1] = "BANNED";
+                              toreturn[2] = Integer.toString(check);
+                          }
+                          else if(check != -1)
                           {
                               toreturn[1] = "OK";
                               toreturn[2] = Integer.toString(check);
@@ -99,7 +104,7 @@ public class Authentication
     
     public int register(String name, String user, String pass, String email, String question, String answer)
     {
-        query = "INSERT INTO userinfo " + "VALUES (DEFAULT,'"+ name +"','"+ user +"','"+ email +"','"+ pass +"','"+ question +"','"+ answer +"')";
+        query = "INSERT INTO userinfo VALUES (DEFAULT,'"+ name +"','"+ user +"','"+ email +"','"+ pass +"','"+ question +"','"+ answer +"','0','0')";
         System.out.println("Executing" + query + "On the database");
         
         String[] received;
@@ -108,7 +113,7 @@ public class Authentication
         received = DBhandler.run(REGISTER,query,null);
         if(Integer.parseInt(received[0]) != -1)
         {
-        query = "INSERT INTO userstats " + "VALUES ("+Integer.parseInt(received[0])+",'"+ 0 +"','"+ 0 +"','"+ 0 +"','"+ 0 +"','"+ 0 +"','"+ 0 +"')";
+        query = "INSERT INTO userstats " + "VALUES ("+Integer.parseInt(received[0])+",'"+ 0 +"','"+ 0 +"','"+ 0 +"','"+ 0 +"','"+ 0 +"')";
         received = DBhandler.run(NEWUSERSTATS,query,null);
         }
         return Integer.parseInt(received[0]);

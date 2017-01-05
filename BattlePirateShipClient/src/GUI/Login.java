@@ -165,7 +165,12 @@ public class Login extends javax.swing.JFrame {
         if( handler.validate(user,pass) ) //return will be true if user and pass are valid, false otherwise
             {
                         handler_return = handler.login(user,pass); //checking if login is successful
-                        if(!handler_return.equals("ERROR"))
+                        if(handler_return.equals("BANNED"))
+                        {
+                            JOptionPane.showMessageDialog(null,user + " is BANNED! Please contact admin.");
+                            leave();
+                        }
+                        else if(!handler_return.equals("ERROR"))
                         {
                             userid = Integer.parseInt(handler_return);
                             JOptionPane.showMessageDialog(null,"Welcome " + user + "!");
@@ -173,6 +178,7 @@ public class Login extends javax.swing.JFrame {
                             on.setVisible(true);
                             this.dispose();
                         }
+                        
                         else
                         {
                             JOptionPane.showMessageDialog(null,"User and Password combination not found in database!");

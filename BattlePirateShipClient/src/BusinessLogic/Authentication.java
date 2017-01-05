@@ -136,7 +136,7 @@ public class Authentication  {
           // User logged in successfully
           return decoded[2]; 
        }
-       else if (decoded[0].equals("2") && decoded[1].equals("ERROR"))
+       else if (decoded[0].equals("2") && decoded[1].equals("BANNED"))
        {
            // Error while trying to login the user
            return decoded[1];

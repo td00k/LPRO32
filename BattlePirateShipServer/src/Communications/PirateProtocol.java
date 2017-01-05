@@ -18,13 +18,13 @@ public class PirateProtocol
     private  Matchmaking matchmaking;
     private  User userinfo;
     
-    public PirateProtocol(Game[] games)
+    public PirateProtocol(Game[] games, JDBCHandler DBhandler)
     {
-        auth = new Authentication();
+        auth = new Authentication(DBhandler);
         this.game = games;
         
-        matchmaking = new Matchmaking();
-        userinfo = new User();
+        matchmaking = new Matchmaking(DBhandler);
+        userinfo = new User(DBhandler);
         
     }
     
@@ -168,9 +168,12 @@ public class PirateProtocol
             case "10":
                         // get user friends
                         received = userinfo.getfriends(Integer.parseInt(decoded[1]));
+                        
                         break;
             case "11":
                         // add friend
+                        received = userinfo.addfriend(Integer.parseInt(decoded[1]),Integer.parseInt(decoded[2]));
+                        
                         break;
             case "12":
                         // receive shot

@@ -35,14 +35,15 @@ public class JDBCHandler
    static Connection conn;
     
     // Creates a connection 
-    public JDBCHandler(String JDBC_DRIVER, String DB_URL, String USER, String PASS) 
+    public JDBCHandler() 
     {
         /** The constructor method saves the variables as class specific ones
          */
-        this.JDBC_DRIVER = JDBC_DRIVER;
-        this.DB_URL = DB_URL;
-        this.USER = USER;
-        this.PASS = PASS;
+        this.JDBC_DRIVER = "org.postgresql.Driver";
+        this.DB_URL = "jdbc:postgresql://dbm.fe.up.pt/lpro1632";
+        this.USER = "lpro1632";
+        this.PASS = "ttva32";
+      
     }
     
     /** This method is the main method of this class. 

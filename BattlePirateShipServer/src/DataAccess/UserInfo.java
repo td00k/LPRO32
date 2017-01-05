@@ -105,6 +105,11 @@ public class UserInfo
                //comparing the results to see if the user is in the database
                if( username.equals(args[0]) && password.equals(args[1]) )
                {
+                if(rs.getInt("banned") == 1) // check if user is banned
+                {
+                    stmt.close();
+                    return -2;
+                }
                 // We found the user in the database
                 stmt.close();
                 return uid;

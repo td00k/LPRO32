@@ -102,7 +102,7 @@ public class MainView extends javax.swing.JFrame {
              return -1;
          }
          //userinfo.getFriends(userid);
-         
+
          UsernameText.setText(info[2]);
          UsernameText.setEditable(false);
          GamesPlayedText.setText(info[5]);
@@ -591,7 +591,7 @@ public class MainView extends javax.swing.JFrame {
         t.start();
         args = gamehandler.quickgame(userid);
         playerfound = true;
-        InGame game= new InGame(this,args[0],userid,this.client,args[1]);
+        InGame game = new InGame(this,args[0],userid,this.client,args[1]);
         game.setVisible(true);
         setVisible(false);
         //fazer mudanca para botao

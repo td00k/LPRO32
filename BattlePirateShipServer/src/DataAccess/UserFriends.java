@@ -44,7 +44,7 @@ public class UserFriends
             
             // executing the Query
             stmt.execute(query);                   
-            System.out.println("Valid UPDATE userfriends Query!");
+            System.out.println("Valid INSERT userfriends Query!");
             
             // closing the statement since we don't need it anymore
             stmt.close();
@@ -72,12 +72,13 @@ public class UserFriends
         String[] toreturn = null;
         try
         {
-            Statement stmt;
+            Statement stmt, stmt2;
             
             // creating a statement so we can execute a query on the DB
             stmt = con.createStatement();
             System.out.println("Query statement created!");
             
+            stmt2 = stmt = con.createStatement();
             // executing the Query
             stmt.execute(query);                   
             System.out.println("Valid Userstats GETfriends Query!");

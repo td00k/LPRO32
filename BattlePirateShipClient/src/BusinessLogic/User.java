@@ -20,7 +20,6 @@ public class User
   */
   public User(SocketClient client)
   {
-      
       this.client = client;
       pirate = new PirateProtocol(client);
       

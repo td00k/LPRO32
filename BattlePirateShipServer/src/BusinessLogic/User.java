@@ -26,18 +26,17 @@ public class User
   /**
    *  The constructor simply initializes a Handler variable so we can call the run method to execute querys on the DB, and a pre-defined array to help in the creation of the querys
    */
-  public User()
+  public User(JDBCHandler DBhandler)
   {
       infoargs = new String[7];
       infoargs[0]="id";
-      infoargs[1]="state";
-      infoargs[2]="gamesplayed";
-      infoargs[3]="wins";
-      infoargs[4]="defeats";
-      infoargs[5]="surrenders";
-      infoargs[6]="rank";
+      infoargs[1]="gamesplayed";
+      infoargs[2]="wins";
+      infoargs[3]="defeats";
+      infoargs[4]="surrenders";
+      infoargs[5]="rank";
       
-      DBhandler = new JDBCHandler("org.postgresql.Driver","jdbc:postgresql://dbm.fe.up.pt/lpro1632","lpro1632","ttva32");                                   
+      this.DBhandler = DBhandler;                                 
   }
   
   /** This method creates a query to grab all the user stats from the userstats database table and sends it to the JDBChandler class to be executed
@@ -61,7 +60,7 @@ public class User
       }
       else
       {
-          System.arraycopy(received, 0, toreturn, 1, 7);
+          System.arraycopy(received, 0, toreturn, 1, 6);
       }
         
       return toreturn;   
@@ -105,9 +104,9 @@ public class User
         String query;
         String[] toreturn;
      
-      query= "SELECT * " + "FROM userfriends" + "WHERE id1 =" + userid;
+      query= "SELECT * FROM userfriends WHERE id1 =" + userid;
      
-      return DBhandler.run(9,query,null);
+      return DBhandler.run(10,query,null);
           
      }   
     /** This method creates a query to add a friend to the friends list
@@ -121,9 +120,9 @@ public class User
         String query;
         String[] toreturn;
      
-      query= "SELECT * " + "FROM userfriends" + "WHERE id1 =" + userid;
+      query = "INSERT INTO userfriends VALUES('" + userid + "','" + userid2 +"')";
      
-      return DBhandler.run(9,query,null);
+      return DBhandler.run(11,query,null);
           
      }      
   

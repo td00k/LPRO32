@@ -1,6 +1,7 @@
 
 package GUI;
 
+import BusinessLogic.User;
 import Communications.SocketClient;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -26,6 +27,8 @@ public class InGame extends javax.swing.JFrame {
     private ActionListener timerlistener;
     private WindowListener exitListener;
     private int gametime;
+    private ChatUI chat;
+    private User userinfo;
     
     public InGame(MainView main, int gameid, int userid, SocketClient client, int startplayer) 
     {
@@ -34,10 +37,19 @@ public class InGame extends javax.swing.JFrame {
      * @param gameid receives the gameid that was given when creating or joining a game
      */
         initComponents();
+
         playergrid = new Grid("player",gameid,userid,client,startplayer);
         enemygrid = new Grid("enemy",gameid,userid,client,startplayer);
-        jPanel11.add(playergrid);
-        jPanel7.add(enemygrid);
+        gridPlayer.add(playergrid);
+        gridEnemy.add(enemygrid);
+        
+        userinfo = new User(client);
+        String info[] =  userinfo.get(userid);
+        PlayerUsername.setText(info[3]);
+        RankText.setText(info[9]);
+        GameIDnum.setText(""+gameid);
+        chat = new ChatUI(info[3]);
+        ChatPanel.add(chat);
         gametime = 0;
         this.client = client;
         this.main = main;
@@ -194,26 +206,22 @@ public class InGame extends javax.swing.JFrame {
         jLabel47 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextField1 = new javax.swing.JTextField();
         TimerPanel = new javax.swing.JPanel();
         MinutesLabel = new javax.swing.JLabel();
         SecondsLabel = new javax.swing.JLabel();
         MinutesLabel2 = new javax.swing.JLabel();
         jButton222 = new javax.swing.JButton();
-        jButton219 = new javax.swing.JButton();
         jPanel8 = new javax.swing.JPanel();
         jButton137 = new javax.swing.JButton();
         jLabel48 = new javax.swing.JLabel();
         jButton269 = new javax.swing.JButton();
         jButton270 = new javax.swing.JButton();
-        jLabel49 = new javax.swing.JLabel();
-        jButton271 = new javax.swing.JButton();
+        PlayerUsername = new javax.swing.JLabel();
+        RankText = new javax.swing.JButton();
         jLabel50 = new javax.swing.JLabel();
         SurrenderButton = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
-        jScrollPane4 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        ChatLabel = new javax.swing.JPanel();
+        ChatPanel = new javax.swing.JPanel();
         jButton223 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -235,8 +243,8 @@ public class InGame extends javax.swing.JFrame {
         jLabel52 = new javax.swing.JLabel();
         jLabel54 = new javax.swing.JLabel();
         jLabel45 = new javax.swing.JLabel();
-        jPanel7 = new javax.swing.JPanel();
-        jPanel11 = new javax.swing.JPanel();
+        gridEnemy = new javax.swing.JPanel();
+        gridPlayer = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
@@ -258,8 +266,13 @@ public class InGame extends javax.swing.JFrame {
         jLabel65 = new javax.swing.JLabel();
         jLabel66 = new javax.swing.JLabel();
         StatusMsg = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
         OrientationButton = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jTable3 = new javax.swing.JTable();
+        GameIDnum = new javax.swing.JTextField();
+        jLabel67 = new javax.swing.JLabel();
+        jLabel68 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -367,19 +380,6 @@ public class InGame extends javax.swing.JFrame {
         jSeparator2.setForeground(new java.awt.Color(0, 0, 0));
         jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, 1085, -1));
 
-        jScrollPane1.setBackground(new java.awt.Color(51, 51, 51));
-        jScrollPane1.setBorder(null);
-        jScrollPane1.setViewportBorder(javax.swing.BorderFactory.createTitledBorder(null, "Chat", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Charlemagne Std", 0, 10))); // NOI18N
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 396, 530, 150));
-
-        jTextField1.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 546, 530, 20));
-
         TimerPanel.setBackground(new java.awt.Color(102, 102, 102));
         TimerPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Play time", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Charlemagne Std", 0, 10))); // NOI18N
 
@@ -425,14 +425,6 @@ public class InGame extends javax.swing.JFrame {
         jButton222.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel1.add(jButton222, new org.netbeans.lib.awtextra.AbsoluteConstraints(534, 326, -1, 30));
 
-        jButton219.setText("#GAME_ID");
-        jButton219.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton219ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(jButton219, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 360, 90, 20));
-
         jPanel8.setBackground(new java.awt.Color(51, 51, 51));
         jPanel8.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), "PIRATE1", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Charlemagne Std", 0, 14), new java.awt.Color(255, 255, 255))); // NOI18N
 
@@ -459,14 +451,14 @@ public class InGame extends javax.swing.JFrame {
             }
         });
 
-        jLabel49.setFont(new java.awt.Font("Charlemagne Std", 0, 11)); // NOI18N
-        jLabel49.setForeground(new java.awt.Color(153, 153, 0));
-        jLabel49.setText("Login name");
+        PlayerUsername.setFont(new java.awt.Font("Charlemagne Std", 0, 11)); // NOI18N
+        PlayerUsername.setForeground(new java.awt.Color(153, 153, 0));
+        PlayerUsername.setText("USERname");
 
-        jButton271.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        jButton271.addActionListener(new java.awt.event.ActionListener() {
+        RankText.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        RankText.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton271ActionPerformed(evt);
+                RankTextActionPerformed(evt);
             }
         });
 
@@ -493,12 +485,12 @@ public class InGame extends javax.swing.JFrame {
                                 .addGap(35, 35, 35)
                                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jButton270, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton271, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(RankText, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(25, 25, 25))
                     .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel8Layout.createSequentialGroup()
                             .addGap(10, 10, 10)
-                            .addComponent(jLabel49, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(PlayerUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(jButton137, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(20, 20, 20))
         );
@@ -507,11 +499,11 @@ public class InGame extends javax.swing.JFrame {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addComponent(jButton137, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel49, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(PlayerUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel50, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jButton271, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(RankText, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel48, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -535,47 +527,42 @@ public class InGame extends javax.swing.JFrame {
         });
         jPanel1.add(SurrenderButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(920, 500, 160, 30));
 
-        jPanel3.setBackground(new java.awt.Color(51, 51, 51));
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Who's Seeing", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Charlemagne Std", 0, 10))); // NOI18N
+        ChatLabel.setBackground(new java.awt.Color(51, 51, 51));
+        ChatLabel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Chat", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Charlemagne Std", 0, 10))); // NOI18N
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
-            },
-            new String [] {
-                "ID", "Login Name"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                true, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jTable2.setGridColor(new java.awt.Color(51, 51, 51));
-        jScrollPane4.setViewportView(jTable2);
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 5, Short.MAX_VALUE))
+        javax.swing.GroupLayout ChatPanelLayout = new javax.swing.GroupLayout(ChatPanel);
+        ChatPanel.setLayout(ChatPanelLayout);
+        ChatPanelLayout.setHorizontalGroup(
+            ChatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 498, Short.MAX_VALUE)
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE)
-                .addContainerGap())
+        ChatPanelLayout.setVerticalGroup(
+            ChatPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 119, Short.MAX_VALUE)
         );
 
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 406, 360, 160));
+        javax.swing.GroupLayout ChatLabelLayout = new javax.swing.GroupLayout(ChatLabel);
+        ChatLabel.setLayout(ChatLabelLayout);
+        ChatLabelLayout.setHorizontalGroup(
+            ChatLabelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 518, Short.MAX_VALUE)
+            .addGroup(ChatLabelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(ChatLabelLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(ChatPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
+        );
+        ChatLabelLayout.setVerticalGroup(
+            ChatLabelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 130, Short.MAX_VALUE)
+            .addGroup(ChatLabelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(ChatLabelLayout.createSequentialGroup()
+                    .addComponent(ChatPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addContainerGap()))
+        );
+
+        jPanel1.add(ChatLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 400, 530, 150));
+        ChatLabel.getAccessibleContext().setAccessibleDescription("");
 
         jButton223.setBackground(new java.awt.Color(51, 51, 51));
         jButton223.setFont(new java.awt.Font("Charlemagne Std", 0, 10)); // NOI18N
@@ -684,35 +671,35 @@ public class InGame extends javax.swing.JFrame {
         jLabel45.setText("J");
         jPanel1.add(jLabel45, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 300, 10, 25));
 
-        jPanel7.setPreferredSize(new java.awt.Dimension(300, 300));
+        gridEnemy.setPreferredSize(new java.awt.Dimension(300, 300));
 
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout gridEnemyLayout = new javax.swing.GroupLayout(gridEnemy);
+        gridEnemy.setLayout(gridEnemyLayout);
+        gridEnemyLayout.setHorizontalGroup(
+            gridEnemyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 300, Short.MAX_VALUE)
         );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
-
-        jPanel1.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 30, -1, -1));
-
-        jPanel11.setPreferredSize(new java.awt.Dimension(300, 300));
-
-        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
-        jPanel11.setLayout(jPanel11Layout);
-        jPanel11Layout.setHorizontalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
-        jPanel11Layout.setVerticalGroup(
-            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        gridEnemyLayout.setVerticalGroup(
+            gridEnemyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 300, Short.MAX_VALUE)
         );
 
-        jPanel1.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 30, -1, -1));
+        jPanel1.add(gridEnemy, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 30, -1, -1));
+
+        gridPlayer.setPreferredSize(new java.awt.Dimension(300, 300));
+
+        javax.swing.GroupLayout gridPlayerLayout = new javax.swing.GroupLayout(gridPlayer);
+        gridPlayer.setLayout(gridPlayerLayout);
+        gridPlayerLayout.setHorizontalGroup(
+            gridPlayerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+        gridPlayerLayout.setVerticalGroup(
+            gridPlayerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+
+        jPanel1.add(gridPlayer, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 30, -1, -1));
 
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -816,11 +803,7 @@ public class InGame extends javax.swing.JFrame {
 
         StatusMsg.setForeground(new java.awt.Color(255, 255, 255));
         StatusMsg.setText("Starting Game...");
-        jPanel1.add(StatusMsg, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 370, -1, -1));
-
-        jLabel22.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel22.setText("Status:");
-        jPanel1.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 370, -1, -1));
+        jPanel1.add(StatusMsg, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 366, -1, 20));
 
         OrientationButton.setText("Change Orientation");
         OrientationButton.addActionListener(new java.awt.event.ActionListener() {
@@ -828,7 +811,62 @@ public class InGame extends javax.swing.JFrame {
                 OrientationButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(OrientationButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 340, -1, -1));
+        jPanel1.add(OrientationButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 340, -1, -1));
+
+        jPanel5.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Who's Seeing", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Charlemagne Std", 0, 10))); // NOI18N
+
+        jTable3.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "ID", "Login Name"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable3.setGridColor(new java.awt.Color(51, 51, 51));
+        jScrollPane5.setViewportView(jTable3);
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 5, Short.MAX_VALUE))
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 400, 360, 150));
+
+        GameIDnum.setText("0");
+        jPanel1.add(GameIDnum, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 360, 50, -1));
+
+        jLabel67.setFont(new java.awt.Font("Charlemagne Std", 0, 11)); // NOI18N
+        jLabel67.setForeground(new java.awt.Color(153, 153, 0));
+        jLabel67.setText("sTATUS :");
+        jPanel1.add(jLabel67, new org.netbeans.lib.awtextra.AbsoluteConstraints(175, 370, 60, 10));
+
+        jLabel68.setFont(new java.awt.Font("Charlemagne Std", 0, 11)); // NOI18N
+        jLabel68.setForeground(new java.awt.Color(153, 153, 0));
+        jLabel68.setText("GAMEID ");
+        jPanel1.add(jLabel68, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 360, -1, 20));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -856,14 +894,6 @@ public class InGame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton268ActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
-
-    private void jButton219ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton219ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton219ActionPerformed
-
     private void jButton269ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton269ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton269ActionPerformed
@@ -872,9 +902,9 @@ public class InGame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton270ActionPerformed
 
-    private void jButton271ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton271ActionPerformed
+    private void RankTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RankTextActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton271ActionPerformed
+    }//GEN-LAST:event_RankTextActionPerformed
 
     private void OrientationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OrientationButtonActionPerformed
         playergrid.vertical = !playergrid.vertical;
@@ -887,16 +917,22 @@ public class InGame extends javax.swing.JFrame {
 
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel ChatLabel;
+    private javax.swing.JPanel ChatPanel;
+    private javax.swing.JTextField GameIDnum;
     private javax.swing.JLabel MinutesLabel;
     private javax.swing.JLabel MinutesLabel2;
     private javax.swing.JButton OrientationButton;
+    private javax.swing.JLabel PlayerUsername;
+    private javax.swing.JButton RankText;
     private javax.swing.JLabel SecondsLabel;
     private javax.swing.JLabel StatusMsg;
     private javax.swing.JButton SurrenderButton;
     private javax.swing.JPanel TimerPanel;
+    private javax.swing.JPanel gridEnemy;
+    private javax.swing.JPanel gridPlayer;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton137;
-    private javax.swing.JButton jButton219;
     private javax.swing.JButton jButton222;
     private javax.swing.JButton jButton223;
     private javax.swing.JButton jButton264;
@@ -904,7 +940,6 @@ public class InGame extends javax.swing.JFrame {
     private javax.swing.JButton jButton268;
     private javax.swing.JButton jButton269;
     private javax.swing.JButton jButton270;
-    private javax.swing.JButton jButton271;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -918,7 +953,6 @@ public class InGame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel41;
@@ -929,7 +963,6 @@ public class InGame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel46;
     private javax.swing.JLabel jLabel47;
     private javax.swing.JLabel jLabel48;
-    private javax.swing.JLabel jLabel49;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel50;
     private javax.swing.JLabel jLabel51;
@@ -949,20 +982,18 @@ public class InGame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel64;
     private javax.swing.JLabel jLabel65;
     private javax.swing.JLabel jLabel66;
+    private javax.swing.JLabel jLabel67;
+    private javax.swing.JLabel jLabel68;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel3;
     public javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel5;
     public javax.swing.JPanel jPanel8;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable jTable3;
     // End of variables declaration//GEN-END:variables
 }

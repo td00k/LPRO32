@@ -14,9 +14,9 @@ public class Matchmaking {
    /**
     * The constructor simply initializes the handler variable
     */
-   public Matchmaking()
+   public Matchmaking(JDBCHandler DBhandler)
    {
-        DBhandler = new JDBCHandler("org.postgresql.Driver","jdbc:postgresql://dbm.fe.up.pt/lpro1632","lpro1632","ttva32");
+        this.DBhandler = DBhandler;
    }
     
  /** This method creates a query to create a new game, and assign it to the games list
