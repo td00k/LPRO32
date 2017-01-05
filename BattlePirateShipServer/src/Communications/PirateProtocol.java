@@ -158,7 +158,7 @@ public class PirateProtocol
                             args[5] = rcv2[4];
                             args[6] = rcv2[5];
                             args[7] = rcv2[6];
-                            argnum = 9;
+                            argnum = 8;
                         }
                         encoded = encode(Integer.parseInt(rcv1[0]),args,argnum);
 
@@ -167,6 +167,11 @@ public class PirateProtocol
             case "10":
                         // get user friends
                         received = userinfo.getfriends(Integer.parseInt(decoded[1]));
+                        for (int i = 0; i < Integer.parseInt(received[0]); i++) 
+                        {
+                           args[i] = received[i+1];
+                        }
+                        encoded = encode(10,args,Integer.parseInt(received[0]));
                         
                         break;
             case "11":

@@ -31,6 +31,7 @@ public class JDBCHandler
    private static final int GETINFO = 12;       // code for signaling it's a addfriend query
    private static final int NEWUSERSTATS = 13;  // code for signaling it's a create userstats query
    private static final int IDBYUSERNAME = 14;    // code for signaling it's a idbyusername query
+
    
    // Connection to DB
    static Connection conn;
@@ -67,7 +68,7 @@ public class JDBCHandler
         Games games = new Games();
         
         // variable we put data on to return
-        String[] returnval= new String[20];
+        String[] returnval= new String[50];
         
         // trying opening a connection to the DB
         if(open() != 1)

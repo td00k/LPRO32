@@ -69,9 +69,10 @@ public class UserFriends
     
     public String[] getfriends(String query, Connection con)
     {
-        String[] toreturn = null;
+        String[] toreturn = new String[51];
         try
         {
+            int i = 1;
             Statement stmt, stmt2;
             
             // creating a statement so we can execute a query on the DB
@@ -89,10 +90,10 @@ public class UserFriends
             while(rs.next())
             {
                 // fetching the results
-                toreturn[0] =  Integer.toString( rs.getInt("id") );
-                toreturn[1] =  Integer.toString( rs.getInt("state") );
-                toreturn[2] =  Integer.toString( rs.getInt("friendname") );
+                toreturn[i] =  Integer.toString( rs.getInt("id2") );
+                i++;
             }
+            toreturn[0] = Integer.toString(i);
             // closing the statement since we don't need it anymore
             stmt.close();
         }

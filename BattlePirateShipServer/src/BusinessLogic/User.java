@@ -102,12 +102,23 @@ public class User
     public String[] getfriends(int userid)
      {
         String query;
-        String[] toreturn;
+        String[] toreturn = new String[101];
+        String[] received;
+        String[] id;
+        int i ,j=1;
+        query= "SELECT * FROM userfriends WHERE id1 =" + userid;
      
-      query= "SELECT * FROM userfriends WHERE id1 =" + userid;
-     
-      return DBhandler.run(10,query,null);
-          
+        id =  DBhandler.run(10,query,null);
+        for (i = 1; i < Integer.parseInt(id[0]);i++)
+        {
+            query = "SELECT * FROM userinfo WHERE id = " + Integer.parseInt(id[i]);
+            received = DBhandler.run(12,query,null);
+            toreturn[j] = received[3];
+            toreturn[j+1] = received[2];
+            j = j+2;
+        }
+        toreturn[0] = Integer.toString(j-1);
+        return toreturn;
      }   
     /** This method creates a query to add a friend to the friends list
      * 
@@ -125,7 +136,7 @@ public class User
         
         received = DBhandler.run(14,query,null);
         
-        query = "INSERT INTO userfriends VALUES('" + userid + "','" + received[0] +"')";
+        query = "INSERT INTO userfriends VALUES('" + userid + "','" + Integer.parseInt(received[0]) +"')";
      
         return DBhandler.run(11,query,null);
           

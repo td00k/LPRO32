@@ -162,6 +162,7 @@ public class UserInfo
             toreturn[0] =  Integer.toString(rs.getInt("id"));
             toreturn[1] =  rs.getString("name");
             toreturn[2] =  rs.getString("username");
+            toreturn[3] =  Integer.toString(rs.getInt("state"));
             }
                     
             // closing the statement since we don't need to use it anymore
@@ -212,4 +213,5 @@ public class UserInfo
             return userid;
         }
     }
+
 }
